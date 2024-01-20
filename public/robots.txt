@@ -1,0 +1,4 @@
+User-Agent: *
+Allow: /
+
+Sitemap: https://nol2tr.dev1stud.io/sitemap.xml
