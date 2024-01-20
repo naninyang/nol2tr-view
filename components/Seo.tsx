@@ -16,7 +16,7 @@ export const originTitle = '놀이터뷰 nol2tr_view';
 const Seo = ({ pageTitles, pageTitle, pageDescription, pageImg, pageImgWidth, pageImgHeight, pageOgType }: Props) => {
   const router = useRouter();
   const pagePath = router.asPath;
-  const domain = 'https://memorial.dev1stud.io';
+  const domain = 'https://nol2tr.dev1stud.io';
 
   const defaultTitle = `인터뷰와 뉴스에 맞는 곡을 추천해주는 - ${originTitle}`;
   const defaultDescription = '인터뷰와 뉴스에 맞는 곡을 추천해주는';

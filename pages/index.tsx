@@ -116,7 +116,7 @@ export default function Home() {
       <Seo
         pageTitle="놀이터뷰 nol2tr_view"
         pageDescription="내가 기억해야 할 뉴스"
-        pageImg={`https://memorial.dev1stud.io/og-image.png?ts=${timestamp}`}
+        pageImg={`https://nol2tr.dev1stud.io/og-image.png?ts=${timestamp}`}
       />
       <div className={`${styles['pages-content']} ${main['main-content']}`}>
         <h1>

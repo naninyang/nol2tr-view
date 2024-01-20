@@ -34,7 +34,7 @@ function OpenSources({ licenses }: { licenses: string[] }) {
         pageTitles={`오픈소스 - ${originTitle}`}
         pageTitle="오픈소스"
         pageDescription="내가 기억해야 할 뉴스"
-        pageImg={`https://memorial.dev1stud.io/og-image.png?ts=${timestamp}`}
+        pageImg={`https://nol2tr.dev1stud.io/og-image.png?ts=${timestamp}`}
       />
       <div className="top-link">
         {currentPage ? (

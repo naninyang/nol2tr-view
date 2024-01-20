@@ -18,7 +18,7 @@ export default function Ebenums() {
         pageTitles={`클릭해보니 - ${originTitle}`}
         pageTitle="클릭해보니"
         pageDescription="대신클릭해드림"
-        pageImg={`https://memorial.dev1stud.io/og-image.png?ts=${timestamp}`}
+        pageImg={`https://nol2tr.dev1stud.io/og-image.png?ts=${timestamp}`}
       />
       <PageName pageName="클릭해보니" />
       <div className={styles.list}>

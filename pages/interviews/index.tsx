@@ -18,7 +18,7 @@ export default function Interviews() {
         pageTitles={`2인터뷰 - ${originTitle}`}
         pageTitle="2인터뷰"
         pageDescription="2인 인터뷰"
-        pageImg={`https://memorial.dev1stud.io/og-image.png?ts=${timestamp}`}
+        pageImg={`https://nol2tr.dev1stud.io/og-image.png?ts=${timestamp}`}
       />
       <PageName pageName="2인터뷰" />
       <div className={styles.list}>

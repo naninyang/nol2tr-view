@@ -1,4 +1,4 @@
-const WatchAPI = 'https://memorial.dev1stud.io/api/sitemapWatch';
+const WatchAPI = 'https://nol2tr.dev1stud.io/api/sitemapWatch';
 // const WatchAPI = 'http://localhost:3003/api/sitemapWatch';
 
 function generateSiteMap(watchs) {

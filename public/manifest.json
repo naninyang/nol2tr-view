@@ -1,7 +1,7 @@
 {
   "name": "놀이터뷰 nol2tr_view",
-  "short_name": "기억뉴스상자",
-  "description": "내가 기억해야 할 뉴스",
+  "short_name": "놀이터뷰",
+  "description": "인터뷰와 뉴스에 맞는 곡을 추천해주는",
   "scope": "/",
   "start_url": "/",
   "display": "standalone",

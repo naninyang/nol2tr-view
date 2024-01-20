@@ -1,4 +1,4 @@
-const ArticleAPI = 'https://memorial.dev1stud.io/api/sitemapArticle';
+const ArticleAPI = 'https://nol2tr.dev1stud.io/api/sitemapArticle';
 // const ArticleAPI = 'http://localhost:3003/api/sitemapArticle';
 
 function generateSiteMap(articles) {
