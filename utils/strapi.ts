@@ -1,4 +1,4 @@
-import { NaverItemsData, YouTubeItemData } from 'types';
+import { NewsicData, InterviewData, EbenumData } from 'types';
 
 const formatDate = (datetime: string) => {
   const date = new Date(datetime);
@@ -12,9 +12,9 @@ const formatDate = (datetime: string) => {
   return `${year}${month}${day}${hours}${minutes}${seconds}`;
 };
 
-export async function getYouTubeNewsData(start?: number, count?: number) {
+export async function getInterviewData(start?: number, count?: number) {
   const response = await fetch(
-    `${process.env.STRAPI_URL}/api/youtube-memorials?sort[0]=id:desc&pagination[page]=${start}&pagination[pageSize]=${count}`,
+    `${process.env.STRAPI_URL}/api/interview-nol2trs?sort[0]=id:desc&pagination[page]=${start}&pagination[pageSize]=${count}`,
     {
       method: 'GET',
       headers: {
@@ -24,22 +24,35 @@ export async function getYouTubeNewsData(start?: number, count?: number) {
   );
   const data = await response.json();
   const filesData = data.data;
-  const rowsData: YouTubeItemData[] = filesData.map((data: any) => ({
+  const rowsData: InterviewData[] = filesData.map((data: any) => ({
     id: data.id,
     idx: `${formatDate(data.attributes.createdAt)}${data.id}`,
-    video_id: data.attributes.videoId,
+    subject: data.attributes.subject,
+    platform: data.attributes.platform,
+    vid: data.attributes.vid,
+    oid: data.attributes.oid,
+    aid: data.attributes.aid,
+    thumbnail: data.attributes.thumbnail,
+    summary: data.attributes.summary,
     description: data.attributes.description,
-    comment: data.attributes.comment,
+    interviewer: data.attributes.interviewer,
+    interviewee: data.attributes.interviewee,
+    music: data.attributes.music,
+    videoid: data.attributes.videoid,
+    artist: data.attributes.artist,
+    album: data.attributes.album,
+    composer: data.attributes.composer,
+    lyricist: data.attributes.lyricist,
+    lyrics: data.attributes.lyrics,
     created: data.attributes.created,
-    title: data.attributes.title,
   }));
 
   return rowsData;
 }
 
-export async function getNaverNewsData(start?: number, count?: number) {
+export async function getNewsicData(start?: number, count?: number) {
   const response = await fetch(
-    `${process.env.STRAPI_URL}/api/naver-memorials?sort[0]=id:desc&pagination[page]=${start}&pagination[pageSize]=${count}`,
+    `${process.env.STRAPI_URL}/api/newsic-nol2trs?sort[0]=id:desc&pagination[page]=${start}&pagination[pageSize]=${count}`,
     {
       method: 'GET',
       headers: {
@@ -49,25 +62,56 @@ export async function getNaverNewsData(start?: number, count?: number) {
   );
   const data = await response.json();
   const filesData = data.data;
-  const rowsData: NaverItemsData[] = filesData.map((data: any) => ({
-    ida: `${data.id}`,
+  const rowsData: NewsicData[] = filesData.map((data: any) => ({
+    id: data.id,
     idx: `${formatDate(data.attributes.createdAt)}${data.id}`,
-    title: data.attributes.title,
-    description: data.attributes.description,
-    thumbnail: data.attributes.thumbnail,
-    created: data.attributes.created,
+    subject: data.attributes.subject,
+    platform: data.attributes.platform,
+    vid: data.attributes.vid,
     oid: data.attributes.oid,
     aid: data.attributes.aid,
-    entertainment: data.attributes.entertainment,
+    thumbnail: data.attributes.thumbnail,
+    summary: data.attributes.summary,
+    description: data.attributes.description,
+    music: data.attributes.music,
+    videoid: data.attributes.videoid,
+    artist: data.attributes.artist,
+    album: data.attributes.album,
+    composer: data.attributes.composer,
+    lyricist: data.attributes.lyricist,
+    lyrics: data.attributes.lyrics,
+    created: data.attributes.created,
+  }));
+
+  return rowsData;
+}
+
+export async function getEbenumData(start?: number, count?: number) {
+  const response = await fetch(
+    `${process.env.STRAPI_URL}/api/ebenum-nol2trs?sort[0]=id:desc&pagination[page]=${start}&pagination[pageSize]=${count}`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_BEARER_TOKEN}`,
+      },
+    },
+  );
+  const data = await response.json();
+  const filesData = data.data;
+  const rowsData: EbenumData[] = filesData.map((data: any) => ({
+    id: `${data.id}`,
+    idx: `${formatDate(data.attributes.createdAt)}${data.id}`,
+    subject: data.attributes.subject,
+    addr: data.attributes.addr,
+    description: data.attributes.description,
   }));
 
   const fullData = await Promise.all(
-    rowsData.map(async (article) => {
-      const url = `https://n.news.naver.com/article/${article.oid}/${article.aid}`;
-      const newsMetaData = await fetchArticleMetadata(url);
+    rowsData.map(async (preview) => {
+      const ebenumMetaData = await fetchPreviewMetadata(preview.addr);
       return {
-        ...article,
-        newsMetaData,
+        ...preview,
+        ebenumMetaData,
       };
     }),
   );
@@ -75,34 +119,9 @@ export async function getNaverNewsData(start?: number, count?: number) {
   return fullData;
 }
 
-export async function getEditorialData(start?: number, count?: number) {
-  const response = await fetch(
-    `${process.env.STRAPI_URL}/api/editorial-memorials?sort[0]=id:desc&pagination[page]=${start}&pagination[pageSize]=${count}`,
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${process.env.STRAPI_BEARER_TOKEN}`,
-      },
-    },
-  );
-  const data = await response.json();
-  const filesData = data.data;
-  const rowsData: NaverItemsData[] = filesData.map((data: any) => ({
-    ida: `${data.id}`,
-    idx: `${formatDate(data.attributes.createdAt)}${data.id}`,
-    title: data.attributes.title,
-    org: data.attributes.org,
-    thumbnail: data.attributes.thumbnail,
-    created: data.attributes.created,
-    articleNumber: data.attributes.articleNumber,
-  }));
-
-  return rowsData;
-}
-
-async function fetchArticleMetadata(url: string) {
+async function fetchPreviewMetadata(url: string) {
   try {
-    const response = await fetch(`https://naver-news-opengraph.vercel.app/api/og?url=${encodeURIComponent(url)}`);
+    const response = await fetch(`${process.env.PREVIEW_API_URL}?url=${encodeURIComponent(url)}`);
     const data = await response.json();
     return data;
   } catch (error) {

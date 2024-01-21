@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
+import ArticlesItem from './item';
 import Seo, { originTitle } from '@/components/Seo';
 import PageName from '@/components/PageName';
-import ArticlesItem from './item';
-import styles from '@/styles/articles.module.sass';
+import styles from '@/styles/News.module.sass';
 
 export default function Interviews() {
   const timestamp = Date.now();
 
   useEffect(() => {
     localStorage.removeItem('currentPage');
-    localStorage.setItem('currentPage', 'articles');
+    localStorage.setItem('currentPage', 'interviews');
   }, []);
 
   return (

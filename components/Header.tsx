@@ -422,9 +422,9 @@ export default function Header() {
     <>
       <Container>
         {router.pathname === '/' ||
-        router.pathname === '/watches' ||
-        router.pathname === '/articles' ||
-        router.pathname === '/editorials' ? undefined : (
+        router.pathname === '/ebenums' ||
+        router.pathname === '/interviews' ||
+        router.pathname === '/newsics' ? undefined : (
           <s />
         )}
         <Primary>
@@ -504,7 +504,7 @@ export default function Header() {
                 </AnchorLink>
               </li>
               <li>
-                <AnchorLink href="https://github.com/naninyang/memorial-news-box-frontend">
+                <AnchorLink href="https://github.com/naninyang/no2tr">
                   <Github />
                   <span>깃헙 저장소</span>
                 </AnchorLink>

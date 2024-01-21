@@ -15,12 +15,12 @@ export default function Ebenums() {
   return (
     <main className={styles.watches}>
       <Seo
-        pageTitles={`클릭해보니 - ${originTitle}`}
-        pageTitle="클릭해보니"
-        pageDescription="대신클릭해드림"
+        pageTitles={`노클노플 - ${originTitle}`}
+        pageTitle="노클노플"
+        pageDescription="노 클릭, 노 플레이"
         pageImg={`https://nol2tr.dev1stud.io/og-image.png?ts=${timestamp}`}
       />
-      <PageName pageName="클릭해보니" />
+      <PageName pageName="노클노플" />
       <div className={styles.list}>
         <WatchesNews />
       </div>

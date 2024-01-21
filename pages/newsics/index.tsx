@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
+import ArticlesItem from './item';
 import Seo, { originTitle } from '@/components/Seo';
 import PageName from '@/components/PageName';
-import EditorialItem from './item';
-import styles from '@/styles/editorials.module.sass';
+import styles from '@/styles/News.module.sass';
 
 export default function Newsics() {
   const timestamp = Date.now();
 
   useEffect(() => {
     localStorage.removeItem('currentPage');
-    localStorage.setItem('currentPage', 'editorials');
+    localStorage.setItem('currentPage', 'newsics');
   }, []);
 
   return (
-    <main className={styles.editorials}>
+    <main className={styles.articles}>
       <Seo
         pageTitles={`뉴직 - ${originTitle}`}
         pageTitle="뉴직"
@@ -22,7 +22,7 @@ export default function Newsics() {
       />
       <PageName pageName="뉴직" />
       <div className={styles.list}>
-        <EditorialItem />
+        <ArticlesItem />
       </div>
     </main>
   );

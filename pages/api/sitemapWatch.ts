@@ -12,7 +12,7 @@ const formatDate = (datetime: string) => {
   return `${year}${month}${day}${hours}${minutes}${seconds}`;
 };
 
-async function fetchYouTubeItemData() {
+async function fetchInterviewData() {
   const response = await fetch(
     `${process.env.STRAPI_URL}/api/youtube-memorials?pagination[page]=1&pagination[pageSize]=10000`,
     {
@@ -28,7 +28,7 @@ async function fetchYouTubeItemData() {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const newsData = await fetchYouTubeItemData();
+    const newsData = await fetchInterviewData();
 
     const newsDataProcessed = newsData.map((newsItem: any) => ({
       idx: `watch-news/${formatDate(newsItem.attributes.createdAt)}${newsItem.id}`,

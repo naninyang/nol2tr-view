@@ -141,13 +141,27 @@ export type CommentResponse = {
   comment: string;
 };
 
-export interface YouTubeItemData {
+export interface InterviewData {
+  id: string;
   idx: string;
-  video_id: string;
+  subject: string;
+  platform: string;
+  vid: string;
+  oid: string;
+  aid: string;
+  thumbnail: string;
+  summary: string;
   description: string;
-  comment: string;
+  interviewer: string;
+  interviewee: string;
+  music: string;
+  videoid: string;
+  artist: string;
+  album: string;
+  composer: string;
+  lyricist: string;
+  lyrics: string;
   created: string;
-  title: string;
 }
 
 export interface YouTubeNewsRowData {
@@ -162,16 +176,25 @@ export interface YouTubeNewsRowData {
   };
 }
 
-export interface NaverItemsData {
+export interface NewsicData {
+  id: string;
   idx: string;
-  title: string;
-  description: string;
+  subject: string;
+  platform: string;
+  vid: string;
   oid: string;
   aid: string;
   thumbnail: string;
+  summary: string;
+  description: string;
+  music: string;
+  videoid: string;
+  artist: string;
+  album: string;
+  composer: string;
+  lyricist: string;
+  lyrics: string;
   created: string;
-  entertainment: boolean;
-  newsMetaData: any;
 }
 
 export interface NaverItemData {
@@ -206,13 +229,26 @@ export interface OgData {
   error?: string;
 }
 
-export interface EditorialItemsData {
+export interface EbenumData {
+  id: string;
   idx: string;
-  title: string;
-  org: any;
-  articleNumber: string;
-  thumbnail: string;
-  created: string;
+  subject: string;
+  addr: string;
+  description: string;
+  ebenumMetaData?: {
+    ogTitle: string;
+    ogUrl: string;
+    ogImage: string;
+    ogDescription: string;
+    ogSiteName?: string;
+    twitterSite?: string;
+    twitterCreator?: string;
+    datePublished?: string;
+    ownerAvatar?: string;
+    ownerName?: string;
+    pressPublished?: string;
+    pressAvatar?: string;
+  };
 }
 
 export interface EditorialItemData {

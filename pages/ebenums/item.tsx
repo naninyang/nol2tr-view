@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import useSWRInfinite from 'swr/infinite';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import useSWRInfinite from 'swr/infinite';
 import { useMediaQuery } from 'react-responsive';
 import Modal from 'react-modal';
 import axios from 'axios';
 import PullToRefresh from 'react-simple-pull-to-refresh';
 import { Masonry } from 'masonic';
-import { YouTubeItemData } from 'types';
+import { EbenumData } from 'types';
 import { modalContainer } from '@/components/ModalStyling';
-import YouTubeController from '@/components/YouTubeController';
+import { FormatDate } from '@/components/FormatDate';
 import WatchDetail from '@/components/Watch';
 import styles from '@/styles/watches.module.sass';
 
@@ -28,10 +28,10 @@ export const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 const getKey = (pageIndex: number, previousPageData: any) => {
   if (previousPageData && !previousPageData.length) return null;
-  return `${process.env.NEXT_PUBLIC_API_URL}/api/youtubeNews?start=${pageIndex + 1}&count=20`;
+  return `${process.env.NEXT_PUBLIC_API_URL}/api/ebenums?start=${pageIndex + 1}&count=20`;
 };
 
-export default function WatchesItem() {
+export default function EbenumsItem() {
   const router = useRouter();
 
   const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher, {
@@ -43,7 +43,7 @@ export default function WatchesItem() {
   const [target, setTarget] = useState<HTMLElement | null | undefined>(null);
   const itemId = Array.isArray(router.query.itemId) ? router.query.itemId[0] : router.query.itemId;
 
-  const sheets = data ? [].concat(...data) : [];
+  const ebenums = data ? [].concat(...data) : [];
   const isLoading = !data && !error;
   const isReachingEnd = data && data[data.length - 1]?.length < 20;
 
@@ -64,7 +64,7 @@ export default function WatchesItem() {
     if (!target || isLoading) return;
   }, [target, isLoading]);
 
-  const selectedWatch = Array.isArray(sheets) ? sheets.find((watch: any) => watch.idx === itemId) : undefined;
+  const selectedWatch = Array.isArray(ebenums) ? ebenums.find((watch: any) => watch.idx === itemId) : undefined;
 
   useEffect(() => {
     const preventScroll = (e: Event) => {
@@ -104,31 +104,51 @@ export default function WatchesItem() {
 
   const isDesktop = useDesktop();
 
-  const renderCard = ({ data }: { data: YouTubeItemData }) => (
+  const renderCard = ({ data }: { data: EbenumData }) => (
     <div className={styles.item}>
       <figure>
-        <YouTubeController videoId={data.video_id} isPlaylist={false} />
-        <figcaption>
-          <div>
-            {isDesktop ? (
-              <Link
-                key={data.idx}
-                href={`/watches?itemId=${data.idx}`}
-                as={`/watch-memorial/${data.idx}`}
-                scroll={false}
-                shallow={true}
-              >
-                {data.title} <time>{data.created}</time>
-              </Link>
+        <div className={styles.opengraph}>
+          <div className={styles['og-container']}>
+            {data.ebenumMetaData?.ownerAvatar ? (
+              <img src={data.ebenumMetaData?.ogImage} alt="" />
             ) : (
-              <Link key={data.idx} href={`/watch-memorial/${data.idx}`} scroll={false} shallow={true}>
-                {data.title} <time>{data.created}</time>
-              </Link>
+              <div className={styles.thumbnails}>
+                <img src={data.ebenumMetaData?.ogImage} alt="" className={styles['thumbnail-origin']} />
+                <img src={data.ebenumMetaData?.ogImage} alt="" className={styles['thumbnail-background']} />
+              </div>
             )}
-            <p dangerouslySetInnerHTML={{ __html: data.description.replace(/\n/g, '<br />') }} />
+            <div className={styles['og-info']}>
+              <div className={styles.detail}>
+                {data.ebenumMetaData?.ownerAvatar ? (
+                  <img src={data.ebenumMetaData?.ownerAvatar} alt="" />
+                ) : (
+                  <img src={data.ebenumMetaData?.pressAvatar} alt="" />
+                )}
+                <div className={styles['user-info']}>
+                  <Link key={data.idx} href={`/instead/${data.idx}`} scroll={false} shallow={true}>
+                    <strong>{data.ebenumMetaData?.ogTitle}</strong>{' '}
+                  </Link>
+                  <div className={styles.user}>
+                    <cite>
+                      {data.ebenumMetaData?.ownerName
+                        ? data.ebenumMetaData?.ownerName
+                        : data.ebenumMetaData?.twitterCreator}
+                    </cite>
+                    {data.ebenumMetaData?.datePublished ? (
+                      <time dateTime={data.ebenumMetaData?.datePublished}>
+                        {FormatDate(data.ebenumMetaData?.datePublished)}
+                      </time>
+                    ) : (
+                      <time dateTime={data.ebenumMetaData?.pressPublished}>
+                        {FormatDate(`${data.ebenumMetaData?.pressPublished}`)}
+                      </time>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <p className="opinion" dangerouslySetInnerHTML={{ __html: data.comment.replace(/\n/g, '<br />') }} />
-        </figcaption>
+        </div>
       </figure>
     </div>
   );
@@ -159,11 +179,11 @@ export default function WatchesItem() {
         <div className={styles['watch-content']}>
           <PullToRefresh onRefresh={handleRefresh}>
             <Masonry
-              items={sheets || []}
+              items={ebenums || []}
               columnCount={columnCount}
               render={renderCard}
-              key={sheets.length}
-              data-index={sheets.length}
+              key={ebenums.length}
+              data-index={ebenums.length}
             />
           </PullToRefresh>
           {isReachingEnd !== undefined && (

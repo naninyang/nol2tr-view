@@ -1,19 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import useSWRInfinite from 'swr/infinite';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import useSWRInfinite from 'swr/infinite';
 import { useMediaQuery } from 'react-responsive';
-import Modal from 'react-modal';
 import axios, { AxiosError } from 'axios';
 import PullToRefresh from 'react-simple-pull-to-refresh';
-import { EditorialItemsData, EditorialProps } from 'types';
-import { modalContainer } from '@/components/ModalStyling';
-// import EditorialDetail from '@/components/Editorial';
-import AnchorLink from '@/components/Anchor';
-import styles from '@/styles/editorials.module.sass';
-
-Modal.setAppElement('#__next');
+import { NewsicData } from 'types';
+import styles from '@/styles/News.module.sass';
 
 export function useDesktop() {
   const [isDesktop, setIsDesktop] = useState(false);
@@ -24,7 +17,7 @@ export function useDesktop() {
   return isDesktop;
 }
 
-function EditorialsItem() {
+function ArticlesItem() {
   const router = useRouter();
 
   const [waitingFor504, setWaitingFor504] = useState(false);
@@ -44,7 +37,7 @@ function EditorialsItem() {
 
   const getKey = (pageIndex: number, previousPageData: any) => {
     if (previousPageData && !previousPageData.length) return null;
-    return `/api/editorial?start=${pageIndex + 1}&count=20`;
+    return `/api/newsics?start=${pageIndex + 1}&count=20`;
   };
 
   const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher, {
@@ -54,9 +47,9 @@ function EditorialsItem() {
   });
 
   const [target, setTarget] = useState<HTMLElement | null | undefined>(null);
-  const editorialId = Array.isArray(router.query.editorialId) ? router.query.editorialId[0] : router.query.editorialId;
+  const articleId = Array.isArray(router.query.articleId) ? router.query.articleId[0] : router.query.articleId;
 
-  const editorials = data ? [].concat(...data) : [];
+  const articles = data ? [].concat(...data) : [];
   const isLoading = !data && !error;
   const isReachingEnd = data && data[data.length - 1]?.length < 20;
 
@@ -77,8 +70,8 @@ function EditorialsItem() {
     if (!target || isLoading) return;
   }, [target, isLoading]);
 
-  const selectedEditorial = Array.isArray(editorials)
-    ? editorials.find((editorial: any) => editorial.idx === editorialId)
+  const selectedArticle = Array.isArray(articles)
+    ? articles.find((article: any) => article.idx === articleId)
     : undefined;
 
   useEffect(() => {
@@ -86,7 +79,7 @@ function EditorialsItem() {
       e.preventDefault();
     };
 
-    if (editorialId !== undefined) {
+    if (articleId !== undefined) {
       window.addEventListener('wheel', preventScroll, { passive: false });
       window.addEventListener('touchmove', preventScroll, { passive: false });
     } else {
@@ -98,64 +91,19 @@ function EditorialsItem() {
       window.removeEventListener('wheel', preventScroll);
       window.removeEventListener('touchmove', preventScroll);
     };
-  }, [editorialId]);
+  }, [articleId]);
 
   const handleRefresh = async () => {
     window.location.reload();
   };
 
-  const NewspaperLink: React.FC<EditorialProps> = ({
-    editorialOrg,
-    editorialCreated,
-    editorialTitle,
-    editorialNumber,
-    editorialThumbnail,
-  }) => {
-    const getNewspaperName = (org: string) => {
-      const names: { [key: string]: string } = {
-        hani: '한겨례신문',
-        khan: '경향신문',
-        ohmynews: '오마이뉴스',
-        vegannews: '비건뉴스',
-        vop: '민중의소리',
-      };
-      return names[org] || 'Unknown';
-    };
-
-    const getNewspaperURL = (org: string) => {
-      const urls: { [key: string]: string } = {
-        hani: 'https://www.hani.co.kr/arti/cartoon/hanicartoon/',
-        khan: 'https://www.khan.co.kr/cartoon/grim-madang/article/', // 경향의 박순찬 화백 퇴사 문제로 그림마당으로 변경함
-        ohmynews: 'https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=',
-        vegannews: 'https://www.vegannews.co.kr/news/article.html?no=',
-        vop: 'https://vop.co.kr/',
-      };
-      return urls[org] || 'Unknown';
-    };
-
-    return (
-      <AnchorLink href={`${getNewspaperURL(editorialOrg)}${editorialNumber}`}>
-        <div className={styles['og-container']}>
-          <img src={`https://cdn.dev1stud.io/memorial/${editorialThumbnail}.webp`} alt="" />
-          <div className={styles['og-info']}>
-            <div className={styles.created}>
-              <cite>{getNewspaperName(editorialOrg)}</cite>
-              <time>{editorialCreated}</time>
-            </div>
-            <div className={styles.summary}>
-              <strong>{editorialTitle}</strong>
-            </div>
-          </div>
-        </div>
-      </AnchorLink>
-    );
-  };
+  const isDesktop = useDesktop();
 
   return (
     <>
       {isLoading && (
         <div className={styles.loading}>
-          <p>만평을 가져오는 중입니다.</p>
+          <p>인터뷰 목록을 읽는 중입니다.</p>
         </div>
       )}
       {waitingFor504 && (
@@ -176,27 +124,32 @@ function EditorialsItem() {
         </div>
       )}
       {!isLoading && !error && (
-        <div className={styles['editorial-content']}>
+        <div className={styles['article-content']}>
           <PullToRefresh onRefresh={handleRefresh}>
-            <div className={styles['editorial-list']}>
-              {editorials.map((editorial: EditorialItemsData) => (
-                <article key={editorial.idx}>
-                  <div className={styles.opengraph}>
-                    <NewspaperLink
-                      editorialOrg={editorial.org}
-                      editorialCreated={editorial.created}
-                      editorialTitle={editorial.title}
-                      editorialNumber={editorial.articleNumber}
-                      editorialThumbnail={editorial.thumbnail}
-                    />
-                  </div>
+            <div className={styles['article-list']}>
+              {articles.map((article: NewsicData) => (
+                <article key={article.idx}>
+                  {article.platform === 'youtube' ? (
+                    <img src={`https://i.ytimg.com/vi_webp/${article.vid}/hqdefault.webp`} alt="" />
+                  ) : (
+                    <img src={`https://cdn.dev1stud.io/nol2tr/${article.thumbnail}.webp`} alt="" />
+                  )}
+                  <h2>
+                    <Link key={article.idx} href={`/article-memorial/${article.idx}`} scroll={false} shallow={true}>
+                      {article.subject}
+                    </Link>
+                  </h2>
+                  <p className={styles.summary}>{article.summary}</p>
+                  <p className={styles.recommended}>
+                    {article.artist}. {article.music}.
+                  </p>
                 </article>
               ))}
             </div>
           </PullToRefresh>
           {isReachingEnd !== undefined && (
             <div ref={setTarget} className={styles.ref}>
-              {isReachingEnd === false && <p>만평을 불러오는 중입니다.</p>}
+              {isReachingEnd === false && <p>인터뷰 목록을 읽는 중입니다.</p>}
             </div>
           )}
         </div>
@@ -205,4 +158,4 @@ function EditorialsItem() {
   );
 }
 
-export default EditorialsItem;
+export default ArticlesItem;

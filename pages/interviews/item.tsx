@@ -1,28 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import useSWRInfinite from 'swr/infinite';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useMediaQuery } from 'react-responsive';
-import Modal from 'react-modal';
+import useSWRInfinite from 'swr/infinite';
 import axios, { AxiosError } from 'axios';
 import PullToRefresh from 'react-simple-pull-to-refresh';
-import { NaverItemsData } from 'types';
-import { modalContainer } from '@/components/ModalStyling';
-import ArticleDetail from '@/components/Article';
-import AnchorLink from '@/components/Anchor';
-import styles from '@/styles/articles.module.sass';
-
-Modal.setAppElement('#__next');
-
-export function useDesktop() {
-  const [isDesktop, setIsDesktop] = useState(false);
-  const desktop = useMediaQuery({ query: '(min-width: 768px)' });
-  useEffect(() => {
-    setIsDesktop(desktop);
-  }, [desktop]);
-  return isDesktop;
-}
+import { InterviewData } from 'types';
+import styles from '@/styles/News.module.sass';
 
 function ArticlesItem() {
   const router = useRouter();
@@ -44,7 +27,7 @@ function ArticlesItem() {
 
   const getKey = (pageIndex: number, previousPageData: any) => {
     if (previousPageData && !previousPageData.length) return null;
-    return `/api/naverNews?start=${pageIndex + 1}&count=20`;
+    return `/api/interviews?start=${pageIndex + 1}&count=20`;
   };
 
   const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher, {
@@ -77,10 +60,6 @@ function ArticlesItem() {
     if (!target || isLoading) return;
   }, [target, isLoading]);
 
-  const selectedArticle = Array.isArray(articles)
-    ? articles.find((article: any) => article.idx === articleId)
-    : undefined;
-
   useEffect(() => {
     const preventScroll = (e: Event) => {
       e.preventDefault();
@@ -104,21 +83,11 @@ function ArticlesItem() {
     window.location.reload();
   };
 
-  const isDesktop = useDesktop();
-
   return (
     <>
-      <Modal
-        isOpen={!!articleId}
-        onRequestClose={() => router.push('/articles', undefined, { scroll: false })}
-        contentLabel="Article Modal"
-        style={modalContainer}
-      >
-        <ArticleDetail articleItem={selectedArticle} />
-      </Modal>
       {isLoading && (
         <div className={styles.loading}>
-          <p>뉴스를 가져오는 중입니다.</p>
+          <p>인터뷰 목록을 읽는 중입니다.</p>
         </div>
       )}
       {waitingFor504 && (
@@ -142,89 +111,39 @@ function ArticlesItem() {
         <div className={styles['article-content']}>
           <PullToRefresh onRefresh={handleRefresh}>
             <div className={styles['article-list']}>
-              {articles.map((article: NaverItemsData) => (
+              {articles.map((article: InterviewData) => (
                 <article key={article.idx}>
-                  <div className={styles.description}>
-                    {isDesktop ? (
-                      <Link
-                        key={article.idx}
-                        href={`/articles?articleId=${article.idx}`}
-                        as={`/article-memorial/${article.idx}`}
-                        scroll={false}
-                        shallow={true}
-                      >
-                        <p
-                          className={`${styles.comment} opinion`}
-                          dangerouslySetInnerHTML={{ __html: article.description.replace(/\n/g, '<br />') }}
-                        />
-                      </Link>
-                    ) : (
-                      <Link key={article.idx} href={`/article-memorial/${article.idx}`} scroll={false} shallow={true}>
-                        <p
-                          className={`${styles.comment} opinion`}
-                          dangerouslySetInnerHTML={{ __html: article.description.replace(/\n/g, '<br />') }}
-                        />
-                      </Link>
-                    )}
-                    <Image
-                      src={`https://cdn.dev1stud.io/memorial/${article?.thumbnail}${
-                        article?.thumbnail?.endsWith('.gif') ? '' : '.webp'
-                      }`}
-                      width={640}
-                      height={480}
-                      unoptimized
-                      priority
-                      alt=""
-                    />
-                  </div>
-                  <div className={styles.opengraph}>
-                    {article.entertainment ? (
-                      <AnchorLink href={`https://n.news.naver.com/entertain/article/${article.oid}/${article.aid}`}>
-                        <div className={styles['og-container']}>
-                          <img src={article.newsMetaData?.ogImage} alt="" />
-                          <div className={styles['og-info']}>
-                            <div className={styles.created}>
-                              <cite>{article.newsMetaData?.ogCreator}</cite>
-                              <time>{article.created}</time>
-                            </div>
-                            <div className={styles.summary}>
-                              <strong>{article.newsMetaData?.ogTitle}</strong>
-                              <div className={styles.description}>
-                                {article.newsMetaData?.ogDescription}
-                                ...
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </AnchorLink>
-                    ) : (
-                      <AnchorLink href={`https://n.news.naver.com/article/${article.oid}/${article.aid}`}>
-                        <div className={styles['og-container']}>
-                          <img src={article.newsMetaData?.ogImage} alt="" />
-                          <div className={styles['og-info']}>
-                            <div className={styles.created}>
-                              <cite>{article.newsMetaData?.ogCreator}</cite>
-                              <time>{article.created}</time>
-                            </div>
-                            <div className={styles.summary}>
-                              <strong>{article.newsMetaData?.ogTitle}</strong>
-                              <div className={styles.description}>
-                                {article.newsMetaData?.ogDescription}
-                                ...
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </AnchorLink>
-                    )}
-                  </div>
+                  {article.platform === 'youtube' ? (
+                    <img src={`https://i.ytimg.com/vi_webp/${article.vid}/hqdefault.webp`} alt="" />
+                  ) : (
+                    <img src={`https://cdn.dev1stud.io/nol2tr/${article.thumbnail}.webp`} alt="" />
+                  )}
+                  <h2>
+                    <Link key={article.idx} href={`/article-memorial/${article.idx}`} scroll={false} shallow={true}>
+                      {article.subject}
+                    </Link>
+                  </h2>
+                  <p className={styles.summary}>{article.summary}</p>
+                  <dl>
+                    <div>
+                      <dt>인터뷰어</dt>
+                      <dd>{article.interviewer}</dd>
+                    </div>
+                    <div>
+                      <dt>인터뷰이</dt>
+                      <dd>{article.interviewee}</dd>
+                    </div>
+                  </dl>
+                  <p className={styles.recommended}>
+                    {article.artist}. {article.music}.
+                  </p>
                 </article>
               ))}
             </div>
           </PullToRefresh>
           {isReachingEnd !== undefined && (
             <div ref={setTarget} className={styles.ref}>
-              {isReachingEnd === false && <p>뉴스를 불러오는 중입니다.</p>}
+              {isReachingEnd === false && <p>인터뷰 목록을 읽는 중입니다.</p>}
             </div>
           )}
         </div>
