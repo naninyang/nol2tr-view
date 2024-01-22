@@ -104,7 +104,7 @@ export default function EbenumsItem() {
                 ) : (
                   <img src={data.ebenumMetaData?.pressAvatar} alt="" />
                 )}
-                <div className={styles['user-info']}>
+                <div className={`${styles['user-info']} noto`}>
                   <strong>{data.ebenumMetaData?.ogTitle}</strong>{' '}
                   <div className={styles.user}>
                     <cite>

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { AppProps } from 'next/app';
-import { Noto_Sans_KR } from 'next/font/google';
+import { Lato, Noto_Sans_KR } from 'next/font/google';
 import localFont from 'next/font/local';
 import Script from 'next/script';
 import Header from '@/components/Header';
@@ -10,8 +10,13 @@ import { GA_TRACKING_ID, pageview } from '@/lib/gtag';
 import 'styles/globals.sass';
 
 const fontNoto = Noto_Sans_KR({
-  weight: ['100', '300', '400', '700', '900'],
+  weight: ['400', '700'],
   subsets: ['cyrillic'],
+});
+
+const fontLato = Lato({
+  weight: ['100', '300', '400', '700', '900'],
+  subsets: ['latin'],
 });
 
 const IBMPlexSansKR = localFont({
@@ -106,10 +111,12 @@ export default function App({ Component, pageProps }: AppProps) {
           select {
             font-family: ${IBMPlexSansKR.style.fontFamily}, monospace;
           }
-          .opinion,
+          .noto {
+            font-family: ${fontNoto.style.fontFamily};
+          }
           time,
           nav > ol a {
-            font-family: ${fontNoto.style.fontFamily};
+            font-family: ${fontLato.style.fontFamily};
           }
         `}
       </style>

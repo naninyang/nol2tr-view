@@ -61,7 +61,7 @@
     display: flex
     flex-direction: column
     gap: rem(15)
-    background-color: var(--bg-primary)
+    border: 1px solid var(--bg-primary)
     overflow: hidden
     border-radius: rem(15)
 
@@ -72,8 +72,7 @@
       .og-container
         display: flex
         flex-direction: column
-        gap: rem(17)
-        background-color: var(--bg-primary)
+        gap: rem(12)
 
         > img
           border-radius: rem(7)
@@ -136,9 +135,7 @@
             .user-info
               display: flex
               flex-direction: column
-              gap: rem(7)
-              font-size: rem(16)
-              line-height: 1.25
+              gap: rem(4)
               color: var(--txt-subject)
               user-select: none
               cursor: default
@@ -155,13 +152,16 @@
                   text-decoration: underline
 
               strong
+                font-size: rem(16)
+                font-weight: 700
+                line-height: 1.375
                 color: var(--txt-summary)
 
               .user
                 display: flex
                 gap: rem(7)
-                line-height: 1
-                font-size: rem(12)
+                font-size: rem(14)
+                font-weight: 400
                 color: var(--txt-subject)
 
                 cite
