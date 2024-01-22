@@ -1,13 +1,11 @@
 import React, { useRef } from 'react';
 import styled from '@emotion/styled';
 import YouTube, { YouTubeProps } from 'react-youtube';
-import styles from '@/styles/watch.module.sass';
 import { rem } from '@/styles/designSystem';
 
 interface Props {
   videoId: string;
-  isPlaylist?: boolean;
-  titles?: string;
+  start?: number;
 }
 
 const Controllers = styled.div({
@@ -38,7 +36,7 @@ const Controllers = styled.div({
   },
 });
 
-const YouTubePlayer = ({ videoId, isPlaylist, titles }: Props) => {
+const YouTubePlayer = ({ videoId, start }: Props) => {
   const playerRef = useRef<any>(null);
 
   const opts: YouTubeProps['opts'] = {
@@ -48,51 +46,13 @@ const YouTubePlayer = ({ videoId, isPlaylist, titles }: Props) => {
       autoplay: 1,
       modestbranding: 1,
       rel: 0,
+      start: start,
     },
   };
-  const playList: YouTubeProps['opts'] = {
-    width: 560,
-    height: 315,
-    playerVars: {
-      autoplay: 1,
-      rel: 0,
-      playlist: videoId,
-      loop: 1,
-    },
-  };
-
-  const onReady = (event: any) => {
-    playerRef.current = event.target;
-  };
-
-  const handleChangeVideo = (videoId: string) => {
-    if (playerRef.current) {
-      playerRef.current.loadVideoById(videoId);
-    }
-  };
-
-  const videoIdsArray = videoId ? videoId.split('.') : [];
-  const titlesArray = titles ? titles.split('.') : [];
 
   return (
     <>
-      {isPlaylist ? (
-        <>
-          <YouTube videoId={videoId} opts={playList} onReady={onReady} />
-          <Controllers className={styles.controller}>
-            <strong>수동으로 영상 넘기기</strong>
-            {videoIdsArray.map((id, index) => (
-              <button key={id} onClick={() => handleChangeVideo(id)}>
-                <span>
-                  {index + 1}. {titlesArray[index]}
-                </span>
-              </button>
-            ))}
-          </Controllers>
-        </>
-      ) : (
-        <YouTube videoId={videoId} opts={opts} />
-      )}
+      <YouTube videoId={videoId} opts={opts} />
     </>
   );
 };

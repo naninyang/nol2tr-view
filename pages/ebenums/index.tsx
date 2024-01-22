@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Seo, { originTitle } from '@/components/Seo';
 import PageName from '@/components/PageName';
 import WatchesNews from './item';
-import styles from '@/styles/watches.module.sass';
+import styles from '@/styles/Ebenums.module.sass';
 
 export default function Ebenums() {
   const timestamp = Date.now();
@@ -13,7 +13,7 @@ export default function Ebenums() {
   }, []);
 
   return (
-    <main className={styles.watches}>
+    <main className={styles.ebenums}>
       <Seo
         pageTitles={`노클노플 - ${originTitle}`}
         pageTitle="노클노플"

@@ -45,6 +45,7 @@ export async function getInterviewData(start?: number, count?: number) {
     lyricist: data.attributes.lyricist,
     lyrics: data.attributes.lyrics,
     created: data.attributes.created,
+    start: data.attributes.start,
   }));
 
   return rowsData;
@@ -81,6 +82,7 @@ export async function getNewsicData(start?: number, count?: number) {
     lyricist: data.attributes.lyricist,
     lyrics: data.attributes.lyrics,
     created: data.attributes.created,
+    start: data.attributes.start,
   }));
 
   return rowsData;

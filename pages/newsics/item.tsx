@@ -6,7 +6,7 @@ import { useMediaQuery } from 'react-responsive';
 import axios, { AxiosError } from 'axios';
 import PullToRefresh from 'react-simple-pull-to-refresh';
 import { NewsicData } from 'types';
-import styles from '@/styles/News.module.sass';
+import styles from '@/styles/Newsics.module.sass';
 
 export function useDesktop() {
   const [isDesktop, setIsDesktop] = useState(false);
@@ -103,7 +103,7 @@ function ArticlesItem() {
     <>
       {isLoading && (
         <div className={styles.loading}>
-          <p>인터뷰 목록을 읽는 중입니다.</p>
+          <p>기사 목록을 읽는 중입니다.</p>
         </div>
       )}
       {waitingFor504 && (
@@ -135,7 +135,7 @@ function ArticlesItem() {
                     <img src={`https://cdn.dev1stud.io/nol2tr/${article.thumbnail}.webp`} alt="" />
                   )}
                   <h2>
-                    <Link key={article.idx} href={`/article-memorial/${article.idx}`} scroll={false} shallow={true}>
+                    <Link key={article.idx} href={`/newsic/${article.idx}`} scroll={false} shallow={true}>
                       {article.subject}
                     </Link>
                   </h2>
@@ -149,7 +149,7 @@ function ArticlesItem() {
           </PullToRefresh>
           {isReachingEnd !== undefined && (
             <div ref={setTarget} className={styles.ref}>
-              {isReachingEnd === false && <p>인터뷰 목록을 읽는 중입니다.</p>}
+              {isReachingEnd === false && <p>기사 목록을 읽는 중입니다.</p>}
             </div>
           )}
         </div>

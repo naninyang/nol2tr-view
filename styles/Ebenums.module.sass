@@ -1,6 +1,6 @@
 @import './designSystem'
 
-.watches
+.ebenums
   padding: 0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)
   min-height: calc(100dvh - rem(50))
   font-size: rem(16)
@@ -40,7 +40,7 @@
       color: $hex-accent
       text-align: center
 
-  .watch-content
+  .ebenum-content
     position: relative
     padding: rem(5)
     min-height: 100dvh
@@ -64,7 +64,6 @@
     background-color: var(--bg-primary)
     overflow: hidden
     border-radius: rem(15)
-    padding-bottom: rem(15)
 
     .opengraph
       position: relative
@@ -174,82 +173,8 @@
                     content: '•'
                     font-size: rem(12)
 
-          .summary
-            display: flex
-            flex-direction: column
-            gap: rem(7)
-            user-select: none
-            cursor: default
-
-            a
-              position: relative
-              transition: all .4s cubic-bezier(.4,0,.2,1)
-              cursor: cursor
-
-              &::before
-                content: '댓글달기'
-                opacity: 0
-                transition: all .4s cubic-bezier(.4,0,.2,1)
-                position: absolute
-                top: 0
-                left: 0
-                z-index: 1
-                background-color: var(--txt-subject)
-                display: flex
-                border-radius: rem(2)
-                height: 0
-                padding: 0 rem(7)
-                font-size: rem(12)
-                color: var(--bg-secondary)
-
-              &:hover, &:focus
-                strong
-                  color: $hex-accent
-
-                &::before
-                  top: rem(-20)
-                  opacity: 1
-                  height: rem(20)
-
-            strong
-              font-size: rem(16)
-              font-weight: 700
-              line-height: 1.5
-              color: var(--txt-summary)
-
-            .user
-              display: flex
-              gap: rem(7)
-
-              img
-                border-radius: 100%
-                width: rem(36)
-                height: rem(36)
-
-              .user-info
-                display: flex
-                flex-direction: column
-                gap: rem(2)
-                font-size: rem(12)
-                color: var(--txt-subject)
-
-          .description
-            font-size: rem(12)
-            color: var(--txt-subject)
-            +line-abbr(2, 36, 1.5)
-
-    > .description
-      margin: rem(15)
-
-      a
-        &:focus
-          color: var(--default-text)
-          text-decoration: underline
-
-      p
-        font-size: rem(14)
-        line-height: 1.6
-        color: var(--txt-blockquote)
-
-        +mq(minLarge)
-          font-size: rem(16)
+    .description
+      padding: rem(7) rem(15) rem(22)
+      font-size: rem(16)
+      line-height: 1.25
+      color: var(--txt-summary)

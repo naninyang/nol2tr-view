@@ -5,12 +5,10 @@ import { isDesktop } from 'react-device-detect';
 import { mixIn, rem } from '@/styles/designSystem';
 import { images } from './images';
 import YouTubePlayer from './YouTubePlayer';
-import styles from '@/styles/watch.module.sass';
 
 interface Props {
   videoId: string;
-  isPlaylist?: boolean;
-  titles?: string;
+  start?: number;
 }
 
 const Container = styled.div<{ isDesktop?: boolean }>(({ isDesktop }) => ({
@@ -77,7 +75,7 @@ const Container = styled.div<{ isDesktop?: boolean }>(({ isDesktop }) => ({
   },
 }));
 
-const YouTubeController = ({ videoId, isPlaylist, titles }: Props) => {
+const YouTubeController = ({ videoId, start }: Props) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlay = () => {
@@ -85,35 +83,24 @@ const YouTubeController = ({ videoId, isPlaylist, titles }: Props) => {
   };
 
   return (
-    <Container isDesktop={isDesktop} className={isPlaying && isPlaylist ? `${styles['youtube-playlist']}` : ''}>
+    <Container isDesktop={isDesktop}>
       {!isPlaying ? (
         <>
-          {isPlaylist ? (
-            <Image
-              src={`https://i.ytimg.com/vi_webp/${videoId.split('.')[0]}/hqdefault.webp`}
-              width={640}
-              height={480}
-              unoptimized
-              priority
-              alt=""
-            />
-          ) : (
-            <Image
-              src={`https://i.ytimg.com/vi_webp/${videoId}/hqdefault.webp`}
-              width={640}
-              height={480}
-              unoptimized
-              priority
-              alt=""
-            />
-          )}
+          <Image
+            src={`https://i.ytimg.com/vi_webp/${videoId}/hqdefault.webp`}
+            width={640}
+            height={480}
+            unoptimized
+            priority
+            alt=""
+          />
           <button type="button" onClick={handlePlay}>
             <i />
             <span>영상 재생하기</span>
           </button>
         </>
       ) : (
-        <YouTubePlayer videoId={videoId} isPlaylist={isPlaylist} titles={titles} />
+        <YouTubePlayer videoId={videoId} start={start} />
       )}
     </Container>
   );

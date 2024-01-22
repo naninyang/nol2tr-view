@@ -5,7 +5,7 @@ import useSWRInfinite from 'swr/infinite';
 import axios, { AxiosError } from 'axios';
 import PullToRefresh from 'react-simple-pull-to-refresh';
 import { InterviewData } from 'types';
-import styles from '@/styles/News.module.sass';
+import styles from '@/styles/Interviews.module.sass';
 
 function ArticlesItem() {
   const router = useRouter();
@@ -119,7 +119,7 @@ function ArticlesItem() {
                     <img src={`https://cdn.dev1stud.io/nol2tr/${article.thumbnail}.webp`} alt="" />
                   )}
                   <h2>
-                    <Link key={article.idx} href={`/article-memorial/${article.idx}`} scroll={false} shallow={true}>
+                    <Link key={article.idx} href={`/interview/${article.idx}`} scroll={false} shallow={true}>
                       {article.subject}
                     </Link>
                   </h2>

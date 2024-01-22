@@ -1,28 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import useSWRInfinite from 'swr/infinite';
-import { useMediaQuery } from 'react-responsive';
-import Modal from 'react-modal';
 import axios from 'axios';
 import PullToRefresh from 'react-simple-pull-to-refresh';
 import { Masonry } from 'masonic';
 import { EbenumData } from 'types';
-import { modalContainer } from '@/components/ModalStyling';
 import { FormatDate } from '@/components/FormatDate';
-import WatchDetail from '@/components/Watch';
-import styles from '@/styles/watches.module.sass';
-
-Modal.setAppElement('#__next');
-
-export function useDesktop() {
-  const [isDesktop, setIsDesktop] = useState(false);
-  const desktop = useMediaQuery({ query: '(min-width: 768px)' });
-  useEffect(() => {
-    setIsDesktop(desktop);
-  }, [desktop]);
-  return isDesktop;
-}
+import styles from '@/styles/Ebenums.module.sass';
 
 export const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
@@ -64,8 +48,6 @@ export default function EbenumsItem() {
     if (!target || isLoading) return;
   }, [target, isLoading]);
 
-  const selectedWatch = Array.isArray(ebenums) ? ebenums.find((watch: any) => watch.idx === itemId) : undefined;
-
   useEffect(() => {
     const preventScroll = (e: Event) => {
       e.preventDefault();
@@ -102,8 +84,6 @@ export default function EbenumsItem() {
     };
   }, []);
 
-  const isDesktop = useDesktop();
-
   const renderCard = ({ data }: { data: EbenumData }) => (
     <div className={styles.item}>
       <figure>
@@ -125,9 +105,7 @@ export default function EbenumsItem() {
                   <img src={data.ebenumMetaData?.pressAvatar} alt="" />
                 )}
                 <div className={styles['user-info']}>
-                  <Link key={data.idx} href={`/instead/${data.idx}`} scroll={false} shallow={true}>
-                    <strong>{data.ebenumMetaData?.ogTitle}</strong>{' '}
-                  </Link>
+                  <strong>{data.ebenumMetaData?.ogTitle}</strong>{' '}
                   <div className={styles.user}>
                     <cite>
                       {data.ebenumMetaData?.ownerName
@@ -149,6 +127,12 @@ export default function EbenumsItem() {
             </div>
           </div>
         </div>
+        <figcaption>
+          <p
+            className={styles.description}
+            dangerouslySetInnerHTML={{ __html: data.description.replace(/\n/g, '<br />') }}
+          />
+        </figcaption>
       </figure>
     </div>
   );
@@ -160,15 +144,7 @@ export default function EbenumsItem() {
 
   return (
     <>
-      <Modal
-        isOpen={!!itemId}
-        onRequestClose={() => router.push('/watches', undefined, { scroll: false })}
-        contentLabel="Watch Modal"
-        style={modalContainer}
-      >
-        <WatchDetail watchNews={selectedWatch} />
-      </Modal>
-      {isLoading && <div className={styles.loading}>뉴스를 불러오는 중입니다.</div>}
+      {isLoading && <div className={styles.loading}>이것저것 불러오는 중</div>}
       {error && (
         <div className={styles.error}>
           <p>데이터를 불러오는데 실패했습니다.</p>
@@ -176,7 +152,7 @@ export default function EbenumsItem() {
         </div>
       )}
       {!isLoading && !error && (
-        <div className={styles['watch-content']}>
+        <div className={styles['ebenum-content']}>
           <PullToRefresh onRefresh={handleRefresh}>
             <Masonry
               items={ebenums || []}
@@ -188,7 +164,7 @@ export default function EbenumsItem() {
           </PullToRefresh>
           {isReachingEnd !== undefined && (
             <div ref={setTarget} className={styles.ref}>
-              {isReachingEnd === false && <p>뉴스를 불러오는 중입니다.</p>}
+              {isReachingEnd === false && <p>이것저것 불러오는 중</p>}
             </div>
           )}
         </div>

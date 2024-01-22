@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import ArticlesItem from './item';
 import Seo, { originTitle } from '@/components/Seo';
 import PageName from '@/components/PageName';
-import styles from '@/styles/News.module.sass';
+import styles from '@/styles/Interviews.module.sass';
 
 export default function Interviews() {
   const timestamp = Date.now();

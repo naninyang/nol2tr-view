@@ -1,19 +1,5 @@
 @import './designSystem'
 
-@font-face
-  font-family: 'KingSejongInstitute'
-  font-style: normal
-  font-weight: 400
-  font-display: swap
-  src: url(/fonts/KingSejongInstitute-Regular.woff2) format('font-woff2')
-
-@font-face
-  font-family: 'KingSejongInstitute'
-  font-style: normal
-  font-weight: 700
-  font-display: swap
-  src: url(/fonts/KingSejongInstitute-Bold.woff2) format('font-woff2')
-
 *, ::before, ::after
   box-sizing: border-box
 
@@ -32,9 +18,12 @@ body
   transition: all .4s cubic-bezier(.4,0,.2,1)
 
 body, pre, input, button, textarea, select
-  font-family: KingSejongInstitute, serif
   font-size: 1rem
   font-weight: 400
+  font-feature-settings: normal
+  font-kerning: auto
+  font-optical-sizing: auto
+  font-stretch: 100%
   text-size-adjust: 100%
   text-rendering: optimizeLegibility
   -webkit-font-smoothing: antialiased
