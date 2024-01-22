@@ -72,8 +72,8 @@ export default function newsicDetail({ newsicData, idx }: { newsicData: NewsicPa
   return (
     <main className={styles.newsic}>
       <Seo
-        pageTitles={`${newsicData.attributes.subject} - ${originTitle}`}
-        pageTitle={`${newsicData.attributes.subject} / ${newsicData.attributes.music}_${newsicData.attributes.artist}`}
+        pageTitles={`${newsicData.attributes.subject} / 추천곡_ ${newsicData.attributes.music}_${newsicData.attributes.artist} - ${originTitle}`}
+        pageTitle={`${newsicData.attributes.subject} / 추천곡_ ${newsicData.attributes.music}_${newsicData.attributes.artist}`}
         pageDescription={newsicData.attributes.summary}
         pageImg={
           newsicData.attributes.platform === 'youtube'

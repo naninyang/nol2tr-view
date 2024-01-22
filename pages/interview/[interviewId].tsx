@@ -78,8 +78,8 @@ export default function interviewDetail({
   return (
     <main className={styles.interview}>
       <Seo
-        pageTitles={`${interviewData.attributes.subject} - ${originTitle}`}
-        pageTitle={`${interviewData.attributes.subject} / ${interviewData.attributes.music}_${interviewData.attributes.artist}`}
+        pageTitles={`${interviewData.attributes.subject} / 추천곡_ ${interviewData.attributes.music}_${interviewData.attributes.artist} - ${originTitle}`}
+        pageTitle={`${interviewData.attributes.subject} / 추천곡_ ${interviewData.attributes.music}_${interviewData.attributes.artist}`}
         pageDescription={interviewData.attributes.summary}
         pageImg={
           interviewData.attributes.platform === 'youtube'
