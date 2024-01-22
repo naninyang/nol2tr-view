@@ -131,6 +131,16 @@ export default function interviewDetail({
               )}
             </>
           )}
+          <dl>
+            <div>
+              <dt>인터뷰어</dt>
+              <dd>{interviewData.attributes.interviewer}</dd>
+            </div>
+            <div>
+              <dt>인터뷰이</dt>
+              <dd>{interviewData.attributes.interviewee}</dd>
+            </div>
+          </dl>
           <p dangerouslySetInnerHTML={{ __html: interviewData.attributes.description.replace(/\n/g, '<br />') }} />
         </div>
         <hr />
@@ -142,16 +152,24 @@ export default function interviewDetail({
           <div className={styles.info}>
             <dl>
               <div>
-                <dt>노래</dt>
-                <dd>{interviewData.attributes.artist}</dd>
+                <div>
+                  <dt>노래</dt>
+                  <dd>{interviewData.attributes.artist}</dd>
+                </div>
+                <div>
+                  <dt>수록앨범</dt>
+                  <dd>{interviewData.attributes.album}</dd>
+                </div>
               </div>
               <div>
-                <dt>작곡</dt>
-                <dd>{interviewData.attributes.composer}</dd>
-              </div>
-              <div>
-                <dt>작사</dt>
-                <dd>{interviewData.attributes.lyricist}</dd>
+                <div>
+                  <dt>작곡</dt>
+                  <dd>{interviewData.attributes.composer}</dd>
+                </div>
+                <div>
+                  <dt>작사</dt>
+                  <dd>{interviewData.attributes.lyricist}</dd>
+                </div>
               </div>
             </dl>
             <p dangerouslySetInnerHTML={{ __html: interviewData.attributes.lyrics.replace(/\n/g, '<br />') }} />

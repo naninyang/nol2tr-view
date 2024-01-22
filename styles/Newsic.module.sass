@@ -208,12 +208,17 @@
         gap: rem(17)
 
       dl
-        display: inline-flex
-        gap: rem(17)
+        display: flex
+        flex-direction: column
+        gap: rem(7)
 
-        div
+        > div
           display: inline-flex
-          gap: rem(7)
+          gap: rem(17)
+
+          > div
+            display: inline-flex
+            gap: rem(7)
 
           dt, dd
             font-size: rem(14)

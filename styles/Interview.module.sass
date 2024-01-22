@@ -172,6 +172,20 @@
       flex-direction: column
       gap: rem(17)
 
+      dl
+        display: inline-flex
+        gap: rem(17)
+
+        div
+          display: inline-flex
+          gap: rem(7)
+
+          dt, dd
+            font-size: rem(14)
+
+          dd
+            font-weight: 700
+
       a
         img
           width: 100%
@@ -211,9 +225,13 @@
         display: inline-flex
         gap: rem(17)
 
-        div
+        > div
           display: inline-flex
-          gap: rem(7)
+          gap: rem(17)
+
+          > div
+            display: inline-flex
+            gap: rem(7)
 
           dt, dd
             font-size: rem(14)

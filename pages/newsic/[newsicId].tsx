@@ -136,16 +136,24 @@ export default function newsicDetail({ newsicData, idx }: { newsicData: NewsicPa
           <div className={styles.info}>
             <dl>
               <div>
-                <dt>노래</dt>
-                <dd>{newsicData.attributes.artist}</dd>
+                <div>
+                  <dt>노래</dt>
+                  <dd>{newsicData.attributes.artist}</dd>
+                </div>
+                <div>
+                  <dt>수록앨범</dt>
+                  <dd>{newsicData.attributes.album}</dd>
+                </div>
               </div>
               <div>
-                <dt>작곡</dt>
-                <dd>{newsicData.attributes.composer}</dd>
-              </div>
-              <div>
-                <dt>작사</dt>
-                <dd>{newsicData.attributes.lyricist}</dd>
+                <div>
+                  <dt>작곡</dt>
+                  <dd>{newsicData.attributes.composer}</dd>
+                </div>
+                <div>
+                  <dt>작사</dt>
+                  <dd>{newsicData.attributes.lyricist}</dd>
+                </div>
               </div>
             </dl>
             <p dangerouslySetInnerHTML={{ __html: newsicData.attributes.lyrics.replace(/\n/g, '<br />') }} />
