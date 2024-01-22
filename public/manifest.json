@@ -1,7 +1,7 @@
 {
   "name": "놀이터뷰 nol2tr_view",
   "short_name": "놀이터뷰",
-  "description": "인터뷰와 뉴스에 맞는 곡을 추천해주는",
+  "description": "인터뷰와 뉴스에 맞는 곡을 추천해주는 놀이터뷰",
   "scope": "/",
   "start_url": "/",
   "display": "standalone",

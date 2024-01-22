@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>https://memorial.dev1stud.io/sitemap-pages.xml</loc>
+    <loc>https://nol2tr.dev1stud.io/sitemap-interview.xml</loc>
   </sitemap>
   <sitemap>
-    <loc>https://memorial.dev1stud.io/sitemap-article.xml</loc>
+    <loc>https://nol2tr.dev1stud.io/sitemap-newsic.xml</loc>
   </sitemap>
   <sitemap>
-    <loc>https://memorial.dev1stud.io/sitemap-watch.xml</loc>
+    <loc>https://nol2tr.dev1stud.io/sitemap-pages.xml</loc>
   </sitemap>
 </sitemapindex>

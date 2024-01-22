@@ -1,14 +1,14 @@
-const WatchAPI = 'https://nol2tr.dev1stud.io/api/sitemapWatch';
-// const WatchAPI = 'http://localhost:3003/api/sitemapWatch';
+const ArticleAPI = 'https://nol2tr.dev1stud.io/api/sitemapInterview';
+// const ArticleAPI = 'http://localhost:3003/api/sitemapInterview';
 
-function generateSiteMap(watchs) {
+function generateSiteMap(articles) {
   return `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-      ${watchs
+      ${articles
         .map(({ idx, created }) => {
           return `
             <url>
-              <loc>https://memorial.dev1stud.io/${idx}</loc>
+              <loc>https://nol2tr.dev1stud.io/${idx}</loc>
               <lastmod>${created}</lastmod>
             </url>
           `;
@@ -21,9 +21,9 @@ function generateSiteMap(watchs) {
 function SiteMap() {}
 
 export async function getServerSideProps({ res }) {
-  const watchRequest = await fetch(WatchAPI);
-  const watchs = await watchRequest.json();
-  const sitemap = generateSiteMap(watchs);
+  const articleRequest = await fetch(ArticleAPI);
+  const articles = await articleRequest.json();
+  const sitemap = generateSiteMap(articles);
 
   res.setHeader('Content-Type', 'text/xml');
   res.write(sitemap);

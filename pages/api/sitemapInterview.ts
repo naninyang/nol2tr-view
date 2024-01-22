@@ -12,9 +12,9 @@ const formatDate = (datetime: string) => {
   return `${year}${month}${day}${hours}${minutes}${seconds}`;
 };
 
-async function fetchInterviewData() {
+async function fetchNaverNewsData() {
   const response = await fetch(
-    `${process.env.STRAPI_URL}/api/youtube-memorials?pagination[page]=1&pagination[pageSize]=10000`,
+    `${process.env.STRAPI_URL}/api/interview-nol2trs?pagination[page]=1&pagination[pageSize]=10000`,
     {
       method: 'GET',
       headers: {
@@ -28,10 +28,10 @@ async function fetchInterviewData() {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const newsData = await fetchInterviewData();
+    const newsData = await fetchNaverNewsData();
 
     const newsDataProcessed = newsData.map((newsItem: any) => ({
-      idx: `watch-news/${formatDate(newsItem.attributes.createdAt)}${newsItem.id}`,
+      idx: `article-news/${formatDate(newsItem.attributes.createdAt)}${newsItem.id}`,
       created: newsItem.attributes.createdAt,
     }));
 
