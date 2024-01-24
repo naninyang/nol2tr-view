@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import styled from '@emotion/styled';
 import { NoticeParalinkData } from 'types';
 import Seo, { originTitle } from '@/components/Seo';

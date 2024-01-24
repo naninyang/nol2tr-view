@@ -3,7 +3,6 @@ import { isSafari } from 'react-device-detect';
 import Seo from '@/components/Seo';
 import styled from '@emotion/styled';
 import { images } from '@/components/images';
-import { rem } from '@/styles/designSystem';
 import styles from '@/styles/Pages.module.sass';
 import content from '@/styles/Content.module.sass';
 import main from '@/styles/Home.module.sass';
