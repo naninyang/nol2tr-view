@@ -83,7 +83,7 @@ export default function interviewDetail({
         pageDescription={interviewData.attributes.summary}
         pageImg={
           interviewData.attributes.platform === 'youtube'
-            ? `https://i.ytimg.com/vi/${interviewData.attributes.vid}/maxresdefault.webp`
+            ? `https://i.ytimg.com/vi_webp/${interviewData.attributes.vid}/maxresdefault.webp`
             : `https://cdn.dev1stud.io/nol2tr/${interviewData.attributes.thumbnail}.webp`
         }
         pageOgType={interviewData.attributes.platform === 'youtube' ? 'video.other' : 'article'}

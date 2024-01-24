@@ -77,7 +77,7 @@ export default function newsicDetail({ newsicData, idx }: { newsicData: NewsicPa
         pageDescription={newsicData.attributes.summary}
         pageImg={
           newsicData.attributes.platform === 'youtube'
-            ? `https://i.ytimg.com/vi/${newsicData.attributes.vid}/maxresdefault.webp`
+            ? `https://i.ytimg.com/vi_webp/${newsicData.attributes.vid}/maxresdefault.webp`
             : `https://cdn.dev1stud.io/nol2tr/${newsicData.attributes.thumbnail}.webp`
         }
         pageOgType={newsicData.attributes.platform === 'youtube' ? 'video.other' : 'article'}
