@@ -4,9 +4,9 @@ import Seo from '@/components/Seo';
 import styled from '@emotion/styled';
 import { images } from '@/components/images';
 import { rem } from '@/styles/designSystem';
-import styles from '@/styles/pages.module.sass';
-import content from '@/styles/content.module.sass';
-import main from '@/styles/main.module.sass';
+import styles from '@/styles/Pages.module.sass';
+import content from '@/styles/Content.module.sass';
+import main from '@/styles/Home.module.sass';
 
 interface Counts {
   youtube: number;
@@ -115,8 +115,8 @@ export default function Home() {
     <main className={`${content.content} ${styles.pages} ${styles.home} ${main.main}`}>
       <Seo
         pageTitle="놀이터뷰 nol2tr_view"
-        pageDescription="내가 기억해야 할 뉴스"
-        pageImg={`https://nol2tr.dev1stud.io/og-image.png?ts=${timestamp}`}
+        pageDescription="인터뷰와 뉴스에 맞는 곡을 추천해주는 놀이터뷰"
+        pageImg={`https://nol2tr.dev1stud.io/og-image.webp?ts=${timestamp}`}
       />
       <div className={`${styles['pages-content']} ${main['main-content']}`}>
         <h1>

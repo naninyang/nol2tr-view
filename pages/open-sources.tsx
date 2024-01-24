@@ -3,10 +3,10 @@ import fs from 'fs';
 import path from 'path';
 import styled from '@emotion/styled';
 import Seo, { originTitle } from '@/components/Seo';
-import AnchorLink from '@/components/Anchor';
+import Anchor from '@/components/Anchor';
 import { images } from '@/components/images';
-import content from '@/styles/content.module.sass';
-import styles from '@/styles/open.module.sass';
+import content from '@/styles/Content.module.sass';
+import styles from '@/styles/Open.module.sass';
 
 const BackButton = styled.i({
   display: 'block',
@@ -33,20 +33,20 @@ function OpenSources({ licenses }: { licenses: string[] }) {
       <Seo
         pageTitles={`오픈소스 - ${originTitle}`}
         pageTitle="오픈소스"
-        pageDescription="내가 기억해야 할 뉴스"
-        pageImg={`https://nol2tr.dev1stud.io/og-image.png?ts=${timestamp}`}
+        pageDescription="놀이터뷰에서 사용한 오픈소스"
+        pageImg={`https://nol2tr.dev1stud.io/og-image.webp?ts=${timestamp}`}
       />
       <div className="top-link">
         {currentPage ? (
-          <AnchorLink href={`/${currentPage}`}>
+          <Anchor href={`/${currentPage}`}>
             <BackButton />
             <span>뒤로가기</span>
-          </AnchorLink>
+          </Anchor>
         ) : (
-          <AnchorLink href="/">
+          <Anchor href="/">
             <BackButton />
             <span>뒤로가기</span>
-          </AnchorLink>
+          </Anchor>
         )}
       </div>
       <div className={styles['open_sources-content']}>
@@ -55,16 +55,16 @@ function OpenSources({ licenses }: { licenses: string[] }) {
         </h1>
         <dl>
           <div>
-            <dt>기획/UX 디자인</dt>
+            <dt>UX Designer</dt>
             <dd>클로이 Chloe</dd>
           </div>
           <div>
-            <dt>프론트엔드/백엔드 개발</dt>
+            <dt>Developer</dt>
             <dd>클로이 Chloe</dd>
           </div>
           <div>
-            <dt>큐레이팅</dt>
-            <dd>NEWS CURATORS</dd>
+            <dt>News Curator</dt>
+            <dd>클로이 Chloe</dd>
           </div>
         </dl>
         <div className={styles.list}>

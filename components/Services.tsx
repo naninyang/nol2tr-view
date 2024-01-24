@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import AnchorLink from './Anchor';
+import Anchor from './Anchor';
 import { hex, rem, mixIn } from '@/styles/designSystem';
 import { useRouter } from 'next/router';
 import { images } from './images';
@@ -113,30 +113,30 @@ export default function Services() {
     <Nav>
       <ol>
         <MenuItem currentRouter={router.pathname === '/' ? true : false}>
-          <AnchorLink href="/">
+          <Anchor href="/">
             <i data-icon="home" />
             <span>Playground</span>
-          </AnchorLink>
+          </Anchor>
         </MenuItem>
         <MenuItem
           currentRouter={router.pathname === '/interviews' || router.pathname.includes('/interview') ? true : false}
         >
-          <AnchorLink href="/interviews">
+          <Anchor href="/interviews">
             <i data-icon="interview" />
             <span>2nterview</span>
-          </AnchorLink>
+          </Anchor>
         </MenuItem>
         <MenuItem currentRouter={router.pathname === '/newsics' || router.pathname.includes('/newsic') ? true : false}>
-          <AnchorLink href="/newsics">
+          <Anchor href="/newsics">
             <i data-icon="newsic" />
             <span>Newsic</span>
-          </AnchorLink>
+          </Anchor>
         </MenuItem>
         <MenuItem currentRouter={router.pathname === '/ebenums' || router.pathname.includes('/ebenum') ? true : false}>
-          <AnchorLink href="/ebenums">
+          <Anchor href="/ebenums">
             <i data-icon="ebenum" />
             <span>Ebenum</span>
-          </AnchorLink>
+          </Anchor>
         </MenuItem>
       </ol>
     </Nav>

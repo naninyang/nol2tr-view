@@ -136,3 +136,21 @@ export interface EbenumPamalinkData {
     };
   };
 }
+
+export interface NoticeData {
+  id: string;
+  idx: string;
+  subject: string;
+  description: string;
+  created: string;
+}
+
+export interface NoticeParalinkData {
+  attributes: {
+    idx: string;
+    subject: string;
+    description: string;
+    created: string;
+    createdAt: string;
+  };
+}

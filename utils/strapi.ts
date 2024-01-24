@@ -1,4 +1,4 @@
-import { NewsicData, InterviewData, EbenumData } from 'types';
+import { NewsicData, InterviewData, EbenumData, NoticeData } from 'types';
 
 const formatDate = (datetime: string) => {
   const date = new Date(datetime);
@@ -119,6 +119,29 @@ export async function getEbenumData(start?: number, count?: number) {
   );
 
   return fullData;
+}
+
+export async function getNoticeData() {
+  const response = await fetch(
+    `${process.env.STRAPI_URL}/api/notice-nol2trs?sort[0]=id:desc&pagination[page]=1&pagination[pageSize]=100`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_BEARER_TOKEN}`,
+      },
+    },
+  );
+  const data = await response.json();
+  const filesData = data.data;
+  const rowsData: NoticeData[] = filesData.map((data: any) => ({
+    id: data.id,
+    idx: `${formatDate(data.attributes.createdAt)}${data.id}`,
+    subject: data.attributes.subject,
+    description: data.attributes.description,
+    created: data.attributes.created,
+  }));
+
+  return rowsData;
 }
 
 async function fetchPreviewMetadata(url: string) {

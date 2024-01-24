@@ -19,7 +19,7 @@ const Seo = ({ pageTitles, pageTitle, pageDescription, pageImg, pageImgWidth, pa
   const domain = 'https://nol2tr.dev1stud.io';
 
   const defaultTitle = `인터뷰와 뉴스에 맞는 곡을 추천해주는 - ${originTitle}`;
-  const defaultDescription = '인터뷰와 뉴스에 맞는 곡을 추천해주는';
+  const defaultDescription = '인터뷰와 뉴스에 맞는 곡을 추천해주는 놀이터뷰';
   const title = pageTitles || defaultTitle;
   const description = pageDescription || defaultDescription;
   const url = `${domain}${pagePath}`;

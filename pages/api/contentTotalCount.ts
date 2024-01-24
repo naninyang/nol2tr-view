@@ -2,40 +2,40 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
-    const youtubeNewsUrl = `${process.env.STRAPI_URL}/api/youtube-memorials`;
-    const youtubeNewsResponse = await fetch(youtubeNewsUrl, {
+    const ebenumUrl = `${process.env.STRAPI_URL}/api/ebenum-nol2trs`;
+    const ebenumResponse = await fetch(ebenumUrl, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_BEARER_TOKEN}`,
       },
     });
-    const youtubeNewsData = await youtubeNewsResponse.json();
+    const ebenumData = await ebenumResponse.json();
 
-    const youtubeCount = youtubeNewsData.meta.pagination.total;
+    const ebenumCount = ebenumData.meta.pagination.total;
 
-    const naverNewsUrl = `${process.env.STRAPI_URL}/api/naver-memorials`;
-    const naverNewsResponse = await fetch(naverNewsUrl, {
+    const interviewUrl = `${process.env.STRAPI_URL}/api/interview-nol2trs`;
+    const interviewResponse = await fetch(interviewUrl, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_BEARER_TOKEN}`,
       },
     });
-    const naverNewsData = await naverNewsResponse.json();
+    const interviewData = await interviewResponse.json();
 
-    const naverCount = naverNewsData.meta.pagination.total;
+    const interviewCount = interviewData.meta.pagination.total;
 
-    const editorialUrl = `${process.env.STRAPI_URL}/api/editorial-memorials`;
-    const editorialResponse = await fetch(editorialUrl, {
+    const newsicUrl = `${process.env.STRAPI_URL}/api/newsic-nol2trs`;
+    const newsicResponse = await fetch(newsicUrl, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_BEARER_TOKEN}`,
       },
     });
-    const editorialData = await editorialResponse.json();
+    const newsicData = await newsicResponse.json();
 
-    const editorialCount = editorialData.meta.pagination.total;
+    const newsicCount = newsicData.meta.pagination.total;
 
-    res.status(200).send({ youtube: youtubeCount, naver: naverCount, editorial: editorialCount });
+    res.status(200).send({ ebenum: ebenumCount, interview: interviewCount, newsic: newsicCount });
   } else {
     console.log('Unsupported method');
   }

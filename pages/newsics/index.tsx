@@ -18,7 +18,7 @@ export default function Newsics() {
         pageTitles={`뉴직 - ${originTitle}`}
         pageTitle="뉴직"
         pageDescription="News & Music"
-        pageImg={`https://nol2tr.dev1stud.io/og-image.png?ts=${timestamp}`}
+        pageImg={`https://nol2tr.dev1stud.io/og-image.webp?ts=${timestamp}`}
       />
       <PageName pageName="뉴직" />
       <div className={styles.list}>
