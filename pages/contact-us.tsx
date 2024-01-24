@@ -35,8 +35,6 @@ function ContactForm() {
 
     try {
       const response = await axios.post(`/api/contact`, formData);
-      console.log('response: ', response);
-
       if (response.status === 200) {
         alert('제출 완료되었어요. 감사합니다.');
         router.push('/');

@@ -3,7 +3,6 @@ import { getNoticeData } from '@/utils/strapi';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const id = req.query.id as string;
-  console.log('req.query: ', req.query);
 
   if (!id) {
     try {
