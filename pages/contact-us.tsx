@@ -3,14 +3,10 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import styled from '@emotion/styled';
 import Seo, { originTitle } from '@/components/Seo';
-import AnchorLink from '@/components/Anchor';
+import Anchor from '@/components/Anchor';
 import { images } from '@/components/images';
-import content from '@/styles/content.module.sass';
-import styles from '@/styles/contact.module.sass';
-
-type DataResponse = {
-  description: string;
-};
+import content from '@/styles/Content.module.sass';
+import styles from '@/styles/Contact.module.sass';
 
 const BackButton = styled.i({
   display: 'block',
@@ -25,11 +21,13 @@ const BackButton = styled.i({
 function ContactForm() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    title: '',
-    name: '',
-    email: '',
-    created: new Date().toISOString(),
-    description: '',
+    subject: '',
+    guestName: '',
+    guestEmail: '',
+    content: '',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    publishedAt: new Date().toISOString(),
   });
 
   const handleSubmit = async (e: any) => {
@@ -37,34 +35,18 @@ function ContactForm() {
 
     try {
       const response = await axios.post(`/api/contact`, formData);
+      console.log('response: ', response);
 
       if (response.status === 200) {
-        alert('성공적으로 제출되었습니다!');
+        alert('제출 완료되었어요. 감사합니다.');
         router.push('/');
       } else {
-        console.log('오류가 발생했습니다: ' + response.data.error);
+        console.log(response.data.error);
       }
     } catch (error) {
-      console.error('오류 발생:', error);
-      console.log('오류가 발생했습니다.');
+      console.error(error);
     }
   };
-
-  const [data, setData] = useState<DataResponse | null>(null);
-  const title = 'ContactUs';
-
-  useEffect(() => {
-    async function fetchDescriptionData() {
-      try {
-        const response = await fetch(`/api/pages?title=${title}`);
-        const descriptionResponse = await response.json();
-        setData(descriptionResponse);
-      } catch (error) {
-        console.error('Error fetching page info:', error);
-      }
-    }
-    fetchDescriptionData();
-  }, [title]);
 
   const [currentPage, setCurrentPage] = useState<string | null>(null);
 
@@ -80,73 +62,91 @@ function ContactForm() {
       <Seo
         pageTitles={`문의사항 - ${originTitle}`}
         pageTitle="문의사항"
-        pageDescription="내가 기억해야 할 뉴스"
-        pageImg={`https://nol2tr.dev1stud.io/og-image.png?ts=${timestamp}`}
+        pageDescription="무엇이든 물어보세요"
+        pageImg={`https://nol2tr.dev1stud.io/og-image.webp?ts=${timestamp}`}
       />
       <div className="top-link">
         {currentPage ? (
-          <AnchorLink href={`/${currentPage}`}>
+          <Anchor href={`/${currentPage}`}>
             <BackButton />
             <span>뒤로가기</span>
-          </AnchorLink>
+          </Anchor>
         ) : (
-          <AnchorLink href="/">
+          <Anchor href="/">
             <BackButton />
             <span>뒤로가기</span>
-          </AnchorLink>
+          </Anchor>
         )}
       </div>
       <div className={styles['contact_us-content']}>
         <h1>
           <span>문의사항 Contact Us.</span>
         </h1>
-        {data && <div dangerouslySetInnerHTML={{ __html: data.description }} />}
+        <div>
+          <p>오타, 탈자, 버그 등 발견시 수정 요청해 주세요</p>
+          <p>도움을 주시는 모든 분들께 감사의 말씀을 올립니다. 🥰</p>
+          <p>
+            <span>모든 항목은 필수 입력입니다.</span> 이름과 이메일은 답변 목적으로만 사용됩니다.
+          </p>
+        </div>
         <form onSubmit={handleSubmit}>
           <fieldset>
             <legend>문의 질의</legend>
             <input
               required
               type="hidden"
-              value={formData.created}
-              onChange={(e) => setFormData({ ...formData, created: e.target.value })}
+              value={formData.createdAt}
+              onChange={(e) => setFormData({ ...formData, createdAt: e.target.value })}
+            />
+            <input
+              required
+              type="hidden"
+              value={formData.updatedAt}
+              onChange={(e) => setFormData({ ...formData, updatedAt: e.target.value })}
+            />
+            <input
+              required
+              type="hidden"
+              value={formData.publishedAt}
+              onChange={(e) => setFormData({ ...formData, publishedAt: e.target.value })}
             />
             <div className={styles['field-group']}>
-              <label htmlFor="title">제목</label>
+              <label htmlFor="subject">제목</label>
               <input
                 required
                 type="text"
-                id="title"
-                value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                id="subject"
+                value={formData.subject}
+                onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
               />
             </div>
             <div className={styles['field-group']}>
-              <label htmlFor="name">이름</label>
+              <label htmlFor="guestName">이름</label>
               <input
                 required
                 type="text"
-                id="name"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                id="guestName"
+                value={formData.guestName}
+                onChange={(e) => setFormData({ ...formData, guestName: e.target.value })}
               />
             </div>
             <div className={styles['field-group']}>
-              <label htmlFor="email">이메일</label>
+              <label htmlFor="guestEmail">이메일</label>
               <input
                 required
                 type="email"
-                id="email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                id="guestEmail"
+                value={formData.guestEmail}
+                onChange={(e) => setFormData({ ...formData, guestEmail: e.target.value })}
               />
             </div>
             <div className={styles['field-group']}>
-              <label htmlFor="description">내용</label>
+              <label htmlFor="content">내용</label>
               <textarea
                 required
-                id="description"
-                value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                id="content"
+                value={formData.content}
+                onChange={(e) => setFormData({ ...formData, content: e.target.value })}
               />
             </div>
             <button type="submit">문의하기</button>
