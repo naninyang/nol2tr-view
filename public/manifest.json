@@ -1,13 +1,6 @@
 {
-  "name": "놀이터뷰 nol2tr_view",
-  "short_name": "놀이터뷰",
-  "description": "인터뷰와 뉴스에 맞는 곡을 추천해주는 놀이터뷰",
-  "scope": "/",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#141414",
-  "theme_color": "#141414",
-  "orientation": "portrait",
+  "name": "놀이터뷰",
+  "short_name": "놀이터뷰 nol2tr_view",
   "icons": [
     {
       "src": "/favicon/android-chrome-192x192.png",
@@ -19,5 +12,8 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],
+  "theme_color": "#eef5ff",
+  "background_color": "#eef5ff",
+  "display": "standalone"
 }
