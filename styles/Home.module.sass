@@ -87,14 +87,27 @@
       display: flex
       flex-direction: column
       align-items: center
-      gap: rem(27)
+      gap: rem(92)
+
+      +mq(minLarge)
+        gap: rem(27)
 
       section
         display: flex
-        gap: rem(17)
+        gap: rem(12)
+
+        +mq(maxMedium)
+          flex-direction: column
+
+        +mq(minLarge)
+          gap: rem(17)
 
         .preview, .content
-          width: rem(370)
+          width: 100%
+          max-width: rem(520)
+
+          +mq(minLarge)
+            width: rem(370)
 
         .preview
           display: flex
@@ -180,6 +193,9 @@
         &.newsic
           flex-direction: row-reverse
 
+          +mq(maxMedium)
+            flex-direction: column
+
           .preview
             gap: rem(15)
             overflow: hidden
@@ -258,8 +274,15 @@
               display: flex
               flex-direction: row-reverse
 
+              +mq(maxMedium)
+                flex-direction: column
+                justify-content: center
+
             .description
-              text-align: right
+              text-align: center
+
+              +mq(minLarge)
+                text-align: right
 
         &.ebenum .preview
           gap: rem(15)
@@ -385,16 +408,28 @@
           display: flex
           flex-direction: column
           gap: rem(12)
-          padding-top: rem(27)
+
+          +mq(minLarge)
+            padding-top: rem(27)
 
           .headline
             display: flex
             align-items: center
-            gap: rem(5)
+
+            +mq(maxMedium)
+              flex-direction: column
+              justify-content: center
+
+            +mq(minLarge)
+              gap: rem(7)
 
             svg
-              width: rem(20)
-              height: rem(20)
+              width: rem(52)
+              height: rem(52)
+
+              +mq(minLarge)
+                width: rem(20)
+                height: rem(20)
 
             h2
               font-size: rem(20)
@@ -408,6 +443,9 @@
             p
               font-size: rem(16)
               line-height: 1.25
+
+              +mq(maxMedium)
+                text-align: center
 
     > dl
       border-top: 1px solid var(--border)
