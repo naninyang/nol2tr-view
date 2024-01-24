@@ -158,20 +158,20 @@
                 color: var(--txt-summary)
 
               .user
-                display: flex
-                gap: rem(7)
                 font-size: rem(14)
                 font-weight: 400
                 color: var(--txt-subject)
 
-                cite
-                  display: flex
-                  gap: rem(7)
+                cite, time
+                  display: inline-flex
                   align-items: center
+                  font-size: rem(14)
 
+                cite
                   &::after
                     content: '•'
-                    font-size: rem(12)
+                    padding: 0 rem(4)
+                    font-size: rem(14)
 
     .description
       padding: rem(7) rem(15) rem(22)
