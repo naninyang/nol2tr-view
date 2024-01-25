@@ -84,3 +84,8 @@ MS Windows, Apple macOS, Android, iOS, iPadOS 등 대부분의 모던 디바이�
 ## 주의사항 및 저작권
 
 이 서비스는 Vercel, AWS 그리고 Google과 관련이 없습니다.
+
+오픈소스 외 개발코드는 클로이 Chloe에게 있습니다.
+
+- UX 디자인: 클로이 Chloe
+- 프론트엔드/백엔드 개발: 클로이 Chloe
