@@ -504,7 +504,7 @@ export default function Header() {
                 </Anchor>
               </li>
               <li>
-                <Anchor href="https://github.com/naninyang/no2tr">
+                <Anchor href="https://github.com/naninyang/nol2tr-view">
                   <Github />
                   <span>깃헙 저장소</span>
                 </Anchor>
