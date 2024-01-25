@@ -134,11 +134,11 @@ function ArticlesItem() {
                   ) : (
                     <img src={`https://cdn.dev1stud.io/nol2tr/${article.thumbnail}.webp`} alt="" />
                   )}
-                  <h2>
+                  <h3>
                     <Link key={article.idx} href={`/newsic/${article.idx}`} scroll={false} shallow={true}>
                       {article.subject}
                     </Link>
-                  </h2>
+                  </h3>
                   <p className={styles.summary}>{article.summary}</p>
                   <p className={styles.recommended}>
                     {article.artist}. {article.music}.
