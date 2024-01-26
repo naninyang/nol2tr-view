@@ -97,8 +97,6 @@ function ArticlesItem() {
     window.location.reload();
   };
 
-  const isDesktop = useDesktop();
-
   return (
     <>
       {isLoading && (
@@ -140,9 +138,7 @@ function ArticlesItem() {
                     </Link>
                   </h3>
                   <p className={styles.summary}>{article.summary}</p>
-                  <p className={styles.recommended}>
-                    {article.artist}. {article.music}.
-                  </p>
+                  <p className={styles.recommended}>{article.music}</p>
                 </article>
               ))}
             </div>
