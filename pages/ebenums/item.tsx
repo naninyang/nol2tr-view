@@ -94,6 +94,7 @@ export default function EbenumsItem() {
             ) : (
               <div className={styles.thumbnails}>
                 <img src={data.ebenumMetaData?.ogImage} alt="" className={styles['thumbnail-origin']} />
+                <div className={styles.background} />
                 <img src={data.ebenumMetaData?.ogImage} alt="" className={styles['thumbnail-background']} />
               </div>
             )}
