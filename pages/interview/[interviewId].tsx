@@ -78,8 +78,8 @@ export default function interviewDetail({
   return (
     <main className={styles.interview}>
       <Seo
-        pageTitles={`${interviewData.attributes.subject} / 추천곡_ ${interviewData.attributes.music}_${interviewData.attributes.artist} - ${originTitle}`}
-        pageTitle={`${interviewData.attributes.subject} / 추천곡_ ${interviewData.attributes.music}_${interviewData.attributes.artist}`}
+        pageTitles={`${interviewData.attributes.subject} / 추천곡_ ${interviewData.attributes.music} - ${originTitle}`}
+        pageTitle={`${interviewData.attributes.subject} / 추천곡_ ${interviewData.attributes.music}`}
         pageDescription={interviewData.attributes.summary}
         pageImg={
           interviewData.attributes.platform === 'youtube'
@@ -104,10 +104,7 @@ export default function interviewDetail({
       <article className={styles['article-news']}>
         <header>
           <h1>
-            {interviewData.attributes.subject}{' '}
-            <span>
-              추천곡_ {interviewData.attributes.artist}. {interviewData.attributes.music}.
-            </span>
+            {interviewData.attributes.subject} <span>추천곡_ {interviewData.attributes.music}</span>
           </h1>
           <time>{interviewData.attributes.created}</time>
         </header>
