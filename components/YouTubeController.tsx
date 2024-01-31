@@ -9,6 +9,7 @@ import YouTubePlayer from './YouTubePlayer';
 interface Props {
   videoId: string;
   start?: number;
+  vi: string;
 }
 
 const Container = styled.div<{ isDesktop?: boolean }>(({ isDesktop }) => ({
@@ -75,7 +76,7 @@ const Container = styled.div<{ isDesktop?: boolean }>(({ isDesktop }) => ({
   },
 }));
 
-const YouTubeController = ({ videoId, start }: Props) => {
+const YouTubeController = ({ videoId, start, vi }: Props) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlay = () => {
@@ -87,7 +88,7 @@ const YouTubeController = ({ videoId, start }: Props) => {
       {!isPlaying ? (
         <>
           <Image
-            src={`https://i.ytimg.com/vi_webp/${videoId}/maxresdefault.webp`}
+            src={vi === 'missing' ? '/missing.webp' : `https://i.ytimg.com/vi_webp/${videoId}/${vi}.webp`}
             width={640}
             height={480}
             unoptimized

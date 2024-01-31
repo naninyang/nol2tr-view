@@ -110,7 +110,7 @@ export default function interviewDetail({
         </header>
         <div className={styles.news}>
           {interviewData.attributes.platform === 'youtube' ? (
-            <YouTubeController videoId={interviewData.attributes.vid} />
+            <YouTubeController videoId={interviewData.attributes.vid} vi={interviewData.attributes.vi} />
           ) : (
             <div className={styles.thumbnail}>
               {interviewData.attributes.platform === 'naverNews' ? (
@@ -147,7 +147,11 @@ export default function interviewDetail({
           <h2>
             <strong>추천곡</strong> {interviewData.attributes.music}
           </h2>
-          <YouTubeController videoId={interviewData.attributes.videoid} start={interviewData.attributes.start} />
+          <YouTubeController
+            videoId={interviewData.attributes.videoid}
+            start={interviewData.attributes.start}
+            vi={interviewData.attributes.vvi}
+          />
           <div className={styles.info}>
             <dl>
               <div>

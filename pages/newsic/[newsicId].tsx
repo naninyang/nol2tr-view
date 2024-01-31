@@ -104,7 +104,7 @@ export default function newsicDetail({ newsicData }: { newsicData: NewsicParalin
         </header>
         <div className={styles.news}>
           {newsicData.attributes.platform === 'youtube' ? (
-            <YouTubeController videoId={newsicData.attributes.vid} />
+            <YouTubeController videoId={newsicData.attributes.vid} vi={newsicData.attributes.vi} />
           ) : (
             <div className={styles.thumbnail}>
               {newsicData.attributes.platform === 'naverNews' ? (
@@ -131,7 +131,11 @@ export default function newsicDetail({ newsicData }: { newsicData: NewsicParalin
           <h2>
             <strong>추천곡</strong> {newsicData.attributes.music}
           </h2>
-          <YouTubeController videoId={newsicData.attributes.videoid} start={newsicData.attributes.start} />
+          <YouTubeController
+            videoId={newsicData.attributes.videoid}
+            start={newsicData.attributes.start}
+            vi={newsicData.attributes.vvi}
+          />
           <div className={styles.info}>
             <dl>
               <div>

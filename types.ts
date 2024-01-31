@@ -28,6 +28,7 @@ export interface InterviewParalinkData {
     idx: string;
     subject: string;
     platform: string;
+    vi: string;
     vid: string;
     oid: string;
     aid: string;
@@ -39,13 +40,14 @@ export interface InterviewParalinkData {
     interviewee: string;
     music: string;
     videoid: string;
+    vvi: string;
+    start: number;
     artist: string;
     album: string;
     composer: string;
     lyricist: string;
     lyrics: string;
     created: string;
-    start: number;
   };
 }
 
@@ -77,6 +79,7 @@ export interface NewsicParalinkData {
     idx: string;
     subject: string;
     platform: string;
+    vi: string;
     vid: string;
     oid: string;
     aid: string;
@@ -86,13 +89,14 @@ export interface NewsicParalinkData {
     description: string;
     music: string;
     videoid: string;
+    vvi: string;
+    start: number;
     artist: string;
     album: string;
     composer: string;
     lyricist: string;
     lyrics: string;
     created: string;
-    start: number;
   };
 }
 
