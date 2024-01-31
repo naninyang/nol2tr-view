@@ -63,7 +63,7 @@ function OpenSources({ licenses }: { licenses: string[] }) {
             <dd>클로이 Chloe</dd>
           </div>
           <div>
-            <dt>News Curator</dt>
+            <dt>News & Music Curator</dt>
             <dd>클로이 Chloe</dd>
           </div>
         </dl>
