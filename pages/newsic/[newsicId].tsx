@@ -112,14 +112,14 @@ export default function newsicDetail({ newsicData, idx }: { newsicData: NewsicPa
                   href={`https://n.news.naver.com/article/${newsicData.attributes.oid}/${newsicData.attributes.aid}`}
                 >
                   <span>기사 전문보기</span>
-                  <img src={`https://cdn.dev1stud.io/nol2tr/${newsicData.attributes.thumbnail}.webp`} alt="" />
+                  <img src={`https://cdn.dev1stud.io/nol2tr/${newsicData.attributes.opengraph}.webp`} alt="" />
                 </Anchor>
               ) : (
                 <Anchor
                   href={`https://entertain.naver.com/read?oid=${newsicData.attributes.oid}&aid=${newsicData.attributes.aid}`}
                 >
                   <span>기사 전문보기</span>
-                  <img src={`https://cdn.dev1stud.io/nol2tr/${newsicData.attributes.thumbnail}.webp`} alt="" />
+                  <img src={`https://cdn.dev1stud.io/nol2tr/${newsicData.attributes.opengraph}.webp`} alt="" />
                 </Anchor>
               )}
             </>

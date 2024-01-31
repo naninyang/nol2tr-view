@@ -30,6 +30,7 @@ export interface InterviewParalinkData {
     vid: string;
     oid: string;
     aid: string;
+    opengraph: string;
     thumbnail: string;
     summary: string;
     description: string;
@@ -77,6 +78,7 @@ export interface NewsicParalinkData {
     vid: string;
     oid: string;
     aid: string;
+    opengraph: string;
     thumbnail: string;
     summary: string;
     description: string;
