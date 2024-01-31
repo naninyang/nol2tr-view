@@ -188,7 +188,28 @@
             font-weight: 700
 
       a
+        position: relative
+        background-color: var(--bg-primary-opacity)
+
+        &:hover, &:focus
+          img
+            opacity: .7
+
+        span
+          display: inline-flex
+          position: absolute
+          z-index: 2
+          top: rem(15)
+          left: rem(15)
+          background-color: $hex-black
+          border-radius: rem(3)
+          padding: rem(7) rem(12)
+          font-size: rem(14)
+          font-weight: 700
+          color: $hex-accent
+
         img
+          transition: all .4s cubic-bezier(.4,0,.2,1)
           width: 100%
           height: auto
 

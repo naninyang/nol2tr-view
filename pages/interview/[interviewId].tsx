@@ -117,12 +117,14 @@ export default function interviewDetail({
                 <Anchor
                   href={`https://n.news.naver.com/article/${interviewData.attributes.oid}/${interviewData.attributes.aid}`}
                 >
+                  <span>기사 전문보기</span>
                   <img src={`https://cdn.dev1stud.io/nol2tr/${interviewData.attributes.thumbnail}.webp`} alt="" />
                 </Anchor>
               ) : (
                 <Anchor
                   href={`https://entertain.naver.com/read?oid=${interviewData.attributes.oid}&aid=${interviewData.attributes.aid}`}
                 >
+                  <span>기사 전문보기</span>
                   <img src={`https://cdn.dev1stud.io/nol2tr/${interviewData.attributes.thumbnail}.webp`} alt="" />
                 </Anchor>
               )}
