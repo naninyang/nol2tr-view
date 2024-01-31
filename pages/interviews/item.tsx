@@ -116,7 +116,7 @@ function ArticlesItem() {
                   {article.platform === 'youtube' ? (
                     <img src={`https://i.ytimg.com/vi_webp/${article.vid}/hqdefault.webp`} alt="" />
                   ) : (
-                    <img src={`https://cdn.dev1stud.io/nol2tr/${article.thumbnail}.webp`} alt="" />
+                    <img src={`https://cdn.dev1stud.io/nol2tr/${article.opengraph}.webp`} alt="" />
                   )}
                   <h3>
                     <Link key={article.idx} href={`/interview/${article.idx}`} scroll={false} shallow={true}>

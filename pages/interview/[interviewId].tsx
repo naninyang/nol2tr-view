@@ -84,7 +84,7 @@ export default function interviewDetail({
         pageImg={
           interviewData.attributes.platform === 'youtube'
             ? `https://i.ytimg.com/vi_webp/${interviewData.attributes.vid}/maxresdefault.webp`
-            : `https://cdn.dev1stud.io/nol2tr/${interviewData.attributes.thumbnail}.webp`
+            : `https://cdn.dev1stud.io/nol2tr/${interviewData.attributes.opengraph}.webp`
         }
         pageOgType={interviewData.attributes.platform === 'youtube' ? 'video.other' : 'article'}
       />
@@ -118,14 +118,14 @@ export default function interviewDetail({
                   href={`https://n.news.naver.com/article/${interviewData.attributes.oid}/${interviewData.attributes.aid}`}
                 >
                   <span>기사 전문보기</span>
-                  <img src={`https://cdn.dev1stud.io/nol2tr/${interviewData.attributes.opengraph}.webp`} alt="" />
+                  <img src={`https://cdn.dev1stud.io/nol2tr/${interviewData.attributes.thumbnail}.webp`} alt="" />
                 </Anchor>
               ) : (
                 <Anchor
                   href={`https://entertain.naver.com/read?oid=${interviewData.attributes.oid}&aid=${interviewData.attributes.aid}`}
                 >
                   <span>기사 전문보기</span>
-                  <img src={`https://cdn.dev1stud.io/nol2tr/${interviewData.attributes.opengraph}.webp`} alt="" />
+                  <img src={`https://cdn.dev1stud.io/nol2tr/${interviewData.attributes.thumbnail}.webp`} alt="" />
                 </Anchor>
               )}
             </>

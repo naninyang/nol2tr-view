@@ -30,7 +30,7 @@ const Comment = styled.p({
   },
 });
 
-export default function newsicDetail({ newsicData, idx }: { newsicData: NewsicParalinkData | null; idx: string }) {
+export default function newsicDetail({ newsicData }: { newsicData: NewsicParalinkData | null }) {
   const router = useRouter();
   let savedScrollPosition;
 
@@ -78,7 +78,7 @@ export default function newsicDetail({ newsicData, idx }: { newsicData: NewsicPa
         pageImg={
           newsicData.attributes.platform === 'youtube'
             ? `https://i.ytimg.com/vi_webp/${newsicData.attributes.vid}/maxresdefault.webp`
-            : `https://cdn.dev1stud.io/nol2tr/${newsicData.attributes.thumbnail}.webp`
+            : `https://cdn.dev1stud.io/nol2tr/${newsicData.attributes.opengraph}.webp`
         }
         pageOgType={newsicData.attributes.platform === 'youtube' ? 'video.other' : 'article'}
       />
@@ -112,14 +112,14 @@ export default function newsicDetail({ newsicData, idx }: { newsicData: NewsicPa
                   href={`https://n.news.naver.com/article/${newsicData.attributes.oid}/${newsicData.attributes.aid}`}
                 >
                   <span>기사 전문보기</span>
-                  <img src={`https://cdn.dev1stud.io/nol2tr/${newsicData.attributes.opengraph}.webp`} alt="" />
+                  <img src={`https://cdn.dev1stud.io/nol2tr/${newsicData.attributes.thumbnail}.webp`} alt="" />
                 </Anchor>
               ) : (
                 <Anchor
                   href={`https://entertain.naver.com/read?oid=${newsicData.attributes.oid}&aid=${newsicData.attributes.aid}`}
                 >
                   <span>기사 전문보기</span>
-                  <img src={`https://cdn.dev1stud.io/nol2tr/${newsicData.attributes.opengraph}.webp`} alt="" />
+                  <img src={`https://cdn.dev1stud.io/nol2tr/${newsicData.attributes.thumbnail}.webp`} alt="" />
                 </Anchor>
               )}
             </>

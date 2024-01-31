@@ -6,6 +6,7 @@ export interface InterviewData {
   vid: string;
   oid: string;
   aid: string;
+  opengraph: string;
   thumbnail: string;
   summary: string;
   description: string;
@@ -56,6 +57,7 @@ export interface NewsicData {
   vid: string;
   oid: string;
   aid: string;
+  opengraph: string;
   thumbnail: string;
   summary: string;
   description: string;
