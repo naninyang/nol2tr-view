@@ -112,7 +112,7 @@ export default function interviewDetail({
           {interviewData.attributes.platform === 'youtube' ? (
             <YouTubeController videoId={interviewData.attributes.vid} />
           ) : (
-            <>
+            <div className={styles.thumbnail}>
               {interviewData.attributes.platform === 'naverNews' ? (
                 <Anchor
                   href={`https://n.news.naver.com/article/${interviewData.attributes.oid}/${interviewData.attributes.aid}`}
@@ -128,7 +128,7 @@ export default function interviewDetail({
                   <img src={`https://cdn.dev1stud.io/nol2tr/${interviewData.attributes.thumbnail}.webp`} alt="" />
                 </Anchor>
               )}
-            </>
+            </div>
           )}
           <dl>
             <div>

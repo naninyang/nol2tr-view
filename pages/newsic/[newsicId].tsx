@@ -106,7 +106,7 @@ export default function newsicDetail({ newsicData }: { newsicData: NewsicParalin
           {newsicData.attributes.platform === 'youtube' ? (
             <YouTubeController videoId={newsicData.attributes.vid} />
           ) : (
-            <>
+            <div className={styles.thumbnail}>
               {newsicData.attributes.platform === 'naverNews' ? (
                 <Anchor
                   href={`https://n.news.naver.com/article/${newsicData.attributes.oid}/${newsicData.attributes.aid}`}
@@ -122,7 +122,7 @@ export default function newsicDetail({ newsicData }: { newsicData: NewsicParalin
                   <img src={`https://cdn.dev1stud.io/nol2tr/${newsicData.attributes.thumbnail}.webp`} alt="" />
                 </Anchor>
               )}
-            </>
+            </div>
           )}
           <p dangerouslySetInnerHTML={{ __html: newsicData.attributes.description.replace(/\n/g, '<br />') }} />
         </div>
