@@ -148,6 +148,7 @@ export interface EbenumPamalinkData {
 export interface NoticeData {
   id: string;
   idx: string;
+  platform: string;
   subject: string;
   description: string;
   created: string;
@@ -156,6 +157,7 @@ export interface NoticeData {
 export interface NoticeParalinkData {
   attributes: {
     idx: string;
+    platform: string;
     subject: string;
     description: string;
     created: string;

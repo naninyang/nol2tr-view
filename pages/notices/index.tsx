@@ -75,16 +75,18 @@ const Notices: NextPage<NoticeProps> = ({ notices }) => {
         <div className={notice.notices}>
           <hr />
           <ul>
-            {noticesData.map((notice) => (
-              <li key={notice.idx}>
-                <Anchor key={notice.idx} href={`/notices/${notice.idx}`} scroll={false} shallow={true}>
-                  <strong>
-                    <span>{notice.subject}</span>
-                  </strong>
-                  <time>{notice.created}</time>
-                </Anchor>
-              </li>
-            ))}
+            {noticesData
+              .filter((notice) => notice.platform === 'nol2tr')
+              .map((notice) => (
+                <li key={notice.idx}>
+                  <Anchor key={notice.idx} href={`/notices/${notice.idx}`} scroll={false} shallow={true}>
+                    <strong>
+                      <span>{notice.subject}</span>
+                    </strong>
+                    <time>{notice.created}</time>
+                  </Anchor>
+                </li>
+              ))}
           </ul>
         </div>
       </div>

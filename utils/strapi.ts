@@ -138,6 +138,7 @@ export async function getNoticeData() {
   const rowsData: NoticeData[] = filesData.map((data: any) => ({
     id: data.id,
     idx: `${formatDate(data.attributes.createdAt)}${data.id}`,
+    platform: data.attributes.platform,
     subject: data.attributes.subject,
     description: data.attributes.description,
     created: data.attributes.created,
