@@ -31,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const newsData = await fetchInterviewData();
 
     const newsDataProcessed = newsData.map((newsItem: any) => ({
-      idx: `watch-news/${formatDate(newsItem.attributes.createdAt)}${newsItem.id}`,
+      idx: `newsic/${formatDate(newsItem.attributes.createdAt)}${newsItem.id}`,
       created: newsItem.attributes.createdAt,
     }));
 

@@ -31,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const newsData = await fetchNaverNewsData();
 
     const newsDataProcessed = newsData.map((newsItem: any) => ({
-      idx: `article-news/${formatDate(newsItem.attributes.createdAt)}${newsItem.id}`,
+      idx: `interview/${formatDate(newsItem.attributes.createdAt)}${newsItem.id}`,
       created: newsItem.attributes.createdAt,
     }));
 
