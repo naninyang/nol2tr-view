@@ -310,7 +310,7 @@ export default function Home() {
             </div>
             <div>
               <dt>추천 곡</dt>
-              <dd>{formatNumber(count.musics)} 건</dd>
+              <dd>{formatNumber(count.musics)} 곡</dd>
             </div>
           </dl>
         )}
