@@ -10,7 +10,7 @@ import main from '@/styles/Home.module.sass';
 interface Counts {
   interview: number;
   newsic: number;
-  ebenum: number;
+  musics: number;
 }
 
 const Apple = styled.article({
@@ -309,8 +309,8 @@ export default function Home() {
               <dd>{formatNumber(count.newsic)} 건</dd>
             </div>
             <div>
-              <dt>노클노플</dt>
-              <dd>{formatNumber(count.ebenum)} 건</dd>
+              <dt>추천 곡</dt>
+              <dd>{formatNumber(count.musics)} 건</dd>
             </div>
           </dl>
         )}
