@@ -87,5 +87,6 @@ MS Windows, Apple macOS, Android, iOS, iPadOS 등 대부분의 모던 디바이�
 
 오픈소스 외 개발코드는 클로이 Chloe에게 저작권이 있습니다.
 
-- UX 디자인: 클로이 Chloe
+- 기획/UX 디자인: 클로이 Chloe
 - 프론트엔드/백엔드 개발: 클로이 Chloe
+- 뉴스/곡 큐레이팅(선정): 클로이 Chloe
