@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
-import { InterviewParalinkData } from 'types';
+import { InterviewParalinkData, MusicParalinkData } from 'types';
 import Seo, { originTitle } from '@/components/Seo';
 import YouTubeController from '@/components/YouTubeController';
 import Anchor from '@/components/Anchor';
@@ -32,10 +32,10 @@ const Comment = styled.p({
 
 export default function interviewDetail({
   interviewData,
-  idx,
+  musicData,
 }: {
   interviewData: InterviewParalinkData | null;
-  idx: string;
+  musicData: any;
 }) {
   const router = useRouter();
   let savedScrollPosition;
@@ -78,8 +78,8 @@ export default function interviewDetail({
   return (
     <main className={styles.interview}>
       <Seo
-        pageTitles={`${interviewData.attributes.subject} / 추천곡_ ${interviewData.attributes.music} - ${originTitle}`}
-        pageTitle={`${interviewData.attributes.subject} / 추천곡_ ${interviewData.attributes.music}`}
+        pageTitles={`${interviewData.attributes.subject} / 추천곡_ ${musicData.attributes.music} - ${originTitle}`}
+        pageTitle={`${interviewData.attributes.subject} / 추천곡_ ${musicData.attributes.music}`}
         pageDescription={interviewData.attributes.summary}
         pageImg={
           interviewData.attributes.platform === 'youtube'
@@ -104,7 +104,7 @@ export default function interviewDetail({
       <article className={styles['article-news']}>
         <header>
           <h1>
-            {interviewData.attributes.subject} <span>추천곡_ {interviewData.attributes.music}</span>
+            {interviewData.attributes.subject} <span>추천곡_ {musicData.attributes.music}</span>
           </h1>
           <time>{interviewData.attributes.created}</time>
         </header>
@@ -145,37 +145,37 @@ export default function interviewDetail({
         <hr />
         <div className={styles.music}>
           <h2>
-            <strong>추천곡</strong> {interviewData.attributes.music}
+            <strong>추천곡</strong> {musicData.attributes.music}
           </h2>
           <YouTubeController
-            videoId={interviewData.attributes.videoid}
-            start={interviewData.attributes.start}
-            vi={interviewData.attributes.vvi}
+            videoId={musicData.attributes.videoid}
+            start={musicData.attributes.start}
+            vi={musicData.attributes.vvi}
           />
           <div className={styles.info}>
             <dl>
               <div>
                 <div>
                   <dt>노래</dt>
-                  <dd>{interviewData.attributes.artist}</dd>
+                  <dd>{musicData.attributes.artist}</dd>
                 </div>
                 <div>
                   <dt>수록앨범</dt>
-                  <dd>{interviewData.attributes.album}</dd>
+                  <dd>{musicData.attributes.album}</dd>
                 </div>
               </div>
               <div>
                 <div>
                   <dt>작곡</dt>
-                  <dd>{interviewData.attributes.composer}</dd>
+                  <dd>{musicData.attributes.composer}</dd>
                 </div>
                 <div>
                   <dt>작사</dt>
-                  <dd>{interviewData.attributes.lyricist}</dd>
+                  <dd>{musicData.attributes.lyricist}</dd>
                 </div>
               </div>
             </dl>
-            <p dangerouslySetInnerHTML={{ __html: interviewData.attributes.lyrics.replace(/\n/g, '<br />') }} />
+            <p dangerouslySetInnerHTML={{ __html: musicData.attributes.lyrics.replace(/\n/g, '<br />') }} />
           </div>
         </div>
       </article>
@@ -186,11 +186,17 @@ export default function interviewDetail({
 export const getStaticProps: GetStaticProps = async (context) => {
   const interviewId = context.params?.interviewId;
   let interviewData = null;
+  let musicData = null;
 
   if (interviewId && typeof interviewId === 'string') {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/interview?id=${interviewId.substring(14)}`);
-    const data = (await response.json()) as { data: InterviewParalinkData[] };
+    const data = (await response.json()) as { data: InterviewParalinkData };
     interviewData = data.data;
+    const musicResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/musics?musicId=${interviewData.attributes.music}`,
+    );
+    const musicResponseData = (await musicResponse.json()) as { data: MusicParalinkData };
+    musicData = musicResponseData.data;
   }
 
   if (!interviewData) {
@@ -205,6 +211,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       interviewData,
       idx: interviewId,
+      musicData,
     },
     revalidate: 1,
   };

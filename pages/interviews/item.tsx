@@ -134,7 +134,7 @@ function ArticlesItem() {
                       <dd>{article.interviewee}</dd>
                     </div>
                   </dl>
-                  <p className={styles.recommended}>{article.music}</p>
+                  <p className={styles.recommended}>{article.musicData.music}</p>
                 </article>
               ))}
             </div>

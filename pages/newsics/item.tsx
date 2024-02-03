@@ -138,7 +138,7 @@ function ArticlesItem() {
                     </Link>
                   </h3>
                   <p className={styles.summary}>{article.summary}</p>
-                  <p className={styles.recommended}>{article.music}</p>
+                  <p className={styles.recommended}>{article.musicData.music}</p>
                 </article>
               ))}
             </div>

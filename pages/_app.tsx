@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { AppProps } from 'next/app';
-import { Lato, Noto_Sans_KR } from 'next/font/google';
+import { Lato, Noto_Sans_JP, Noto_Sans_KR } from 'next/font/google';
 import localFont from 'next/font/local';
 import Script from 'next/script';
 import Header from '@/components/Header';
@@ -9,9 +9,14 @@ import Services from '@/components/Services';
 import { GA_TRACKING_ID, pageview } from '@/lib/gtag';
 import 'styles/globals.sass';
 
-const fontNoto = Noto_Sans_KR({
+const fontKR = Noto_Sans_KR({
   weight: ['400', '700'],
   subsets: ['cyrillic'],
+});
+
+const fontJP = Noto_Sans_JP({
+  weight: ['400', '700'],
+  subsets: ['vietnamese'],
 });
 
 const fontLato = Lato({
@@ -109,10 +114,10 @@ export default function App({ Component, pageProps }: AppProps) {
           button,
           textarea,
           select {
-            font-family: ${IBMPlexSansKR.style.fontFamily}, monospace;
+            font-family: ${IBMPlexSansKR.style.fontFamily}, ${fontJP.style.fontFamily}, monospace;
           }
           .noto {
-            font-family: ${fontNoto.style.fontFamily};
+            font-family: ${fontKR.style.fontFamily};
           }
           time,
           nav > ol a {

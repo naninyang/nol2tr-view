@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
-import { NewsicParalinkData } from 'types';
+import { MusicParalinkData, NewsicParalinkData } from 'types';
 import Seo, { originTitle } from '@/components/Seo';
 import YouTubeController from '@/components/YouTubeController';
 import Anchor from '@/components/Anchor';
@@ -30,7 +30,13 @@ const Comment = styled.p({
   },
 });
 
-export default function newsicDetail({ newsicData }: { newsicData: NewsicParalinkData | null }) {
+export default function newsicDetail({
+  newsicData,
+  musicData,
+}: {
+  newsicData: NewsicParalinkData | null;
+  musicData: any;
+}) {
   const router = useRouter();
   let savedScrollPosition;
 
@@ -72,8 +78,8 @@ export default function newsicDetail({ newsicData }: { newsicData: NewsicParalin
   return (
     <main className={styles.newsic}>
       <Seo
-        pageTitles={`${newsicData.attributes.subject} / 추천곡_ ${newsicData.attributes.music} - ${originTitle}`}
-        pageTitle={`${newsicData.attributes.subject} / 추천곡_ ${newsicData.attributes.music}`}
+        pageTitles={`${newsicData.attributes.subject} / 추천곡_ ${musicData.attributes.music} - ${originTitle}`}
+        pageTitle={`${newsicData.attributes.subject} / 추천곡_ ${musicData.attributes.music}`}
         pageDescription={newsicData.attributes.summary}
         pageImg={
           newsicData.attributes.platform === 'youtube'
@@ -98,7 +104,7 @@ export default function newsicDetail({ newsicData }: { newsicData: NewsicParalin
       <article className={styles['article-news']}>
         <header>
           <h1>
-            {newsicData.attributes.subject} <span>추천곡_ {newsicData.attributes.music}</span>
+            {newsicData.attributes.subject} <span>추천곡_ {musicData.attributes.music}</span>
           </h1>
           <time>{newsicData.attributes.created}</time>
         </header>
@@ -129,37 +135,37 @@ export default function newsicDetail({ newsicData }: { newsicData: NewsicParalin
         <hr />
         <div className={styles.music}>
           <h2>
-            <strong>추천곡</strong> {newsicData.attributes.music}
+            <strong>추천곡</strong> {musicData.attributes.music}
           </h2>
           <YouTubeController
-            videoId={newsicData.attributes.videoid}
-            start={newsicData.attributes.start}
-            vi={newsicData.attributes.vvi}
+            videoId={musicData.attributes.videoid}
+            start={musicData.attributes.start}
+            vi={musicData.attributes.vvi}
           />
           <div className={styles.info}>
             <dl>
               <div>
                 <div>
                   <dt>노래</dt>
-                  <dd>{newsicData.attributes.artist}</dd>
+                  <dd>{musicData.attributes.artist}</dd>
                 </div>
                 <div>
                   <dt>수록앨범</dt>
-                  <dd>{newsicData.attributes.album}</dd>
+                  <dd>{musicData.attributes.album}</dd>
                 </div>
               </div>
               <div>
                 <div>
                   <dt>작곡</dt>
-                  <dd>{newsicData.attributes.composer}</dd>
+                  <dd>{musicData.attributes.composer}</dd>
                 </div>
                 <div>
                   <dt>작사</dt>
-                  <dd>{newsicData.attributes.lyricist}</dd>
+                  <dd>{musicData.attributes.lyricist}</dd>
                 </div>
               </div>
             </dl>
-            <p dangerouslySetInnerHTML={{ __html: newsicData.attributes.lyrics.replace(/\n/g, '<br />') }} />
+            <p dangerouslySetInnerHTML={{ __html: musicData.attributes.lyrics.replace(/\n/g, '<br />') }} />
           </div>
         </div>
       </article>
@@ -170,11 +176,17 @@ export default function newsicDetail({ newsicData }: { newsicData: NewsicParalin
 export const getStaticProps: GetStaticProps = async (context) => {
   const newsicId = context.params?.newsicId;
   let newsicData = null;
+  let musicData = null;
 
   if (newsicId && typeof newsicId === 'string') {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/newsic?id=${newsicId.substring(14)}`);
-    const data = (await response.json()) as { data: NewsicParalinkData[] };
+    const data = (await response.json()) as { data: NewsicParalinkData };
     newsicData = data.data;
+    const musicResponse = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/musics?musicId=${newsicData.attributes.music}`,
+    );
+    const musicResponseData = (await musicResponse.json()) as { data: MusicParalinkData };
+    musicData = musicResponseData.data;
   }
 
   if (!newsicData) {
@@ -189,6 +201,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       newsicData,
       idx: newsicId,
+      musicData,
     },
     revalidate: 1,
   };

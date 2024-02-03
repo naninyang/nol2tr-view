@@ -1,0 +1,121 @@
+@import './designSystem'
+
+.musics
+  margin: 0 auto
+  max-width: rem(720)
+  width: 100%
+
+  ul
+    li
+      border-top: 1px solid var(--border)
+
+      &:first-of-type
+        border-top: 0
+
+      > button
+        display: flex
+        justify-content: space-between
+        align-items: center
+        background: none
+        padding: rem(7) 0
+        width: 100%
+
+        span
+          position: relative
+          display: flex
+          align-items: center
+
+          &::before
+            content: ''
+            display: block
+            position: absolute
+            top: 0
+            left: 0
+            width: 0
+            height: 100%
+            border-radius: rem(7)
+            background-color: var(--default-bg)
+            transition: all .4s cubic-bezier(.4,0,.2,1)
+
+          strong, em
+            display: inline-flex
+            justify-content: flex-start
+            position: relative
+            padding: rem(7) rem(17)
+            color: var(--txt-subject)
+            text-align: left
+            transition: all .4s cubic-bezier(.4,0,.2,1)
+
+          strong
+            padding-right: rem(7)
+            font-size: rem(16)
+
+          em
+            padding-left: rem(7)
+            font-size: rem(14)
+
+      dl
+        display: flex
+        flex-direction: column
+        gap: rem(7)
+        padding: rem(17) 0
+
+        > div
+          display: inline-flex
+          gap: rem(17)
+
+          > div
+            display: inline-flex
+            gap: rem(7)
+
+          dt, dd
+            font-size: rem(14)
+
+          dt
+            color: var(--txt-summary)
+
+          dd
+            font-weight: 700
+            color: var(--txt-subject)
+
+      p
+        font-size: rem(14)
+        color: var(--txt-subject)
+        text-align: left !important
+
+        & + button
+          justify-content: center
+          background-color: $hex-accent
+          margin: rem(17) 0
+          border-radius: rem(3)
+          width: 100%
+          font-size: rem(14)
+          font-weight: 700
+          color: $hex-white
+
+.music
+  article
+    margin: 0 auto
+    padding: 0 rem(15)
+    max-width: rem(720)
+    width: 100%
+
+    header
+      padding: rem(17) 0
+
+      h2
+        font-size: rem(24)
+        line-height: 1.16666667
+        color: var(--txt-subject)
+
+      time
+        font-size: rem(14)
+        color: var(--txt-blockquote)
+
+    .description
+      padding: rem(27) 0
+
+      p
+        font-size: rem(16)
+        line-height: 1.25
+        color: var(--txt-summary)

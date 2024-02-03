@@ -458,6 +458,11 @@ export default function Header() {
             </Close>
             <ol>
               <li>
+                <Anchor href="/musics" onClick={closeMenu}>
+                  선곡표
+                </Anchor>
+              </li>
+              <li>
                 <Anchor href="/notices" onClick={closeMenu}>
                   안내사항
                 </Anchor>

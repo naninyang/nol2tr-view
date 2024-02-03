@@ -12,15 +12,8 @@ export interface InterviewData {
   description: string;
   interviewer: string;
   interviewee: string;
-  music: string;
-  videoid: string;
-  artist: string;
-  album: string;
-  composer: string;
-  lyricist: string;
-  lyrics: string;
+  musicData: any;
   created: string;
-  start: number;
 }
 
 export interface InterviewParalinkData {
@@ -39,16 +32,9 @@ export interface InterviewParalinkData {
     interviewer: string;
     interviewee: string;
     music: string;
-    videoid: string;
-    vvi: string;
-    start: number;
-    artist: string;
-    album: string;
-    composer: string;
-    lyricist: string;
-    lyrics: string;
     created: string;
   };
+  musicData: any;
 }
 
 export interface NewsicData {
@@ -63,15 +49,8 @@ export interface NewsicData {
   thumbnail: string;
   summary: string;
   description: string;
-  music: string;
-  videoid: string;
-  artist: string;
-  album: string;
-  composer: string;
-  lyricist: string;
-  lyrics: string;
+  musicData: any;
   created: string;
-  start: number;
 }
 
 export interface NewsicParalinkData {
@@ -98,6 +77,7 @@ export interface NewsicParalinkData {
     lyrics: string;
     created: string;
   };
+  musicData: any;
 }
 
 export interface EbenumData {
@@ -162,5 +142,31 @@ export interface NoticeParalinkData {
     description: string;
     created: string;
     createdAt: string;
+  };
+}
+
+export interface MusicData {
+  id: string;
+  music: string;
+  videoid: string;
+  start: number;
+  artist: string;
+  album: string;
+  composer: string;
+  lyricist: string;
+  lyrics: string;
+  vvi: string;
+}
+
+export interface MusicParalinkData {
+  attributes: {
+    music: string;
+    videoid: string;
+    start: number;
+    artist: string;
+    album: string;
+    composer: string;
+    lyricist: string;
+    lyrics: string;
   };
 }
