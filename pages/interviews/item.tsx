@@ -114,7 +114,7 @@ function ArticlesItem() {
               {articles.map((article: InterviewData) => (
                 <article key={article.idx}>
                   {article.platform === 'youtube' ? (
-                    <img src={`https://i.ytimg.com/vi_webp/${article.vid}/hqdefault.webp`} alt="" />
+                    <img src={`https://i.ytimg.com/vi_webp/${article.vid}/maxresdefault.webp`} alt="" />
                   ) : (
                     <img src={`https://cdn.dev1stud.io/nol2tr/${article.opengraph}.webp`} alt="" />
                   )}
