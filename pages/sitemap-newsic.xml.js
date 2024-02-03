@@ -1,5 +1,5 @@
-const WatchAPI = 'https://nol2tr.dev1stud.io/api/sitemapNewsic';
-// const WatchAPI = 'http://localhost:3003/api/sitemapNewsic';
+const NewicAPI = 'https://nol2tr.dev1stud.io/api/sitemapNewsic';
+// const NewicAPI = 'http://localhost:3003/api/sitemapNewsic';
 
 function generateSiteMap(watchs) {
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -21,9 +21,9 @@ function generateSiteMap(watchs) {
 function SiteMap() {}
 
 export async function getServerSideProps({ res }) {
-  const watchRequest = await fetch(WatchAPI);
-  const watchs = await watchRequest.json();
-  const sitemap = generateSiteMap(watchs);
+  const newsicRequest = await fetch(NewicAPI);
+  const newsics = await newsicRequest.json();
+  const sitemap = generateSiteMap(newsics);
 
   res.setHeader('Content-Type', 'text/xml');
   res.write(sitemap);

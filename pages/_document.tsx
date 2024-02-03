@@ -8,7 +8,7 @@ interface DocumentProps extends DocumentInitialProps {
   ids: string[];
 }
 
-const ShortsDocument: React.FC<DocumentProps> & {
+const Nol2trDocument: React.FC<DocumentProps> & {
   getInitialProps: (ctx: DocumentContext) => Promise<DocumentProps>;
 } = ({ css, ids, ...props }) => {
   return (
@@ -140,10 +140,10 @@ const ShortsDocument: React.FC<DocumentProps> & {
           media="screen and (device-width: 744px) and (device-height: 1133px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
           href="/splash/8.3__iPad_Mini_portrait.png"
         />
-        <meta name="application-name" content="놀이터뷰" />
+        <meta name="application-name" content="놀이터뷰 nol2tr_view" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="Black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="놀이터뷰" />
+        <meta name="apple-mobile-web-app-title" content="놀이터뷰 nol2tr_view" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
@@ -166,7 +166,7 @@ const ShortsDocument: React.FC<DocumentProps> & {
   );
 };
 
-ShortsDocument.getInitialProps = async (ctx) => {
+Nol2trDocument.getInitialProps = async (ctx) => {
   const { renderPage } = ctx;
   const page = await renderPage((App) => {
     return function (props) {
@@ -180,4 +180,4 @@ ShortsDocument.getInitialProps = async (ctx) => {
   return { ...initialProps, ...page, css, ids };
 };
 
-export default ShortsDocument;
+export default Nol2trDocument;

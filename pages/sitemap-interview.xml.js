@@ -1,5 +1,5 @@
-const ArticleAPI = 'https://nol2tr.dev1stud.io/api/sitemapInterview';
-// const ArticleAPI = 'http://localhost:3003/api/sitemapInterview';
+const InterviewAPI = 'https://nol2tr.dev1stud.io/api/sitemapInterview';
+// const InterviewAPI = 'http://localhost:3003/api/sitemapInterview';
 
 function generateSiteMap(articles) {
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -21,9 +21,9 @@ function generateSiteMap(articles) {
 function SiteMap() {}
 
 export async function getServerSideProps({ res }) {
-  const articleRequest = await fetch(ArticleAPI);
-  const articles = await articleRequest.json();
-  const sitemap = generateSiteMap(articles);
+  const interviewRequest = await fetch(InterviewAPI);
+  const interviews = await interviewRequest.json();
+  const sitemap = generateSiteMap(interviews);
 
   res.setHeader('Content-Type', 'text/xml');
   res.write(sitemap);

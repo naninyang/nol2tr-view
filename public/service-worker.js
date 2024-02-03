@@ -1,4 +1,4 @@
-const CACHE_NAME = 'memorial-data';
+const CACHE_NAME = 'nol2tr-data';
 
 self.addEventListener('fetch', (event) => {
   if (
