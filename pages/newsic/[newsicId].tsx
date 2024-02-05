@@ -145,10 +145,17 @@ export default function newsicDetail({
           <div className={styles.info}>
             <dl>
               <div>
-                <div>
-                  <dt>노래</dt>
-                  <dd>{musicData.attributes.artist}</dd>
-                </div>
+                {musicData.attributes.instrument ? (
+                  <div>
+                    <dt>아티스트</dt>
+                    <dd>{musicData.attributes.composer}</dd>
+                  </div>
+                ) : (
+                  <div>
+                    <dt>노래</dt>
+                    <dd>{musicData.attributes.artist}</dd>
+                  </div>
+                )}
                 <div>
                   <dt>수록앨범</dt>
                   <dd>{musicData.attributes.album}</dd>
