@@ -99,13 +99,17 @@ const Musics: NextPage<NoticeProps> = ({ musics }) => {
                           <dt>작곡</dt>
                           <dd>{music.composer}</dd>
                         </div>
-                        <div>
-                          <dt>작사</dt>
-                          <dd>{music.lyricist}</dd>
-                        </div>
+                        {music.lyricist !== null && (
+                          <div>
+                            <dt>작사</dt>
+                            <dd>{music.lyricist}</dd>
+                          </div>
+                        )}
                       </div>
                     </dl>
-                    <p dangerouslySetInnerHTML={{ __html: music.lyrics.replace(/\n/g, '<br />') }} />
+                    {music.lyrics !== null && (
+                      <p dangerouslySetInnerHTML={{ __html: music.lyrics.replace(/\n/g, '<br />') }} />
+                    )}
                     <button type="button" onClick={() => handleButtonClick(music.id)}>
                       곡 정보 닫기
                     </button>
