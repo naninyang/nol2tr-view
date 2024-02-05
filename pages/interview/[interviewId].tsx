@@ -171,18 +171,27 @@ export default function interviewDetail({
                   <dd>{musicData.attributes.album}</dd>
                 </div>
               </div>
-              <div>
+              {musicData.attributes.composer === musicData.attributes.lyricist ? (
                 <div>
-                  <dt>작곡</dt>
-                  <dd>{musicData.attributes.composer}</dd>
-                </div>
-                {musicData.attributes.lyricist !== null && (
                   <div>
-                    <dt>작사</dt>
-                    <dd>{musicData.attributes.lyricist}</dd>
+                    <dt>작곡/작사</dt>
+                    <dd>{musicData.attributes.composer}</dd>
                   </div>
-                )}
-              </div>
+                </div>
+              ) : (
+                <div>
+                  <div>
+                    <dt>작곡</dt>
+                    <dd>{musicData.attributes.composer}</dd>
+                  </div>
+                  {musicData.attributes.lyricist !== null && (
+                    <div>
+                      <dt>작사</dt>
+                      <dd>{musicData.attributes.lyricist}</dd>
+                    </div>
+                  )}
+                </div>
+              )}
             </dl>
             {musicData.attributes.lyrics !== null && (
               <p dangerouslySetInnerHTML={{ __html: musicData.attributes.lyrics.replace(/\n/g, '<br />') }} />
