@@ -94,18 +94,27 @@ const Musics: NextPage<NoticeProps> = ({ musics }) => {
                           <dd>{music.album}</dd>
                         </div>
                       </div>
-                      <div>
+                      {music.composer === music.lyricist ? (
                         <div>
-                          <dt>작곡</dt>
-                          <dd>{music.composer}</dd>
-                        </div>
-                        {music.lyricist !== null && (
                           <div>
-                            <dt>작사</dt>
-                            <dd>{music.lyricist}</dd>
+                            <dt>작곡/작사</dt>
+                            <dd>{music.composer}</dd>
                           </div>
-                        )}
-                      </div>
+                        </div>
+                      ) : (
+                        <div>
+                          <div>
+                            <dt>작곡</dt>
+                            <dd>{music.composer}</dd>
+                          </div>
+                          {music.lyricist !== null && (
+                            <div>
+                              <dt>작사</dt>
+                              <dd>{music.lyricist}</dd>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </dl>
                     {music.lyrics !== null && (
                       <p dangerouslySetInnerHTML={{ __html: music.lyrics.replace(/\n/g, '<br />') }} />
