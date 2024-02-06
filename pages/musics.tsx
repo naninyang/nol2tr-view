@@ -41,6 +41,7 @@ const Musics: NextPage<NoticeProps> = ({ musics }) => {
 
   const handleButtonClick = (id: string) => {
     setSelectedMusicId(selectedMusicId === id ? null : id);
+    document.querySelector(`#music${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   const timestamp = Date.now();
@@ -85,7 +86,7 @@ const Musics: NextPage<NoticeProps> = ({ musics }) => {
                   </span>
                 </button>
                 {selectedMusicId === music.id && (
-                  <>
+                  <div id={`music${music.id}`}>
                     <YouTubeController videoId={music.videoid} start={music.start} vi={music.vvi} />
                     <dl>
                       <div>
@@ -122,7 +123,7 @@ const Musics: NextPage<NoticeProps> = ({ musics }) => {
                     <button type="button" onClick={() => handleButtonClick(music.id)}>
                       곡 정보 닫기
                     </button>
-                  </>
+                  </div>
                 )}
               </li>
             ))}
