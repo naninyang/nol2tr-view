@@ -19,11 +19,10 @@
         background: none
         padding: rem(7) 0
         width: 100%
+        text-align: left
 
         span
           position: relative
-          display: flex
-          align-items: center
 
           &::before
             content: ''
@@ -38,7 +37,6 @@
             transition: all .4s cubic-bezier(.4,0,.2,1)
 
           strong, em
-            display: inline-flex
             justify-content: flex-start
             position: relative
             padding: rem(7) rem(17)
@@ -50,11 +48,12 @@
             word-break: normal
 
           strong
-            padding-right: rem(7)
+            padding-right: 0
             font-size: rem(16)
 
           em
-            padding-left: rem(7)
+            display: inline-block
+            padding-left: rem(14)
             font-size: rem(14)
 
       dl
