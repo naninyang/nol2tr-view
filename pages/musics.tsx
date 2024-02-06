@@ -69,7 +69,7 @@ const Musics: NextPage<NoticeProps> = ({ musics }) => {
       </div>
       <div className={styles['pages-content']}>
         <h1>
-          <span>선곡표 music.table</span>
+          <span>선곡표 music_table</span>
         </h1>
         <div>
           <p>🎶 놀이터뷰에서 선곡한 곡 목록입니다 🎵</p>

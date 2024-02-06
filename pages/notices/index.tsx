@@ -61,7 +61,7 @@ const Notices: NextPage<NoticeProps> = ({ notices }) => {
       </div>
       <div className={styles['pages-content']}>
         <h1>
-          <span>안내사항 Notice.</span>
+          <span>안내사항 nol2tr_log</span>
         </h1>
         <div>
           <p>

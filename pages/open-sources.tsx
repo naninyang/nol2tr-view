@@ -51,7 +51,7 @@ function OpenSources({ licenses }: { licenses: string[] }) {
       </div>
       <div className={styles['open_sources-content']}>
         <h1>
-          <span>오픈소스 Open Sources.</span>
+          <span>오픈소스 open_sources</span>
         </h1>
         <dl>
           <div>

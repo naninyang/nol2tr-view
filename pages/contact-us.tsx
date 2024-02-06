@@ -78,7 +78,7 @@ function ContactForm() {
       </div>
       <div className={styles['contact_us-content']}>
         <h1>
-          <span>문의사항 Contact Us.</span>
+          <span>문의사항 contact_us</span>
         </h1>
         <div>
           <p>오타, 탈자, 버그 등 발견시 수정 요청해 주세요</p>
