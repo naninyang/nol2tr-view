@@ -9,7 +9,9 @@
 
     +mq(minLarge)
       gap: rem(100)
+      margin: 0 auto
       padding-bottom: rem(100)
+      max-width: rem(920)
 
     h1
       display: flex
@@ -104,17 +106,17 @@
 
         .preview, .content
           width: 100%
-          max-width: rem(520)
-
-          +mq(minLarge)
-            width: rem(370)
 
         .preview
           display: flex
           flex-direction: column
           border-radius: rem(7)
+          max-width: rem(520)
           user-select: none
           cursor: default
+
+          +mq(minLarge)
+            width: rem(370)
 
         &.interview .preview
           gap: rem(15)
@@ -408,6 +410,7 @@
           display: flex
           flex-direction: column
           gap: rem(12)
+          +col
 
           +mq(minLarge)
             padding-top: rem(27)
