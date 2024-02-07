@@ -158,7 +158,11 @@ export default function interviewDetail({
                 {musicData.attributes.instrument ? (
                   <div>
                     <dt>아티스트</dt>
-                    <dd>{musicData.attributes.composer}</dd>
+                    {musicData.attributes.artist !== null ? (
+                      <dd>{musicData.attributes.artist}</dd>
+                    ) : (
+                      <dd>{musicData.attributes.composer}</dd>
+                    )}
                   </div>
                 ) : (
                   <div>

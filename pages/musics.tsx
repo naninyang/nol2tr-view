@@ -82,7 +82,8 @@ const Musics: NextPage<NoticeProps> = ({ musics }) => {
               <li key={music.id}>
                 <button type="button" onClick={() => handleButtonClick(music.id)}>
                   <span>
-                    <strong>{music.music}</strong> <em>{music.instrument ? music.composer : music.artist}</em>
+                    <strong>{music.music}</strong>{' '}
+                    <em>{music.instrument ? (music.artist !== null ? music.artist : music.composer) : music.artist}</em>
                   </span>
                 </button>
                 {selectedMusicId === music.id && (
