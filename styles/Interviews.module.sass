@@ -94,12 +94,16 @@
 
     dl
       display: inline-flex
-      gap: rem(17)
+      gap: rem(2)
       padding: 0 rem(25)
       padding-right: rem(25)
       padding-left: rem(25)
 
+      +mq(maxExtraSmall)
+        flex-direction: column
+
       +mq(minSmall)
+        gap: rem(17)
         padding: 0 rem(20)
 
       div

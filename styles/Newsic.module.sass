@@ -242,7 +242,13 @@
 
         > div
           display: inline-flex
-          gap: rem(17)
+          gap: rem(7)
+
+          +mq(maxExtraSmall)
+            flex-direction: column
+
+          +mq(minSmall)
+            gap: rem(17)
 
           > div
             display: inline-flex
@@ -253,17 +259,12 @@
 
           dt
             color: var(--txt-summary)
+            white-space: nowrap
 
           dd
             font-weight: 700
             color: var(--txt-subject)
-            white-space: break-spaces
-            word-wrap: break-word
-            word-break: normal
 
       p
         font-size: rem(14)
         color: var(--txt-subject)
-        white-space: break-spaces
-        word-wrap: break-word
-        word-break: normal

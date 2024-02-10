@@ -151,6 +151,7 @@ export interface MusicData {
   videoid: string;
   start: number;
   artist: string;
+  cover: string;
   instrument: boolean;
   album: string;
   composer: string;
@@ -165,6 +166,7 @@ export interface MusicParalinkData {
     videoid: string;
     start: number;
     artist: string;
+    cover: string;
     instrument: boolean;
     album: string;
     composer: string;

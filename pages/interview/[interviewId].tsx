@@ -164,6 +164,17 @@ export default function interviewDetail({
                       <dd>{musicData.attributes.composer}</dd>
                     )}
                   </div>
+                ) : musicData.attributes.cover !== null ? (
+                  <>
+                    <div>
+                      <dt>커버</dt>
+                      <dd>{musicData.attributes.cover}</dd>
+                    </div>
+                    <div>
+                      <dt>원곡</dt>
+                      <dd>{musicData.attributes.artist}</dd>
+                    </div>
+                  </>
                 ) : (
                   <div>
                     <dt>노래</dt>

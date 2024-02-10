@@ -83,7 +83,15 @@ const Musics: NextPage<NoticeProps> = ({ musics }) => {
                 <button type="button" onClick={() => handleButtonClick(music.id)}>
                   <span>
                     <strong>{music.music}</strong>{' '}
-                    <em>{music.instrument ? (music.artist !== null ? music.artist : music.composer) : music.artist}</em>
+                    <em>
+                      {music.instrument
+                        ? music.artist !== null
+                          ? music.artist
+                          : music.composer
+                        : music.cover !== null
+                        ? music.cover
+                        : music.artist}
+                    </em>
                   </span>
                 </button>
                 {selectedMusicId === music.id && (
@@ -91,6 +99,12 @@ const Musics: NextPage<NoticeProps> = ({ musics }) => {
                     <YouTubeController videoId={music.videoid} start={music.start} vi={music.vvi} />
                     <dl>
                       <div>
+                        {music.cover !== null && (
+                          <div>
+                            <dt>원곡</dt>
+                            <dd>{music.artist}</dd>
+                          </div>
+                        )}
                         <div>
                           <dt>수록앨범</dt>
                           <dd>{music.album}</dd>
