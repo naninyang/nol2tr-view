@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         },
       });
       if (!response.ok) {
-        throw new Error('Failed to fetch article data');
+        throw new Error('Failed to fetch music data');
       }
       const musicData = await response.json();
       res.status(200).json(musicData);

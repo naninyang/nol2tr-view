@@ -116,7 +116,7 @@ export async function getMusicData(music: string) {
 
 export async function getMusicsData() {
   const response = await fetch(
-    `${process.env.STRAPI_URL}/api/musics-nol2trs?sort[0]=id:desc&pagination[page]=1&pagination[pageSize]=1000`,
+    `${process.env.STRAPI_URL}/api/musics-nol2trs?sort[0]=id:desc&pagination[page]=1&pagination[pageSize]=10000`,
     {
       method: 'GET',
       headers: {
