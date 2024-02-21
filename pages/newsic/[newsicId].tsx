@@ -215,8 +215,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   if (newsicId && typeof newsicId === 'string') {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/newsic?id=${newsicId.substring(14)}`);
-    const data = (await response.json()) as { data: NewsicParalinkData };
-    newsicData = data.data;
+    const newsicResponse = (await response.json()) as { data: NewsicParalinkData };
+    newsicData = newsicResponse.data;
     const musicResponse = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/musics?musicId=${newsicData.attributes.music}`,
     );

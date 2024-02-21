@@ -22,8 +22,8 @@ export async function getInterviewData(start?: number, count?: number) {
       },
     },
   );
-  const data = await response.json();
-  const filesData = data.data;
+  const interviewResponse = await response.json();
+  const filesData = interviewResponse.data;
   const rowsData: InterviewData[] = await Promise.all(
     filesData.map(async (data: any) => {
       const musicData = await getMusicData(data.attributes.music);
@@ -61,8 +61,8 @@ export async function getNewsicData(start?: number, count?: number) {
       },
     },
   );
-  const data = await response.json();
-  const filesData = data.data;
+  const newsicResponse = await response.json();
+  const filesData = newsicResponse.data;
   const rowsData: NewsicData[] = await Promise.all(
     filesData.map(async (data: any) => {
       const musicData = await getMusicData(data.attributes.music);
@@ -94,8 +94,8 @@ export async function getMusicData(music: string) {
       Authorization: `Bearer ${process.env.STRAPI_BEARER_TOKEN}`,
     },
   });
-  const data = await response.json();
-  const musicData = data.data;
+  const musicResponse = await response.json();
+  const musicData = musicResponse.data;
   const rowsData: MusicData = {
     id: musicData.id,
     music: musicData.attributes.music,
@@ -124,8 +124,8 @@ export async function getMusicsData() {
       },
     },
   );
-  const data = await response.json();
-  const filesData = data.data;
+  const musicsResponse = await response.json();
+  const filesData = musicsResponse.data;
   const rowsData: MusicData[] = filesData.map((data: any) => ({
     id: data.id,
     music: data.attributes.music,
@@ -154,8 +154,8 @@ export async function getEbenumData(start?: number, count?: number) {
       },
     },
   );
-  const data = await response.json();
-  const filesData = data.data;
+  const ebenumResponse = await response.json();
+  const filesData = ebenumResponse.data;
   const rowsData: EbenumData[] = filesData.map((data: any) => ({
     id: `${data.id}`,
     idx: `${formatDate(data.attributes.createdAt)}${data.id}`,
@@ -187,8 +187,8 @@ export async function getNoticeData() {
       },
     },
   );
-  const data = await response.json();
-  const filesData = data.data;
+  const noticeResponse = await response.json();
+  const filesData = noticeResponse.data;
   const rowsData: NoticeData[] = filesData.map((data: any) => ({
     id: data.id,
     idx: `${formatDate(data.attributes.createdAt)}${data.id}`,

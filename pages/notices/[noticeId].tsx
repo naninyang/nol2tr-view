@@ -62,8 +62,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   if (noticeId && typeof noticeId === 'string') {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/notices/?id=${noticeId.substring(14)}`);
-    const data = (await response.json()) as { data: NoticeParalinkData[] };
-    notice = data.data;
+    const noticeResponse = (await response.json()) as { data: NoticeParalinkData[] };
+    notice = noticeResponse.data;
   }
 
   if (!notice) {

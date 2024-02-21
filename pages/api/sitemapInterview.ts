@@ -22,8 +22,8 @@ async function fetchNaverNewsData() {
       },
     },
   );
-  const data = await response.json();
-  return data.data;
+  const interviewResponse = await response.json();
+  return interviewResponse.data;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

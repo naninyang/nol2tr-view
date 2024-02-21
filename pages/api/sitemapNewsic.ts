@@ -22,8 +22,8 @@ async function fetchInterviewData() {
       },
     },
   );
-  const data = await response.json();
-  return data.data;
+  const newsicResponse = await response.json();
+  return newsicResponse.data;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
