@@ -29,7 +29,6 @@
 - Google YouTube iframe API
 - Masonry w/ Masonic
 - Perfect Scrollbar
-- pull-to-refresh (without Mutate Caching)
 - PWA
 - SWR w/ useSWRInfinite
 - Notion Client
@@ -66,6 +65,7 @@
 
 - 데이터 불러올 때 텍스트가 세로 가운데 정렬이 안되는 현상 해결 (최소 세로폭 설정 문제)
   - iOS, iPadOS 의 안전 공간 계산 문제로 복잡함
+- 목록을 `SWR` 에서 `getServerSideProps`으로 변경
 
 ## Supported PWA App. Download
 

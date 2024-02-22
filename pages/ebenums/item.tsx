@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useSWRInfinite from 'swr/infinite';
-import axios from 'axios';
-import PullToRefresh from 'react-simple-pull-to-refresh';
 import { Masonry } from 'masonic';
 import { EbenumData } from 'types';
 import { FormatDate } from '@/components/FormatDate';
 import styles from '@/styles/Ebenums.module.sass';
 
-export const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+export const fetcher = (url: string) =>
+  fetch(url).then((res) => {
+    if (!res.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return res.json();
+  });
 
 const getKey = (pageIndex: number, previousPageData: any) => {
   if (previousPageData && !previousPageData.length) return null;
@@ -138,9 +142,6 @@ export default function EbenumsItem() {
     </div>
   );
 
-  const handleRefresh = async () => {
-    window.location.reload();
-  };
   const [columnCount, setColumnCount] = useState(1);
 
   return (
@@ -154,15 +155,13 @@ export default function EbenumsItem() {
       )}
       {!isLoading && !error && (
         <div className={styles['ebenum-content']}>
-          <PullToRefresh onRefresh={handleRefresh}>
-            <Masonry
-              items={ebenums || []}
-              columnCount={columnCount}
-              render={renderCard}
-              key={ebenums.length}
-              data-index={ebenums.length}
-            />
-          </PullToRefresh>
+          <Masonry
+            items={ebenums || []}
+            columnCount={columnCount}
+            render={renderCard}
+            key={ebenums.length}
+            data-index={ebenums.length}
+          />
           {isReachingEnd !== undefined && (
             <div ref={setTarget} className={styles.ref}>
               {isReachingEnd === false && <p>이것저것 불러오는 중</p>}

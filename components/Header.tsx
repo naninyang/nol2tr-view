@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import Anchor from './Anchor';
-import { hex, mixIn, rem } from '@/styles/designSystem';
 import { images } from './images';
+import { hex, mixIn, rem } from '@/styles/designSystem';
 
 const Container = styled.header({
   backgroundColor: 'var(--bg-primary-opacity)',
@@ -35,18 +35,21 @@ const Primary = styled.div({
   display: 'flex',
   alignItems: 'center',
   gap: rem(15),
-  '& h1 a': {
-    display: 'block',
-    width: rem(77),
-    height: rem(30),
-    'body[data-theme="dark"] &': {
-      background: `url(${images.logo.light}) no-repeat 50% 50%/contain`,
-    },
-    'body &, body[data-theme="light"] &': {
-      background: `url(${images.logo.dark}) no-repeat 50% 50%/contain`,
-    },
-    '& span': {
-      ...mixIn.screenReaderOnly,
+  '& h1': {
+    '& a, & button': {
+      backgroundColor: 'transparent',
+      display: 'block',
+      width: rem(77),
+      height: rem(30),
+      'body[data-theme="dark"] &': {
+        background: `url(${images.logo.light}) no-repeat 50% 50%/contain`,
+      },
+      'body &, body[data-theme="light"] &': {
+        background: `url(${images.logo.dark}) no-repeat 50% 50%/contain`,
+      },
+      '& span': {
+        ...mixIn.screenReaderOnly,
+      },
     },
   },
   '& button': {
@@ -429,9 +432,20 @@ export default function Header() {
         )}
         <Primary>
           <h1>
-            <Anchor href="/">
-              <span>놀이터뷰 nol2tr_view</span>
-            </Anchor>
+            {router.pathname === '/ebenums' || router.pathname === '/interviews' || router.pathname === '/newsics' ? (
+              <button
+                type="button"
+                onClick={() => {
+                  (window.location.reload as (cache: boolean) => void)(true);
+                }}
+              >
+                <span>놀이터뷰 nol2tr_view</span>
+              </button>
+            ) : (
+              <Anchor href="/">
+                <span>놀이터뷰 nol2tr_view</span>
+              </Anchor>
+            )}
           </h1>
           <ThemeChangeButton type="button" themeMode={themeMode === 'dark'} onClick={themeModeHandle}>
             {themeMode === 'dark' ? <span>라이트 모드로 변경</span> : <span>라이트 모드로 변경</span>}

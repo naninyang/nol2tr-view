@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import useSWRInfinite from 'swr/infinite';
 import { useMediaQuery } from 'react-responsive';
 import axios, { AxiosError } from 'axios';
-import PullToRefresh from 'react-simple-pull-to-refresh';
 import { NewsicData } from 'types';
 import styles from '@/styles/Newsics.module.sass';
 
@@ -93,10 +92,6 @@ function ArticlesItem() {
     };
   }, [articleId]);
 
-  const handleRefresh = async () => {
-    window.location.reload();
-  };
-
   return (
     <>
       {isLoading && (
@@ -123,26 +118,24 @@ function ArticlesItem() {
       )}
       {!isLoading && !error && (
         <div className={styles['article-content']}>
-          <PullToRefresh onRefresh={handleRefresh}>
-            <div className={styles['article-list']}>
-              {articles.map((article: NewsicData) => (
-                <article key={article.idx}>
-                  {article.platform === 'youtube' ? (
-                    <img src={`https://i.ytimg.com/vi_webp/${article.vid}/maxresdefault.webp`} alt="" />
-                  ) : (
-                    <img src={`https://cdn.dev1stud.io/nol2tr/${article.opengraph}.webp`} alt="" />
-                  )}
-                  <h3>
-                    <Link key={article.idx} href={`/newsic/${article.idx}`} scroll={false} shallow={true}>
-                      {article.subject}
-                    </Link>
-                  </h3>
-                  <p className={styles.summary}>{article.summary}</p>
-                  <p className={styles.recommended}>{article.musicData.music}</p>
-                </article>
-              ))}
-            </div>
-          </PullToRefresh>
+          <div className={styles['article-list']}>
+            {articles.map((article: NewsicData) => (
+              <article key={article.idx}>
+                {article.platform === 'youtube' ? (
+                  <img src={`https://i.ytimg.com/vi_webp/${article.vid}/maxresdefault.webp`} alt="" />
+                ) : (
+                  <img src={`https://cdn.dev1stud.io/nol2tr/${article.opengraph}.webp`} alt="" />
+                )}
+                <h3>
+                  <Link key={article.idx} href={`/newsic/${article.idx}`} scroll={false} shallow={true}>
+                    {article.subject}
+                  </Link>
+                </h3>
+                <p className={styles.summary}>{article.summary}</p>
+                <p className={styles.recommended}>{article.musicData.music}</p>
+              </article>
+            ))}
+          </div>
           {isReachingEnd !== undefined && (
             <div ref={setTarget} className={styles.ref}>
               {isReachingEnd === false && <p>기사 목록을 읽는 중입니다.</p>}

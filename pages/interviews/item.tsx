@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import useSWRInfinite from 'swr/infinite';
 import axios, { AxiosError } from 'axios';
-import PullToRefresh from 'react-simple-pull-to-refresh';
 import { InterviewData } from 'types';
 import styles from '@/styles/Interviews.module.sass';
 
@@ -12,18 +11,16 @@ function ArticlesItem() {
 
   const [waitingFor504, setWaitingFor504] = useState(false);
 
-  const fetcher = async (url: string) => {
-    try {
-      const response = await axios.get(url);
-      setWaitingFor504(false);
-      return response.data;
-    } catch (error) {
-      if ((error as AxiosError).response?.status === 504) {
+  const fetcher = (url: string) =>
+    fetch(url).then((res) => {
+      if (!res.ok) {
         setWaitingFor504(true);
+        throw new Error('Network response was not ok');
+      } else {
+        setWaitingFor504(false);
       }
-      throw error;
-    }
-  };
+      return res.json();
+    });
 
   const getKey = (pageIndex: number, previousPageData: any) => {
     if (previousPageData && !previousPageData.length) return null;
@@ -79,10 +76,6 @@ function ArticlesItem() {
     };
   }, [articleId]);
 
-  const handleRefresh = async () => {
-    window.location.reload();
-  };
-
   return (
     <>
       {isLoading && (
@@ -109,36 +102,34 @@ function ArticlesItem() {
       )}
       {!isLoading && !error && (
         <div className={styles['article-content']}>
-          <PullToRefresh onRefresh={handleRefresh}>
-            <div className={styles['article-list']}>
-              {articles.map((article: InterviewData) => (
-                <article key={article.idx}>
-                  {article.platform === 'youtube' ? (
-                    <img src={`https://i.ytimg.com/vi_webp/${article.vid}/maxresdefault.webp`} alt="" />
-                  ) : (
-                    <img src={`https://cdn.dev1stud.io/nol2tr/${article.opengraph}.webp`} alt="" />
-                  )}
-                  <h3>
-                    <Link key={article.idx} href={`/interview/${article.idx}`} scroll={false} shallow={true}>
-                      {article.subject}
-                    </Link>
-                  </h3>
-                  <p className={styles.summary}>{article.summary}</p>
-                  <dl>
-                    <div>
-                      <dt>인터뷰어</dt>
-                      <dd>{article.interviewer}</dd>
-                    </div>
-                    <div>
-                      <dt>인터뷰이</dt>
-                      <dd>{article.interviewee}</dd>
-                    </div>
-                  </dl>
-                  <p className={styles.recommended}>{article.musicData.music}</p>
-                </article>
-              ))}
-            </div>
-          </PullToRefresh>
+          <div className={styles['article-list']}>
+            {articles.map((article: InterviewData) => (
+              <article key={article.idx}>
+                {article.platform === 'youtube' ? (
+                  <img src={`https://i.ytimg.com/vi_webp/${article.vid}/maxresdefault.webp`} alt="" />
+                ) : (
+                  <img src={`https://cdn.dev1stud.io/nol2tr/${article.opengraph}.webp`} alt="" />
+                )}
+                <h3>
+                  <Link key={article.idx} href={`/interview/${article.idx}`} scroll={false} shallow={true}>
+                    {article.subject}
+                  </Link>
+                </h3>
+                <p className={styles.summary}>{article.summary}</p>
+                <dl>
+                  <div>
+                    <dt>인터뷰어</dt>
+                    <dd>{article.interviewer}</dd>
+                  </div>
+                  <div>
+                    <dt>인터뷰이</dt>
+                    <dd>{article.interviewee}</dd>
+                  </div>
+                </dl>
+                <p className={styles.recommended}>{article.musicData.music}</p>
+              </article>
+            ))}
+          </div>
           {isReachingEnd !== undefined && (
             <div ref={setTarget} className={styles.ref}>
               {isReachingEnd === false && <p>인터뷰 목록을 읽는 중입니다.</p>}

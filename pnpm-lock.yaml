@@ -65,9 +65,6 @@ dependencies:
   react-responsive:
     specifier: ^9.0.2
     version: 9.0.2(react@18.2.0)
-  react-simple-pull-to-refresh:
-    specifier: ^1.3.3
-    version: 1.3.3(react-dom@18.2.0)(react@18.2.0)
   react-youtube:
     specifier: ^10.1.0
     version: 10.1.0(react@18.2.0)
@@ -5480,8 +5477,6 @@ packages:
       webpack: ^5.0.0
     peerDependenciesMeta:
       '@next/font':
-        optional: true
-      '@storybook/addon-actions':
         optional: true
       typescript:
         optional: true
@@ -14320,16 +14315,6 @@ packages:
       prop-types: 15.8.1
       react: 18.2.0
       shallow-equal: 1.2.1
-    dev: false
-
-  /react-simple-pull-to-refresh@1.3.3(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-6qXsa5RtNVmKJhLWvDLIX8UK51HFtCEGjdqQGf+M1Qjrcc4qH4fki97sgVpGEFBRwbY7DiVDA5N5p97kF16DTw==}
-    peerDependencies:
-      react: ^16.10.2 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.10.2 || ^17.0.0 || ^18.0.0
-    dependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /react-style-singleton@2.2.1(@types/react@18.0.26)(react@18.2.0):
