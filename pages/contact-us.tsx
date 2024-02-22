@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import axios from 'axios';
 import styled from '@emotion/styled';
 import Seo, { originTitle } from '@/components/Seo';
 import Anchor from '@/components/Anchor';
@@ -34,12 +33,20 @@ function ContactForm() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`/api/contact`, formData);
-      if (response.status === 200) {
+      const response = await fetch(`/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
         alert('제출 완료되었어요. 감사합니다.');
         router.push('/');
       } else {
-        console.log(response.data.error);
+        const errorData = await response.json();
+        console.log(errorData.error);
       }
     } catch (error) {
       console.error(error);

@@ -33,7 +33,6 @@
 - SWR w/ useSWRInfinite
 - Notion Client
 - Strapi API
-- API: Fetch, Axios 혼용
 - Node 18
 - vercel deployment
 

@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import useSWRInfinite from 'swr/infinite';
 import { useMediaQuery } from 'react-responsive';
-import axios, { AxiosError } from 'axios';
 import { NewsicData } from 'types';
 import styles from '@/styles/Newsics.module.sass';
 
@@ -21,18 +20,16 @@ function ArticlesItem() {
 
   const [waitingFor504, setWaitingFor504] = useState(false);
 
-  const fetcher = async (url: string) => {
-    try {
-      const response = await axios.get(url);
-      setWaitingFor504(false);
-      return response.data;
-    } catch (error) {
-      if ((error as AxiosError).response?.status === 504) {
+  const fetcher = (url: string) =>
+    fetch(url).then((res) => {
+      if (!res.ok) {
         setWaitingFor504(true);
+        throw new Error('Network response was not ok');
+      } else {
+        setWaitingFor504(false);
       }
-      throw error;
-    }
-  };
+      return res.json();
+    });
 
   const getKey = (pageIndex: number, previousPageData: any) => {
     if (previousPageData && !previousPageData.length) return null;

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import useSWRInfinite from 'swr/infinite';
-import axios, { AxiosError } from 'axios';
 import { InterviewData } from 'types';
 import styles from '@/styles/Interviews.module.sass';
 
