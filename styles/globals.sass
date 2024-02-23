@@ -129,3 +129,39 @@ iframe
 .scrollbar-container
   position: relative
   height: 100%
+
+.top-link
+  position: fixed
+  top: calc(env(safe-area-inset-top) + rem(10))
+  left: calc(env(safe-area-inset-left) + rem(25))
+  z-index: 1050
+
+  a, button
+    background-color: transparent
+    transition: border .4s cubic-bezier(.4,0,.2,1)
+    display: inline-flex
+    align-items: center
+    gap: rem(5)
+    padding: 0 rem(5)
+    height: rem(30)
+
+    i
+      transition: transform .4s cubic-bezier(.4,0,.2,1)
+      width: rem(18)
+      height: rem(18)
+
+    span
+      transition: color .4s cubic-bezier(.4,0,.2,1)
+      font-size: rem(14)
+      line-height: 1
+      color: var(--txt-summary)
+
+      +mq(maxExtraSmall)
+        +screen-reader-only
+
+    &:hover, &:focus
+      i
+        transform: translateX(rem(-5))
+
+      span
+        color: var(--default-text)
