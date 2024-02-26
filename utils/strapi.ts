@@ -119,40 +119,6 @@ export async function getMusicData(music: string) {
   return rowsData;
 }
 
-// export async function getMusicsData() {
-//   const response = await fetch(
-//     `${process.env.STRAPI_URL}/api/musics-nol2trs?sort[0]=id:desc&pagination[page]=1&pagination[pageSize]=100`,
-//     {
-//       method: 'GET',
-//       headers: {
-//         Authorization: `Bearer ${process.env.STRAPI_BEARER_TOKEN}`,
-//       },
-//     },
-//   );
-//   const musicsResponse = await response.json();
-//   const filesData = musicsResponse.data;
-//   const rowsData: MusicData[] = filesData.map((data: any, meta: any) => ({
-//     id: data.id,
-//     music: data.attributes.music,
-//     videoid: data.attributes.videoid,
-//     artist: data.attributes.artist,
-//     cover: data.attributes.cover,
-//     instrument: data.attributes.instrument,
-//     album: data.attributes.album,
-//     composer: data.attributes.composer,
-//     lyricist: data.attributes.lyricist,
-//     lyrics: data.attributes.lyrics,
-//     start: data.attributes.start,
-//     vvi: data.attributes.vvi,
-//     page: meta.pagination.page,
-//     pageSize: meta.pagination.pageSize,
-//     pageCount: meta.pagination.pageCount,
-//     total: meta.pagination.total,
-//   }));
-
-//   return rowsData;
-// }
-
 export async function getMusicsData(page = 1, allData: MusicData[] = []): Promise<MusicData[]> {
   const pageSize = 100;
   const response = await fetch(
