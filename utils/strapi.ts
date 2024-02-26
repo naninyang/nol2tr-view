@@ -96,6 +96,7 @@ export async function getMusicData(music: string) {
   });
   const musicResponse = await response.json();
   const musicData = musicResponse.data;
+  const musicMeta = musicResponse.meta;
   const rowsData: MusicData = {
     id: musicData.id,
     music: musicData.attributes.music,
@@ -109,14 +110,53 @@ export async function getMusicData(music: string) {
     lyrics: musicData.attributes.lyrics,
     start: musicData.attributes.start,
     vvi: musicData.attributes.vvi,
+    page: musicMeta.pagination.page,
+    pageSize: musicMeta.pagination.pageSize,
+    pageCount: musicMeta.pagination.pageCount,
+    total: musicMeta.pagination.total,
   };
 
   return rowsData;
 }
 
-export async function getMusicsData() {
+// export async function getMusicsData() {
+//   const response = await fetch(
+//     `${process.env.STRAPI_URL}/api/musics-nol2trs?sort[0]=id:desc&pagination[page]=1&pagination[pageSize]=100`,
+//     {
+//       method: 'GET',
+//       headers: {
+//         Authorization: `Bearer ${process.env.STRAPI_BEARER_TOKEN}`,
+//       },
+//     },
+//   );
+//   const musicsResponse = await response.json();
+//   const filesData = musicsResponse.data;
+//   const rowsData: MusicData[] = filesData.map((data: any, meta: any) => ({
+//     id: data.id,
+//     music: data.attributes.music,
+//     videoid: data.attributes.videoid,
+//     artist: data.attributes.artist,
+//     cover: data.attributes.cover,
+//     instrument: data.attributes.instrument,
+//     album: data.attributes.album,
+//     composer: data.attributes.composer,
+//     lyricist: data.attributes.lyricist,
+//     lyrics: data.attributes.lyrics,
+//     start: data.attributes.start,
+//     vvi: data.attributes.vvi,
+//     page: meta.pagination.page,
+//     pageSize: meta.pagination.pageSize,
+//     pageCount: meta.pagination.pageCount,
+//     total: meta.pagination.total,
+//   }));
+
+//   return rowsData;
+// }
+
+export async function getMusicsData(page = 1, allData: MusicData[] = []): Promise<MusicData[]> {
+  const pageSize = 100;
   const response = await fetch(
-    `${process.env.STRAPI_URL}/api/musics-nol2trs?sort[0]=id:desc&pagination[page]=1&pagination[pageSize]=10000`,
+    `${process.env.STRAPI_URL}/api/musics-nol2trs?sort[0]=id:desc&pagination[page]=${page}&pagination[pageSize]=${pageSize}`,
     {
       method: 'GET',
       headers: {
@@ -124,24 +164,29 @@ export async function getMusicsData() {
       },
     },
   );
-  const musicsResponse = await response.json();
-  const filesData = musicsResponse.data;
-  const rowsData: MusicData[] = filesData.map((data: any) => ({
-    id: data.id,
-    music: data.attributes.music,
-    videoid: data.attributes.videoid,
-    artist: data.attributes.artist,
-    cover: data.attributes.cover,
-    instrument: data.attributes.instrument,
-    album: data.attributes.album,
-    composer: data.attributes.composer,
-    lyricist: data.attributes.lyricist,
-    lyrics: data.attributes.lyrics,
-    start: data.attributes.start,
-    vvi: data.attributes.vvi,
-  }));
 
-  return rowsData;
+  const musicsResponse = await response.json();
+  let newData = musicsResponse.data;
+
+  newData = await Promise.all(
+    newData.map(async (data: any) => {
+      const musicInteraction = await fetchPreviewMetadata(`https://youtu.be/${data.attributes.videoid}`);
+      return {
+        ...data.attributes,
+        id: data.id,
+        musicInteraction,
+      };
+    }),
+  );
+
+  const combinedData = [...allData, ...newData];
+
+  const meta = musicsResponse.meta.pagination;
+  if (page < meta.pageCount) {
+    return getMusicsData(page + 1, combinedData);
+  } else {
+    return combinedData.sort((a, b) => b.musicInteraction.interactionCount - a.musicInteraction.interactionCount);
+  }
 }
 
 export async function getEbenumData(start?: number, count?: number) {

@@ -146,6 +146,10 @@ export interface NoticeParalinkData {
 }
 
 export interface MusicData {
+  page: number;
+  pageSize: number;
+  pageCount: number;
+  total: number;
   id: string;
   music: string;
   videoid: string;
