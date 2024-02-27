@@ -12,9 +12,9 @@ const formatDate = (datetime: string) => {
   return `${year}${month}${day}${hours}${minutes}${seconds}`;
 };
 
-async function fetchInterviewData() {
-  const response = await fetch(
-    `${process.env.STRAPI_URL}/api/newsic-nol2trs?pagination[page]=1&pagination[pageSize]=10000`,
+async function fetchAllNewsicData() {
+  let response = await fetch(
+    `${process.env.STRAPI_URL}/api/newsic-nol2trs?sort[0]=id:desc&pagination[page]=1&pagination[pageSize]=100`,
     {
       method: 'GET',
       headers: {
@@ -22,15 +22,31 @@ async function fetchInterviewData() {
       },
     },
   );
-  const newsicResponse = await response.json();
-  return newsicResponse.data;
+  let data = await response.json();
+  const pageCount = data.meta.pagination.pageCount;
+  let allNewsData = [];
+  for (let page = 1; page <= pageCount; page++) {
+    response = await fetch(
+      `${process.env.STRAPI_URL}/api/newsic-nol2trs?sort[0]=id:desc&pagination[page]=${page}&pagination[pageSize]=100`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${process.env.STRAPI_BEARER_TOKEN}`,
+        },
+      },
+    );
+    data = await response.json();
+    allNewsData.push(...data.data);
+  }
+
+  return allNewsData;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const newsData = await fetchInterviewData();
+    const allNewsData = await fetchAllNewsicData();
 
-    const newsDataProcessed = newsData.map((newsItem: any) => ({
+    const newsDataProcessed = allNewsData.map((newsItem: any) => ({
       idx: `newsic/${formatDate(newsItem.attributes.createdAt)}${newsItem.id}`,
       created: newsItem.attributes.createdAt,
     }));
