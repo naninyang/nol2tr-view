@@ -1,4 +1,4 @@
-import { NewsicData, InterviewData, NoticeData, MusicData } from 'types';
+import { NewsicData, InterviewData, NoticeData, MusicData, MusicParalinkData } from 'types';
 
 const formatDate = (datetime: string) => {
   const date = new Date(datetime);
@@ -96,9 +96,7 @@ export async function getMusicData(music: string) {
   });
   const musicResponse = await response.json();
   const musicData = musicResponse.data;
-  const musicMeta = musicResponse.meta;
-  const rowsData: MusicData = {
-    id: musicData.id,
+  const rowsData: MusicParalinkData = {
     music: musicData.attributes.music,
     videoid: musicData.attributes.videoid,
     artist: musicData.attributes.artist,
@@ -109,11 +107,6 @@ export async function getMusicData(music: string) {
     lyricist: musicData.attributes.lyricist,
     lyrics: musicData.attributes.lyrics,
     start: musicData.attributes.start,
-    vvi: musicData.attributes.vvi,
-    page: musicMeta.pagination.page,
-    pageSize: musicMeta.pagination.pageSize,
-    pageCount: musicMeta.pagination.pageCount,
-    total: musicMeta.pagination.total,
   };
 
   return rowsData;

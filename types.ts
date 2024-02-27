@@ -120,16 +120,14 @@ export interface MusicData {
 }
 
 export interface MusicParalinkData {
-  attributes: {
-    music: string;
-    videoid: string;
-    start: number;
-    artist: string;
-    cover: string;
-    instrument: boolean;
-    album: string;
-    composer: string;
-    lyricist: string;
-    lyrics: string;
-  };
+  music: string;
+  videoid: string;
+  start: number;
+  artist: string;
+  cover: string;
+  instrument: boolean;
+  album: string;
+  composer: string;
+  lyricist: string;
+  lyrics: string;
 }
