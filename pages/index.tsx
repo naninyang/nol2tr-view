@@ -242,60 +242,6 @@ export default function Home() {
               </div>
             </div>
           </section>
-          <section className={main.ebenum}>
-            <div className={main.preview} aria-hidden>
-              <div className={main.opengraph}>
-                <div className={main['og-container']}>
-                  <div className={main.thumbnails}>
-                    <img
-                      src="https://imgnews.pstatic.net/image/023/2024/01/17/0003811266_001_20240117104607435.jpg?type=w800"
-                      alt=""
-                      className={main['thumbnail-origin']}
-                    />
-                    <img
-                      src="https://imgnews.pstatic.net/image/023/2024/01/17/0003811266_001_20240117104607435.jpg?type=w800"
-                      alt=""
-                      className={main['thumbnail-background']}
-                    />
-                  </div>
-                  <div className={main['og-info']}>
-                    <div className={main.detail}>
-                      <img
-                        src="https://mimgnews.pstatic.net/image/upload/office_logo/023/2017/12/21/logo_023_41_20171221155921.jpg"
-                        alt=""
-                      />
-                      <div className={main['user-info']}>
-                        <strong>이낙연 “욕 잘하는 정치인 뽑지 마라, 욕밖에 못 한다”</strong>
-                        <div className={main.user}>
-                          <cite>조선일보</cite>
-                          <time dateTime="2024-01-17T19:46:07Z">2024년 1월 18일 목 04:46</time>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className={main.figcaption}>
-                <p className={main.description}>셀프디스</p>
-              </div>
-            </div>
-            <div className={main.content}>
-              <div className={main.headline}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M12 2C6.486 2 2 6.038 2 11C2 11.322 2.01964 11.6411 2.05664 11.9551C2.65264 17.4771 8.32894 21.3795 9.46094 22.1055L10 22.4512C11 23.0002 10.98 21.993 11 22V19.9531C12.505 20.0931 13.9505 19.9247 15.2715 19.5137L15.3945 19.4648C15.1445 19.0208 15 18.523 15 18C15 17.199 15.3119 16.4449 15.8789 15.8789C16.4449 15.3119 17.199 15 18 15C18.801 15 19.5551 15.3119 20.1211 15.8789L20.2754 16.0332C21.3574 14.5922 22 12.863 22 11C22 6.038 17.514 2 12 2ZM18 17C17.7441 17 17.4885 17.0975 17.293 17.293C16.902 17.683 16.902 18.316 17.293 18.707L19.0859 20.5L17.293 22.293C16.902 22.683 16.902 23.316 17.293 23.707C17.683 24.098 18.316 24.098 18.707 23.707L20.5 21.9141L22.2715 23.6855C22.6615 24.0765 23.2945 24.0765 23.6855 23.6855C24.0765 23.2955 24.0765 22.6625 23.6855 22.2715L21.9141 20.5L23.707 18.707C24.098 18.317 24.098 17.684 23.707 17.293C23.317 16.902 22.683 16.902 22.293 17.293L20.5 19.0859L18.707 17.293C18.512 17.0975 18.2559 17 18 17Z"
-                    fill="#EE9B00"
-                  />
-                </svg>
-                <h2>Ebenum</h2>
-              </div>
-              <div className={main.description}>
-                <p>굳이 클릭할 필요가 없는 뉴스를 가져옵니다</p>
-                <p>공식 뉴스가 아니더라도 소식을 전하는 모든 걸 가져옵니다</p>
-                <p>곡 추천과 링크는 제공하지 않습니다.</p>
-              </div>
-            </div>
-          </section>
         </div>
 
         {count && (

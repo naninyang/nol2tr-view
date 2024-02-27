@@ -80,51 +80,6 @@ export interface NewsicParalinkData {
   musicData: any;
 }
 
-export interface EbenumData {
-  id: string;
-  idx: string;
-  subject: string;
-  addr: string;
-  description: string;
-  ebenumMetaData?: {
-    ogTitle: string;
-    ogUrl: string;
-    ogImage: string;
-    ogDescription: string;
-    ogSiteName?: string;
-    twitterSite?: string;
-    twitterCreator?: string;
-    datePublished?: string;
-    ownerAvatar?: string;
-    ownerName?: string;
-    pressPublished?: string;
-    pressAvatar?: string;
-  };
-}
-
-export interface EbenumPamalinkData {
-  attributes: {
-    idx: string;
-    subject: string;
-    addr: string;
-    description: string;
-    ebenumMetaData?: {
-      ogTitle: string;
-      ogUrl: string;
-      ogImage: string;
-      ogDescription: string;
-      ogSiteName?: string;
-      twitterSite?: string;
-      twitterCreator?: string;
-      datePublished?: string;
-      ownerAvatar?: string;
-      ownerName?: string;
-      pressPublished?: string;
-      pressAvatar?: string;
-    };
-  };
-}
-
 export interface NoticeData {
   id: string;
   idx: string;

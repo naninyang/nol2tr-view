@@ -1,4 +1,4 @@
-import { NewsicData, InterviewData, EbenumData, NoticeData, MusicData } from 'types';
+import { NewsicData, InterviewData, NoticeData, MusicData } from 'types';
 
 const formatDate = (datetime: string) => {
   const date = new Date(datetime);
@@ -153,39 +153,6 @@ export async function getMusicsData(page = 1, allData: MusicData[] = []): Promis
   } else {
     return combinedData.sort((a, b) => b.musicInteraction.interactionCount - a.musicInteraction.interactionCount);
   }
-}
-
-export async function getEbenumData(start?: number, count?: number) {
-  const response = await fetch(
-    `${process.env.STRAPI_URL}/api/ebenum-nol2trs?sort[0]=id:desc&pagination[page]=${start}&pagination[pageSize]=${count}`,
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${process.env.STRAPI_BEARER_TOKEN}`,
-      },
-    },
-  );
-  const ebenumResponse = await response.json();
-  const filesData = ebenumResponse.data;
-  const rowsData: EbenumData[] = filesData.map((data: any) => ({
-    id: `${data.id}`,
-    idx: `${formatDate(data.attributes.createdAt)}${data.id}`,
-    subject: data.attributes.subject,
-    addr: data.attributes.addr,
-    description: data.attributes.description,
-  }));
-
-  const fullData = await Promise.all(
-    rowsData.map(async (preview) => {
-      const ebenumMetaData = await fetchPreviewMetadata(preview.addr);
-      return {
-        ...preview,
-        ebenumMetaData,
-      };
-    }),
-  );
-
-  return fullData;
 }
 
 export async function getNoticeData() {

@@ -68,14 +68,6 @@ const Nav = styled.nav({
           background: `url(${images.tab.newsic.dark}) no-repeat 50% 50%/contain`,
         },
       },
-      '&[data-icon="ebenum"]': {
-        'body[data-theme="dark"] &': {
-          background: `url(${images.tab.ebenum.light}) no-repeat 50% 50%/contain`,
-        },
-        'body &, body[data-theme="light"] &': {
-          background: `url(${images.tab.ebenum.dark}) no-repeat 50% 50%/contain`,
-        },
-      },
     },
     '& span': {
       fontSize: rem(12),
@@ -99,9 +91,6 @@ const MenuItem = styled.li<{ currentRouter?: boolean }>(({ currentRouter }) => (
       },
       '&[data-icon="newsic"]': {
         background: currentRouter ? `url(${images.tab.newsic.active}) no-repeat 50% 50%/contain !important` : undefined,
-      },
-      '&[data-icon="ebenum"]': {
-        background: currentRouter ? `url(${images.tab.ebenum.active}) no-repeat 50% 50%/contain !important` : undefined,
       },
     },
   },
@@ -130,12 +119,6 @@ export default function Services() {
           <Anchor href="/newsics">
             <i data-icon="newsic" />
             <span>Newsic</span>
-          </Anchor>
-        </MenuItem>
-        <MenuItem currentRouter={router.pathname === '/ebenums' || router.pathname.includes('/ebenum') ? true : false}>
-          <Anchor href="/ebenums">
-            <i data-icon="ebenum" />
-            <span>Ebenum</span>
           </Anchor>
         </MenuItem>
       </ol>
