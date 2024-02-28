@@ -34,7 +34,7 @@ const ThemeChangeButton = styled.button<{ themeMode?: boolean }>(({ themeMode })
 const Primary = styled.div({
   display: 'flex',
   alignItems: 'center',
-  gap: rem(15),
+  gap: rem(7),
   '& h1': {
     '& a, & button': {
       backgroundColor: 'transparent',
@@ -526,7 +526,7 @@ export default function Header() {
                 </Anchor>
               </li>
             </ul>
-            <p>&copy; NEWS CURATORS, 2024</p>
+            <p>&copy; nol2tr_view, 2024</p>
           </MenuContainer>
         </Menu>
       )}

@@ -112,8 +112,7 @@ export async function getMusicData(music: string) {
   return rowsData;
 }
 
-export async function getMusicsData(page = 1, allData: MusicData[] = []): Promise<MusicData[]> {
-  const pageSize = 100;
+export async function getMusicsData(page: number, pageSize: number) {
   const response = await fetch(
     `${process.env.STRAPI_URL}/api/musics-nol2trs?sort[0]=id:desc&pagination[page]=${page}&pagination[pageSize]=${pageSize}`,
     {
@@ -123,34 +122,28 @@ export async function getMusicsData(page = 1, allData: MusicData[] = []): Promis
       },
     },
   );
-
   const musicsResponse = await response.json();
-  let newData = musicsResponse.data;
-
-  newData = await Promise.all(
-    newData.map(async (data: any) => {
-      const musicInteraction = await fetchPreviewMetadata(`https://youtu.be/${data.attributes.videoid}`);
-      return {
-        ...data.attributes,
-        id: data.id,
-        musicInteraction,
-      };
-    }),
-  );
-
-  const combinedData = [...allData, ...newData];
-
-  const meta = musicsResponse.meta.pagination;
-  if (page < meta.pageCount) {
-    return getMusicsData(page + 1, combinedData);
-  } else {
-    return combinedData.sort((a, b) => b.musicInteraction.interactionCount - a.musicInteraction.interactionCount);
-  }
+  const musicsData = musicsResponse.data;
+  const rowsData: MusicData[] = musicsData.map((data: any) => ({
+    id: data.id,
+    music: data.attributes.music,
+    videoid: data.attributes.videoid,
+    artist: data.attributes.artist,
+    cover: data.attributes.cover,
+    instrument: data.attributes.instrument,
+    album: data.attributes.album,
+    composer: data.attributes.composer,
+    lyricist: data.attributes.lyricist,
+    lyrics: data.attributes.lyrics,
+    start: data.attributes.start,
+    vvi: data.attributes.vvi,
+  }));
+  return rowsData;
 }
 
 export async function getNoticeData() {
   const response = await fetch(
-    `${process.env.STRAPI_URL}/api/notice-nol2trs?sort[0]=id:desc&pagination[page]=1&pagination[pageSize]=1000`,
+    `${process.env.STRAPI_URL}/api/notice-nol2trs?sort[0]=id:desc&pagination[page]=1&pagination[pageSize]=100`,
     {
       method: 'GET',
       headers: {
@@ -170,15 +163,4 @@ export async function getNoticeData() {
   }));
 
   return rowsData;
-}
-
-async function fetchPreviewMetadata(url: string) {
-  try {
-    const response = await fetch(`${process.env.PREVIEW_API_URL}?url=${encodeURIComponent(url)}`);
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Failed to fetch article metadata', error);
-    return {};
-  }
 }

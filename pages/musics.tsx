@@ -34,17 +34,42 @@ const Musics: NextPage<NoticeProps> = ({ musics }) => {
   }, []);
 
   const [musicsData, setMusicsData] = useState<MusicData[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchData = async () => {
+    try {
+      setIsLoading(true);
+      let mergedData: MusicData[] = [];
+      let hasMoreData = true;
+      let page = 1;
+
+      while (hasMoreData) {
+        const response = await fetch(`/api/musics?page=${page}`);
+        const data = await response.json();
+
+        if (data.length === 0) {
+          hasMoreData = false;
+        } else {
+          mergedData = mergedData.concat(data);
+          page++;
+        }
+      }
+
+      const sortedData = mergedData.sort((a, b) => {
+        if (a.music < b.music) return -1;
+        if (a.music > b.music) return 1;
+        return 0;
+      });
+
+      setMusicsData(sortedData);
+    } catch (error) {
+      console.error('왜 여기서 오류가 나와?', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/musics`);
-      const data = await response.json();
-      setMusicsData(data);
-      setLoading(false);
-    };
-
     fetchData();
   }, []);
 
@@ -82,12 +107,11 @@ const Musics: NextPage<NoticeProps> = ({ musics }) => {
         </h1>
         <div>
           <p>🎶 놀이터뷰에서 선곡한 곡 목록입니다 🎵</p>
-          <p>👉 곡은 유튜브 조회수 기준으로 정렬됩니다 👉</p>
-          <p className={styles.warning}>조회수를 가져와서 정렬하므로 로딩 속도가 느립니다.</p>
+          <p>👉 곡은 가나다 순으로 정렬됩니다 👉</p>
         </div>
         <div className={music.musics}>
           <hr />
-          {loading ? (
+          {isLoading ? (
             <>
               <p>곡 목록을 가져오는 중입니다.</p>
               <p>잠시만 기다려 주세요!</p>

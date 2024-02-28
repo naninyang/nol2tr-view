@@ -3,14 +3,12 @@ import { getMusicsData } from '@/utils/strapi';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const musicId = req.query.musicId as string;
+  const page = Number(req.query.page) || 1;
+  const pageSize = Number(req.query.pageSize) || 100;
 
   if (!musicId) {
-    try {
-      const data = await getMusicsData();
-      res.status(200).json(data);
-    } catch (error) {
-      console.log('Unsupported method');
-    }
+    const data = await getMusicsData(page, pageSize);
+    res.status(200).json(data);
   } else {
     try {
       const response = await fetch(`${process.env.STRAPI_URL}/api/musics-nol2trs/${musicId}`, {
