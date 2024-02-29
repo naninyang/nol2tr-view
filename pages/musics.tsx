@@ -24,6 +24,10 @@ const BackButton = styled.i({
   },
 });
 
+const YTmusicIcon = styled.i({
+  background: `url(${images.misc.music}) no-repeat 50% 50%/contain`,
+});
+
 const Musics: NextPage<NoticeProps> = ({ musics }) => {
   const [currentPage, setCurrentPage] = useState<string | null>(null);
   const [selectedMusicId, setSelectedMusicId] = useState<string | null>(null);
@@ -119,7 +123,7 @@ const Musics: NextPage<NoticeProps> = ({ musics }) => {
           ) : (
             <ul>
               {musicsData.map((music, index) => (
-                <li key={music.id} data-id={music.id}>
+                <li key={music.id}>
                   <button type="button" onClick={() => handleButtonClick(music.id)}>
                     <span>
                       <i>{index + 1}</i>
@@ -139,6 +143,15 @@ const Musics: NextPage<NoticeProps> = ({ musics }) => {
                     <div id={`music${music.id}`}>
                       <YouTubeController videoId={music.videoid} start={music.start} vi={music.vvi} />
                       <dl>
+                        <div>
+                          <dt>유튜브뮤직</dt>
+                          <dd>
+                            <Anchor href={`https://music.youtube.com/watch?v=${music.videoid}`}>
+                              <YTmusicIcon />
+                              <span>YouTube Music</span>에서 고음질로 듣기
+                            </Anchor>
+                          </dd>
+                        </div>
                         <div>
                           {music.cover !== null && (
                             <div>
