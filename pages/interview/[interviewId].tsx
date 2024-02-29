@@ -236,7 +236,6 @@ export default function interviewDetail({
             {musicData.attributes.lyrics !== null && (
               <p dangerouslySetInnerHTML={{ __html: musicData.attributes.lyrics.replace(/\n/g, '<br />') }} />
             )}
-            di
           </div>
         </div>
       </article>
