@@ -240,6 +240,24 @@
       flex-direction: column
       gap: rem(17)
 
+      .ytMusic
+        a
+          display: inline-flex
+          gap: rem(3)
+          background-color: $hex-black
+          border-radius: rem(3)
+          padding: rem(6) rem(12)
+          color: $hex-white
+          font-size: rem(14)
+
+          i
+            display: inline-block
+            width: rem(67)
+            height: rem(20)
+
+          span
+            +screen-reader-only
+
       .info
         display: flex
         flex-direction: column

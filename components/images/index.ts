@@ -28,6 +28,7 @@ export const images = {
     symbolLight: require('./misc/symbolLight.svg'),
     shareDark: require('./misc/shareDark.svg'),
     shareLight: require('./misc/shareLight.svg'),
+    music: require('./misc/music.svg'),
   },
   arrow: {
     backDark: require('./arrow/backDark.svg'),

@@ -28,6 +28,10 @@ const ClipboardIcon = styled.i({
   },
 });
 
+const YTmusicIcon = styled.i({
+  background: `url(${images.misc.music}) no-repeat 50% 50%/contain`,
+});
+
 export default function interviewDetail({
   interviewData,
   musicData,
@@ -167,6 +171,12 @@ export default function interviewDetail({
             start={musicData.attributes.start}
             vi={musicData.attributes.vvi}
           />
+          <div className={styles.ytMusic}>
+            <Anchor href={`https://music.youtube.com/watch?v=${musicData.attributes.videoid}`}>
+              <YTmusicIcon />
+              <span>YouTube Music</span>에서 고음질로 듣기
+            </Anchor>
+          </div>
           <div className={styles.info}>
             <dl>
               <div>
@@ -226,6 +236,7 @@ export default function interviewDetail({
             {musicData.attributes.lyrics !== null && (
               <p dangerouslySetInnerHTML={{ __html: musicData.attributes.lyrics.replace(/\n/g, '<br />') }} />
             )}
+            di
           </div>
         </div>
       </article>
