@@ -101,37 +101,6 @@
       +mq(minLarge)
         gap: rem(15)
 
-      button
-        position: absolute
-        top: rem(15)
-        right: rem(15)
-        background: none
-        width: rem(26)
-        height: rem(26)
-
-        +mq(minLarge)
-          top: rem(25)
-          right: rem(25)
-          width: rem(50)
-          height: rem(50)
-
-        i
-          width: rem(26)
-          height: rem(26)
-
-          +mq(minLarge)
-            width: rem(50)
-            height: rem(50)
-
-        span
-          +screen-reader-only
-
-        & + h1
-          padding-right: rem(35)
-
-          +mq(minLarge)
-            padding-right: rem(70)
-
     h1
       display: flex
       flex-direction: column
@@ -151,6 +120,30 @@
           content: '🎵'
           padding-right: rem(3)
 
+    .function
+      display: flex
+      gap: rem(17)
+      align-items: center
+      padding: rem(7) 0
+
+      time, button span
+        font-size: rem(14)
+        color: var(--txt-subject)
+        line-height: 1
+
+      button
+        display: flex
+        align-items: center
+        gap: rem(3)
+        background-color: transparent
+        padding: 0
+        font-weight: 600
+
+        i
+          display: inline-block
+          width: rem(20)
+          height: rem(20)
+
     h2
       font-size: rem(20)
       color: var(--txt-subject)
@@ -165,10 +158,6 @@
       margin: 0
       border: 0
       border-top: 1px solid var(--border)
-
-    time
-      font-size: rem(14)
-      color: var(--txt-subject)
 
     .news
       display: flex

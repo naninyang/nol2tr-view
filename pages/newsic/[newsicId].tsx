@@ -19,14 +19,12 @@ const BackButton = styled.i({
   },
 });
 
-const Comment = styled.p({
-  '&::before': {
-    'body[data-theme="dark"] &': {
-      background: `url(${images.misc.commentLight}) no-repeat 50% 50%/contain`,
-    },
-    'body &, body[data-theme="light"] &': {
-      background: `url(${images.misc.commentDark}) no-repeat 50% 50%/contain`,
-    },
+const ClipboardIcon = styled.i({
+  'body[data-theme="dark"] &': {
+    background: `url(${images.misc.shareLight}) no-repeat 50% 50%/contain`,
+  },
+  'body &, body[data-theme="light"] &': {
+    background: `url(${images.misc.shareDark}) no-repeat 50% 50%/contain`,
   },
 });
 
@@ -75,6 +73,18 @@ export default function newsicDetail({
     }
   }
 
+  const copyToClipboard = () => {
+    const url = window.location.href;
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        alert('URL이 클립보드에 복사되었습니다!');
+      })
+      .catch((err) => {
+        console.error('URL 복사에 실패했습니다:', err);
+      });
+  };
+
   return (
     <main className={styles.newsic}>
       <Seo
@@ -102,12 +112,6 @@ export default function newsicDetail({
         )}
       </div>
       <article className={styles['article-news']}>
-        <header>
-          <h1>
-            {newsicData.attributes.subject} <span>추천곡_ {musicData.attributes.music}</span>
-          </h1>
-          <time>{newsicData.attributes.created}</time>
-        </header>
         <div className={styles.news}>
           {newsicData.attributes.platform === 'youtube' ? (
             <YouTubeController videoId={newsicData.attributes.vid} vi={newsicData.attributes.vi} />
@@ -130,6 +134,17 @@ export default function newsicDetail({
               )}
             </div>
           )}
+          <header>
+            <h1>
+              {newsicData.attributes.subject} <span>추천곡_ {musicData.attributes.music}</span>
+            </h1>
+            <div className={styles.function}>
+              <button onClick={copyToClipboard}>
+                <ClipboardIcon /> <span>URL 복사</span>
+              </button>
+              <time>기사 작성일 {newsicData.attributes.created}</time>
+            </div>
+          </header>
           <p dangerouslySetInnerHTML={{ __html: newsicData.attributes.description.replace(/\n/g, '<br />') }} />
         </div>
         <hr />
