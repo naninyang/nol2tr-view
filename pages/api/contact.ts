@@ -8,6 +8,7 @@ interface PostData {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+  site: string;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -30,6 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             createdAt,
             updatedAt,
             publishedAt,
+            site: 'nol2tr',
           },
         }),
       });
