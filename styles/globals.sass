@@ -55,6 +55,7 @@ body
 
 main
   margin-top: calc(env(safe-area-inset-top) + rem(50))
+  margin-bottom: calc(env(safe-area-inset-top) + rem(50))
 
 h1, h2, h3, h4, h5, h6
   margin-top: 0
@@ -111,24 +112,6 @@ address, cite
 
 iframe
   display: block
-
-.ReactModal__Overlay
-  padding: calc(env(safe-area-inset-top) + rem(25)) calc(env(safe-area-inset-right) + rem(25)) calc(env(safe-area-inset-bottom) + rem(25)) calc(env(safe-area-inset-left) + rem(25))
-
-  +mq(minLarge)
-    padding: calc(env(safe-area-inset-top) + rem(50)) calc(env(safe-area-inset-right) + rem(50)) calc(env(safe-area-inset-bottom) + rem(50)) calc(env(safe-area-inset-left) + rem(50))
-
-.ReactModal__Content
-  border-radius: rem(15)
-  max-height: calc(100dvh - rem(25))
-
-  +mq(minLarge)
-    border-radius: rem(25)
-    max-height: calc(100dvh - rem(50))
-
-.scrollbar-container
-  position: relative
-  height: 100%
 
 .top-link
   position: fixed

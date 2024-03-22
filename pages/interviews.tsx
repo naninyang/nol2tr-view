@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { InterviewData, NewsicData } from 'types';
+import { InterviewData } from 'types';
 import Seo, { originTitle } from '@/components/Seo';
 import PageName from '@/components/PageName';
 import { Pagination } from '@/components/Pagination';
-import styles from '@/styles/Interviews.module.sass';
+import styles from '@/styles/Articles.module.sass';
 
 function Interviews({ articles, error, currentPage }: { articles: any; error: string; currentPage: number }) {
   const router = useRouter();
@@ -16,6 +16,10 @@ function Interviews({ articles, error, currentPage }: { articles: any; error: st
     localStorage.removeItem('currentPage');
     localStorage.setItem('currentPage', 'interviews');
   }, []);
+
+  useEffect(() => {
+    sessionStorage.setItem('location', router.asPath);
+  }, [router.asPath]);
 
   return (
     <main className={styles.articles}>
@@ -38,28 +42,32 @@ function Interviews({ articles, error, currentPage }: { articles: any; error: st
               <div className={styles['article-list']}>
                 {articles.articles.map((article: InterviewData) => (
                   <article key={article.idx}>
-                    {article.platform === 'youtube' ? (
-                      <img src={`https://i.ytimg.com/vi_webp/${article.vid}/maxresdefault.webp`} alt="" />
-                    ) : (
-                      <img src={`https://cdn.dev1stud.io/nol2tr/${article.opengraph}.webp`} alt="" />
-                    )}
-                    <h3>
-                      <Link key={article.idx} href={`/interview/${article.idx}`} scroll={false} shallow={true}>
-                        {article.subject}
-                      </Link>
-                    </h3>
-                    <p className={styles.summary}>{article.summary}</p>
-                    <dl>
-                      <div>
-                        <dt>인터뷰어</dt>
-                        <dd>{article.interviewer}</dd>
-                      </div>
-                      <div>
-                        <dt>인터뷰이</dt>
-                        <dd>{article.interviewee}</dd>
-                      </div>
-                    </dl>
-                    <p className={styles.recommended}>{article.musicData.music}</p>
+                    <Link key={article.idx} href={`/interview/${article.idx}`} scroll={false} shallow={true}>
+                      {article.platform === 'youtube' ? (
+                        <img src={`https://i.ytimg.com/vi_webp/${article.vid}/maxresdefault.webp`} alt="" />
+                      ) : (
+                        <img src={`https://cdn.dev1stud.io/nol2tr/${article.opengraph}.webp`} alt="" />
+                      )}
+                      <h3>{article.subject}</h3>
+                      <p className={styles.summary}>{article.summary}</p>
+                      <dl className={styles.people}>
+                        <div>
+                          <dt>인터뷰어</dt>
+                          <dd>{article.interviewer}</dd>
+                        </div>
+                        <div>
+                          <dt>인터뷰이</dt>
+                          <dd>{article.interviewee}</dd>
+                        </div>
+                      </dl>
+                      <dl className={styles.recommended}>
+                        <dt>
+                          <i />
+                          <span>추천곡</span>
+                        </dt>
+                        <dd>{article.musicData.music}</dd>
+                      </dl>
+                    </Link>
                   </article>
                 ))}
                 <Pagination currentPage={currentPage} pageCount={articles.pageCount} sorting={'newsics'} />

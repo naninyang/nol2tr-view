@@ -6,7 +6,7 @@ import { NewsicData } from 'types';
 import Seo, { originTitle } from '@/components/Seo';
 import PageName from '@/components/PageName';
 import { Pagination } from '@/components/Pagination';
-import styles from '@/styles/Newsics.module.sass';
+import styles from '@/styles/Articles.module.sass';
 
 function Newsics({ articles, error, currentPage }: { articles: any; error: string; currentPage: number }) {
   const router = useRouter();
@@ -42,18 +42,22 @@ function Newsics({ articles, error, currentPage }: { articles: any; error: strin
               <div className={styles['article-list']}>
                 {articles.articles.map((article: NewsicData) => (
                   <article key={article.idx}>
-                    {article.platform === 'youtube' ? (
-                      <img src={`https://i.ytimg.com/vi_webp/${article.vid}/maxresdefault.webp`} alt="" />
-                    ) : (
-                      <img src={`https://cdn.dev1stud.io/nol2tr/${article.opengraph}.webp`} alt="" />
-                    )}
-                    <h3>
-                      <Link key={article.idx} href={`/newsic/${article.idx}`} scroll={false} shallow={true}>
-                        {article.subject}
-                      </Link>
-                    </h3>
-                    <p className={styles.summary}>{article.summary}</p>
-                    <p className={styles.recommended}>{article.musicData.music}</p>
+                    <Link key={article.idx} href={`/newsic/${article.idx}`} scroll={false} shallow={true}>
+                      {article.platform === 'youtube' ? (
+                        <img src={`https://i.ytimg.com/vi_webp/${article.vid}/maxresdefault.webp`} alt="" />
+                      ) : (
+                        <img src={`https://cdn.dev1stud.io/nol2tr/${article.opengraph}.webp`} alt="" />
+                      )}
+                      <h3>{article.subject}</h3>
+                      <p className={styles.summary}>{article.summary}</p>
+                      <dl className={styles.recommended}>
+                        <dt>
+                          <i />
+                          <span>추천곡</span>
+                        </dt>
+                        <dd>{article.musicData.music}</dd>
+                      </dl>
+                    </Link>
                   </article>
                 ))}
                 <Pagination currentPage={currentPage} pageCount={articles.pageCount} sorting={'newsics'} />
