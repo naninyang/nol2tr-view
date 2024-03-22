@@ -1,9 +1,12 @@
 @import './designSystem'
 
 .articles
-  padding: 0 env(safe-area-inset-right) 0 env(safe-area-inset-left)
+  padding: 0 calc(env(safe-area-inset-right) + rem(15)) 0 calc(env(safe-area-inset-left) + rem(15))
   min-height: calc(100dvh - rem(50))
   font-size: rem(16)
+
+  +mq(minLarge)
+    padding: 0 calc(env(safe-area-inset-right) + rem(25)) 0 calc(env(safe-area-inset-left) + rem(25))
 
   .error
     display: flex

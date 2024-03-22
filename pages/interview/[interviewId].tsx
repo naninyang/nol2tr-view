@@ -7,7 +7,7 @@ import YouTubeController from '@/components/YouTubeController';
 import Anchor from '@/components/Anchor';
 import { images } from '@/components/images';
 import styled from '@emotion/styled';
-import styles from '@/styles/Interview.module.sass';
+import styles from '@/styles/Article.module.sass';
 
 const BackButton = styled.i({
   display: 'block',
@@ -32,20 +32,21 @@ const YTmusicIcon = styled.i({
   background: `url(${images.misc.music}) no-repeat 50% 50%/contain`,
 });
 
-export default function interviewDetail({
-  interviewData,
+export default function articleDetail({
+  articleData,
   musicData,
 }: {
-  interviewData: InterviewParalinkData | null;
+  articleData: InterviewParalinkData | null;
   musicData: any;
 }) {
   const router = useRouter();
-  let savedScrollPosition;
 
-  const handleBackClick = () => {
-    const savedScrollPosition = sessionStorage.getItem('scrollPosition_' + router.asPath);
-    if (savedScrollPosition) {
-      router.back();
+  const previousPageHandler = () => {
+    const previousPage = sessionStorage.getItem('location');
+    if (previousPage) {
+      router.push(`${previousPage}`);
+    } else {
+      router.push('/');
     }
   };
 
@@ -58,19 +59,19 @@ export default function interviewDetail({
     return () => clearTimeout(timer);
   }, []);
 
-  if (!interviewData) {
+  if (!articleData) {
     if (timeoutReached) {
       return (
-        <main className={styles.interview}>
+        <main className={styles.article}>
           <p className={styles.error}>
             기사를 불러오지 못했습니다. 삭제된 기사이거나 인터넷 속도가 느립니다.{' '}
-            <Anchor href="/interviews">뒤로가기</Anchor>
+            <Anchor href="/articles">뒤로가기</Anchor>
           </p>
         </main>
       );
     } else {
       return (
-        <main className={styles.interview}>
+        <main className={styles.article}>
           <p className={styles.loading}>기사 읽는 중...</p>
         </main>
       );
@@ -90,76 +91,69 @@ export default function interviewDetail({
   };
 
   return (
-    <main className={styles.interview}>
+    <main className={styles.article}>
       <Seo
-        pageTitles={`${interviewData.attributes.subject} / 추천곡_ ${musicData.attributes.music} - ${originTitle}`}
-        pageTitle={`${interviewData.attributes.subject} / 추천곡_ ${musicData.attributes.music}`}
-        pageDescription={interviewData.attributes.summary}
+        pageTitles={`${articleData.attributes.subject} / 추천곡_ ${musicData.attributes.music} - ${originTitle}`}
+        pageTitle={`${articleData.attributes.subject} / 추천곡_ ${musicData.attributes.music}`}
+        pageDescription={articleData.attributes.summary}
         pageImg={
-          interviewData.attributes.platform === 'youtube'
-            ? `https://i.ytimg.com/vi_webp/${interviewData.attributes.vid}/maxresdefault.webp`
-            : `https://cdn.dev1stud.io/nol2tr/${interviewData.attributes.opengraph}.webp`
+          articleData.attributes.platform === 'youtube'
+            ? `https://i.ytimg.com/vi_webp/${articleData.attributes.vid}/maxresdefault.webp`
+            : `https://cdn.dev1stud.io/nol2tr/${articleData.attributes.opengraph}.webp`
         }
-        pageOgType={interviewData.attributes.platform === 'youtube' ? 'video.other' : 'article'}
+        pageOgType={articleData.attributes.platform === 'youtube' ? 'video.other' : 'article'}
       />
       <div className="top-link">
-        {savedScrollPosition ? (
-          <button onClick={handleBackClick}>
-            <BackButton />
-            <span>뒤로가기</span>
-          </button>
-        ) : (
-          <Anchor href="/interviews">
-            <BackButton />
-            <span>뒤로가기</span>
-          </Anchor>
-        )}
+        <button onClick={previousPageHandler} type="button">
+          <BackButton />
+          <span>뒤로가기</span>
+        </button>
       </div>
-      <article className={styles['article-news']}>
+      <article>
         <div className={styles.news}>
-          {interviewData.attributes.platform === 'youtube' ? (
-            <YouTubeController videoId={interviewData.attributes.vid} vi={interviewData.attributes.vi} />
+          {articleData.attributes.platform === 'youtube' ? (
+            <YouTubeController videoId={articleData.attributes.vid} vi={articleData.attributes.vi} />
           ) : (
             <div className={styles.thumbnail}>
-              {interviewData.attributes.platform === 'naverNews' ? (
+              {articleData.attributes.platform === 'naverNews' ? (
                 <Anchor
-                  href={`https://n.news.naver.com/article/${interviewData.attributes.oid}/${interviewData.attributes.aid}`}
+                  href={`https://n.news.naver.com/article/${articleData.attributes.oid}/${articleData.attributes.aid}`}
                 >
                   <span>기사 전문보기</span>
-                  <img src={`https://cdn.dev1stud.io/nol2tr/${interviewData.attributes.thumbnail}.webp`} alt="" />
+                  <img src={`https://cdn.dev1stud.io/nol2tr/${articleData.attributes.thumbnail}.webp`} alt="" />
                 </Anchor>
               ) : (
                 <Anchor
-                  href={`https://entertain.naver.com/read?oid=${interviewData.attributes.oid}&aid=${interviewData.attributes.aid}`}
+                  href={`https://entertain.naver.com/read?oid=${articleData.attributes.oid}&aid=${articleData.attributes.aid}`}
                 >
                   <span>기사 전문보기</span>
-                  <img src={`https://cdn.dev1stud.io/nol2tr/${interviewData.attributes.thumbnail}.webp`} alt="" />
+                  <img src={`https://cdn.dev1stud.io/nol2tr/${articleData.attributes.thumbnail}.webp`} alt="" />
                 </Anchor>
               )}
             </div>
           )}
           <header>
             <h1>
-              {interviewData.attributes.subject} <span>추천곡_ {musicData.attributes.music}</span>
+              {articleData.attributes.subject} <span>추천곡_ {musicData.attributes.music}</span>
             </h1>
             <div className={styles.function}>
               <button onClick={copyToClipboard}>
                 <ClipboardIcon /> <span>URL 복사</span>
               </button>
-              <time>기사 작성일 {interviewData.attributes.created}</time>
+              <time>기사 작성일 {articleData.attributes.created}</time>
             </div>
           </header>
           <dl>
             <div>
               <dt>인터뷰어</dt>
-              <dd>{interviewData.attributes.interviewer}</dd>
+              <dd>{articleData.attributes.interviewer}</dd>
             </div>
             <div>
               <dt>인터뷰이</dt>
-              <dd>{interviewData.attributes.interviewee}</dd>
+              <dd>{articleData.attributes.interviewee}</dd>
             </div>
           </dl>
-          <p dangerouslySetInnerHTML={{ __html: interviewData.attributes.description.replace(/\n/g, '<br />') }} />
+          <p dangerouslySetInnerHTML={{ __html: articleData.attributes.description.replace(/\n/g, '<br />') }} />
         </div>
         <hr />
         <div className={styles.music}>
@@ -245,31 +239,31 @@ export default function interviewDetail({
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const interviewId = context.params?.interviewId;
-  let interviewData = null;
+  let articleData = null;
   let musicData = null;
 
   if (interviewId && typeof interviewId === 'string') {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/interview?id=${interviewId.substring(14)}`);
-    const interviewResponse = (await response.json()) as { data: InterviewParalinkData };
-    interviewData = interviewResponse.data;
+    const articleResponse = (await response.json()) as { data: InterviewParalinkData };
+    articleData = articleResponse.data;
     const musicResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/musics?musicId=${interviewData.attributes.music}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/musics?musicId=${articleData.attributes.music}`,
     );
     const musicResponseData = (await musicResponse.json()) as { data: MusicParalinkData };
     musicData = musicResponseData.data;
   }
 
-  if (!interviewData) {
+  if (!articleData) {
     return {
       props: {
-        interviewData: null,
+        articleData: null,
       },
     };
   }
 
   return {
     props: {
-      interviewData,
+      articleData,
       idx: interviewId,
       musicData,
     },

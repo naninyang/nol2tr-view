@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
+import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { NoticeData } from 'types';
 import Seo, { originTitle } from '@/components/Seo';
@@ -24,12 +25,16 @@ const BackButton = styled.i({
 });
 
 const Notices: NextPage<NoticeProps> = ({ notices }) => {
-  const [currentPage, setCurrentPage] = useState<string | null>(null);
+  const router = useRouter();
 
-  useEffect(() => {
-    const storedPage = localStorage.getItem('currentPage');
-    setCurrentPage(storedPage);
-  }, []);
+  const previousPageHandler = () => {
+    const previousPage = sessionStorage.getItem('location');
+    if (previousPage) {
+      router.push(`${previousPage}`);
+    } else {
+      router.push('/');
+    }
+  };
 
   const [noticesData, setNoticesData] = useState<NoticeData[]>([]);
   useEffect(() => {
@@ -47,17 +52,10 @@ const Notices: NextPage<NoticeProps> = ({ notices }) => {
         pageImg={`https://nol2tr.dev1stud.io/og-image.webp?ts=${timestamp}`}
       />
       <div className="top-link">
-        {currentPage ? (
-          <Anchor href={`/${currentPage}`}>
-            <BackButton />
-            <span>뒤로가기</span>
-          </Anchor>
-        ) : (
-          <Anchor href="/">
-            <BackButton />
-            <span>뒤로가기</span>
-          </Anchor>
-        )}
+        <button onClick={previousPageHandler} type="button">
+          <BackButton />
+          <span>뒤로가기</span>
+        </button>
       </div>
       <div className={styles['pages-content']}>
         <h1>

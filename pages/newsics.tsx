@@ -14,7 +14,6 @@ function Newsics({ articles, error, currentPage }: { articles: any; error: strin
 
   useEffect(() => {
     localStorage.removeItem('currentPage');
-    localStorage.setItem('currentPage', 'newsics');
   }, []);
 
   useEffect(() => {

@@ -14,7 +14,6 @@ function Interviews({ articles, error, currentPage }: { articles: any; error: st
 
   useEffect(() => {
     localStorage.removeItem('currentPage');
-    localStorage.setItem('currentPage', 'interviews');
   }, []);
 
   useEffect(() => {

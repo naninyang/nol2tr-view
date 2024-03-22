@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import fs from 'fs';
 import path from 'path';
 import styled from '@emotion/styled';
 import Seo, { originTitle } from '@/components/Seo';
-import Anchor from '@/components/Anchor';
 import { images } from '@/components/images';
 import content from '@/styles/Content.module.sass';
 import styles from '@/styles/Open.module.sass';
@@ -19,12 +18,16 @@ const BackButton = styled.i({
 });
 
 function OpenSources({ licenses }: { licenses: string[] }) {
-  const [currentPage, setCurrentPage] = useState<string | null>(null);
+  const router = useRouter();
 
-  useEffect(() => {
-    const storedPage = localStorage.getItem('currentPage');
-    setCurrentPage(storedPage);
-  }, []);
+  const previousPageHandler = () => {
+    const previousPage = sessionStorage.getItem('location');
+    if (previousPage) {
+      router.push(`${previousPage}`);
+    } else {
+      router.push('/');
+    }
+  };
 
   const timestamp = Date.now();
 
@@ -37,17 +40,10 @@ function OpenSources({ licenses }: { licenses: string[] }) {
         pageImg={`https://nol2tr.dev1stud.io/og-image.webp?ts=${timestamp}`}
       />
       <div className="top-link">
-        {currentPage ? (
-          <Anchor href={`/${currentPage}`}>
-            <BackButton />
-            <span>뒤로가기</span>
-          </Anchor>
-        ) : (
-          <Anchor href="/">
-            <BackButton />
-            <span>뒤로가기</span>
-          </Anchor>
-        )}
+        <button onClick={previousPageHandler} type="button">
+          <BackButton />
+          <span>뒤로가기</span>
+        </button>
       </div>
       <div className={styles['open_sources-content']}>
         <h1>

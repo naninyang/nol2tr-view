@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
-import { GetServerSideProps, NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { MusicData } from 'types';
 import Seo, { originTitle } from '@/components/Seo';
 import Anchor from '@/components/Anchor';
 import { images } from '@/components/images';
+import YouTubeController from '@/components/YouTubeController';
 import content from '@/styles/Content.module.sass';
 import styles from '@/styles/Pages.module.sass';
 import music from '@/styles/Music.module.sass';
-import YouTubeController from '@/components/YouTubeController';
 
 interface NoticeProps {
   musics: MusicData[];
@@ -29,14 +30,8 @@ const YTmusicIcon = styled.i({
 });
 
 const Musics: NextPage<NoticeProps> = ({ musics }) => {
-  const [currentPage, setCurrentPage] = useState<string | null>(null);
+  const router = useRouter();
   const [selectedMusicId, setSelectedMusicId] = useState<string | null>(null);
-
-  useEffect(() => {
-    const storedPage = localStorage.getItem('currentPage');
-    setCurrentPage(storedPage);
-  }, []);
-
   const [musicsData, setMusicsData] = useState<MusicData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -82,6 +77,15 @@ const Musics: NextPage<NoticeProps> = ({ musics }) => {
     document.querySelector(`#music${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  const previousPageHandler = () => {
+    const previousPage = sessionStorage.getItem('location');
+    if (previousPage) {
+      router.push(`${previousPage}`);
+    } else {
+      router.push('/');
+    }
+  };
+
   const timestamp = Date.now();
 
   return (
@@ -93,17 +97,10 @@ const Musics: NextPage<NoticeProps> = ({ musics }) => {
         pageImg={`https://nol2tr.dev1stud.io/og-image.webp?ts=${timestamp}`}
       />
       <div className="top-link">
-        {currentPage ? (
-          <Anchor href={`/${currentPage}`}>
-            <BackButton />
-            <span>뒤로가기</span>
-          </Anchor>
-        ) : (
-          <Anchor href="/">
-            <BackButton />
-            <span>뒤로가기</span>
-          </Anchor>
-        )}
+        <button onClick={previousPageHandler} type="button">
+          <BackButton />
+          <span>뒤로가기</span>
+        </button>
       </div>
       <div className={styles['pages-content']}>
         <h1>
