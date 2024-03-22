@@ -64,10 +64,7 @@ const Notices: NextPage<NoticeProps> = ({ notices }) => {
           <span>안내사항 nol2tr_log</span>
         </h1>
         <div>
-          <p>
-            이 서비스는 Vercel, AWS, Google 그리고 NAVER와 관련이 없고,{' '}
-            <span>큐레이터 코멘트는 언론사의 입장과 다를 수 있습니다.</span>
-          </p>
+          <p>이 서비스는 Vercel, AWS, Google 그리고 NAVER와 관련이 없습니다.</p>
           <p>
             뉴스 콘텐츠에 대한 저작권은 각 언론사에 있으며 <span>곡에 대한 저작권은 저작권리사에 있습니다.</span>
           </p>
