@@ -11,11 +11,11 @@ const Container = styled.h2({
   display: 'flex',
   alignItems: 'center',
   gap: rem(5),
-  padding: `${rem(15)} ${rem(20)}`,
+  padding: `${rem(15)} 0`,
   fontSize: rem(20),
   color: 'var(--default-text)',
   [mq.minSmall]: {
-    padding: `${rem(15)} ${rem(25)}`,
+    padding: `${rem(15)} 0`,
   },
   '& span': {
     lineHeight: 1,
