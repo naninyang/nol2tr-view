@@ -1,20 +1,20 @@
 import { NewsicData, InterviewData, NoticeData, MusicData, MusicParalinkData } from 'types';
 
-const formatDate = (datetime: string) => {
+export const formatDate = (datetime: string) => {
   const date = new Date(datetime);
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
-  const hours = date.getHours().toString().padStart(2, '0');
-  const minutes = date.getMinutes().toString().padStart(2, '0');
-  const seconds = date.getSeconds().toString().padStart(2, '0');
+  const year = date.getUTCFullYear();
+  const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
+  const day = date.getUTCDate().toString().padStart(2, '0');
+  const hours = date.getUTCHours().toString().padStart(2, '0');
+  const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+  const seconds = date.getUTCSeconds().toString().padStart(2, '0');
 
   return `${year}${month}${day}${hours}${minutes}${seconds}`;
 };
 
-export async function getInterviewData(start?: number, count?: number) {
+export async function getInterviewData(page?: number) {
   const response = await fetch(
-    `${process.env.STRAPI_URL}/api/interview-nol2trs?sort[0]=id:desc&pagination[page]=${start}&pagination[pageSize]=${count}`,
+    `${process.env.STRAPI_URL}/api/interview-nol2trs?sort[0]=id:desc&pagination[page]=${page}&pagination[pageSize]=48`,
     {
       method: 'GET',
       headers: {
@@ -23,9 +23,10 @@ export async function getInterviewData(start?: number, count?: number) {
     },
   );
   const interviewResponse = await response.json();
-  const filesData = interviewResponse.data;
-  const rowsData: InterviewData[] = await Promise.all(
-    filesData.map(async (data: any) => {
+  const interviewData = interviewResponse.data;
+  const pageCount = interviewResponse.meta.pagination.pageCount;
+  const articles: InterviewData[] = await Promise.all(
+    interviewData.map(async (data: any) => {
       const musicData = await getMusicData(data.attributes.music);
       return {
         id: data.id,
@@ -48,12 +49,12 @@ export async function getInterviewData(start?: number, count?: number) {
     }),
   );
 
-  return rowsData;
+  return { articles, pageCount: pageCount };
 }
 
-export async function getNewsicData(start?: number, count?: number) {
+export async function getNewsicData(page?: number) {
   const response = await fetch(
-    `${process.env.STRAPI_URL}/api/newsic-nol2trs?sort[0]=id:desc&pagination[page]=${start}&pagination[pageSize]=${count}`,
+    `${process.env.STRAPI_URL}/api/newsic-nol2trs?sort[0]=id:desc&pagination[page]=${page}&pagination[pageSize]=48`,
     {
       method: 'GET',
       headers: {
@@ -62,9 +63,10 @@ export async function getNewsicData(start?: number, count?: number) {
     },
   );
   const newsicResponse = await response.json();
-  const filesData = newsicResponse.data;
-  const rowsData: NewsicData[] = await Promise.all(
-    filesData.map(async (data: any) => {
+  const newsicData = newsicResponse.data;
+  const pageCount = newsicResponse.meta.pagination.pageCount;
+  const articles: NewsicData[] = await Promise.all(
+    newsicData.map(async (data: any) => {
       const musicData = await getMusicData(data.attributes.music);
       return {
         id: data.id,
@@ -84,7 +86,7 @@ export async function getNewsicData(start?: number, count?: number) {
     }),
   );
 
-  return rowsData;
+  return { articles, pageCount: pageCount };
 }
 
 export async function getMusicData(music: string) {

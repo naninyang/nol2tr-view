@@ -1,0 +1,35 @@
+@import './designSystem'
+
+.pagination
+  display: flex
+  justify-content: flex-end
+  gap: rem(7)
+  padding: rem(27) rem(12) rem(57)
+
+  +mq(minSmall)
+    justify-content: center
+    padding: rem(27) 0 rem(57)
+    width: 100%
+
+  .pager, .pages
+    a
+      display: inline-flex
+      justify-content: center
+      align-items: center
+      border: 1px solid $hex-black
+      border-radius: rem(3)
+      width: rem(30)
+      height: rem(30)
+      font-size: rem(12)
+      color: $hex-black
+
+  .pager span
+    +screen-reader-only
+
+  .pages
+    &.current
+      a
+        border: 1px solid $hex-accent
+        background-color: $hex-accent
+        color: $hex-white
+        font-weight: 900
