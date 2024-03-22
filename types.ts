@@ -49,6 +49,7 @@ export interface NewsicData {
   thumbnail: string;
   summary: string;
   description: string;
+  fin: string;
   musicData: any;
   created: string;
 }
@@ -66,6 +67,7 @@ export interface NewsicParalinkData {
     thumbnail: string;
     summary: string;
     description: string;
+    fin: string;
     music: string;
     videoid: string;
     vvi: string;

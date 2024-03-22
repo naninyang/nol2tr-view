@@ -144,6 +144,9 @@ export default function articleDetail({
             </div>
           </header>
           <p dangerouslySetInnerHTML={{ __html: articleData.attributes.description.replace(/\n/g, '<br />') }} />
+          {articleData.attributes.fin !== null && (
+            <p dangerouslySetInnerHTML={{ __html: articleData.attributes.fin.replace(/\n/g, '<br />') }} />
+          )}
         </div>
         <hr />
         <div className={styles.music}>

@@ -80,6 +80,7 @@ export async function getNewsicData(page?: number) {
         thumbnail: data.attributes.thumbnail,
         summary: data.attributes.summary,
         description: data.attributes.description,
+        fin: data.attributes.fin,
         musicData,
         created: data.attributes.created,
       };
