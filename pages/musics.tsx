@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import styled from '@emotion/styled';
 import { MusicData } from 'types';
 import Seo, { originTitle } from '@/components/Seo';
@@ -10,8 +10,9 @@ import YouTubeController from '@/components/YouTubeController';
 import content from '@/styles/Content.module.sass';
 import styles from '@/styles/Pages.module.sass';
 import music from '@/styles/Music.module.sass';
+import { env } from 'process';
 
-interface NoticeProps {
+interface MusicProps {
   musics: MusicData[];
 }
 
@@ -29,45 +30,9 @@ const YTmusicIcon = styled.i({
   background: `url(${images.misc.music}) no-repeat 50% 50%/contain`,
 });
 
-const Musics: NextPage<NoticeProps> = ({ musics }) => {
+const Musics = ({ musicsData }: { musicsData: MusicData[] }) => {
   const router = useRouter();
   const [selectedMusicId, setSelectedMusicId] = useState<string | null>(null);
-  const [musicsData, setMusicsData] = useState<MusicData[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [total, setTotal] = useState(0);
-  const [loaded, setLoaded] = useState(0);
-
-  const fetchData = async () => {
-    try {
-      setIsLoading(true);
-      let mergedData: MusicData[] = [];
-      let page = 1;
-
-      do {
-        const response = await fetch(`/api/musics?page=${page}`);
-        const data = await response.json();
-        setTotal(data.total);
-
-        if (data.rowsData.length === 0) {
-          break;
-        } else {
-          mergedData = mergedData.concat(data.rowsData);
-          setLoaded(mergedData.length);
-          page++;
-        }
-      } while (mergedData.length < total);
-
-      setMusicsData(mergedData);
-    } catch (error) {
-      console.error('Error fetching data', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const handleButtonClick = (id: string) => {
     setSelectedMusicId(selectedMusicId === id ? null : id);
@@ -109,94 +74,82 @@ const Musics: NextPage<NoticeProps> = ({ musics }) => {
         </div>
         <div className={music.musics}>
           <hr />
-          {isLoading ? (
-            <>
-              <p>곡 목록을 가져오는 중입니다.</p>
-              <p>잠시만 기다려 주세요!</p>
-              {total > 0 && (
-                <p>
-                  {total}개 곡 중 {loaded}곡 가져옴.
-                </p>
-              )}
-            </>
-          ) : (
-            <ul>
-              {musicsData.map((music, index) => (
-                <li key={music.id}>
-                  <button type="button" onClick={() => handleButtonClick(music.id)}>
-                    <span>
-                      <i>{index + 1}</i>
-                      <strong>{music.music}</strong>
-                      <em>
-                        {music.instrument
-                          ? music.artist !== null
-                            ? music.artist
-                            : music.composer
-                          : music.cover !== null
-                          ? music.cover
-                          : music.artist}
-                      </em>
-                    </span>
-                  </button>
-                  {selectedMusicId === music.id && (
-                    <div id={`music${music.id}`}>
-                      <YouTubeController videoId={music.videoid} start={music.start} vi={music.vvi} />
-                      <dl>
-                        <div>
-                          <dt>유튜브뮤직</dt>
-                          <dd>
-                            <Anchor href={`https://music.youtube.com/watch?v=${music.videoid}`}>
-                              <YTmusicIcon />
-                              <span>YouTube Music</span>에서 고음질로 듣기
-                            </Anchor>
-                          </dd>
-                        </div>
-                        <div>
-                          {music.cover !== null && (
-                            <div>
-                              <dt>원곡</dt>
-                              <dd>{music.artist}</dd>
-                            </div>
-                          )}
+          <ul>
+            {musicsData.map((music, index) => (
+              <li key={music.id}>
+                <button type="button" onClick={() => handleButtonClick(music.id)}>
+                  <span>
+                    <i>{index + 1}</i>
+                    <strong>{music.music}</strong>
+                    <em>
+                      {music.instrument
+                        ? music.artist !== null
+                          ? music.artist
+                          : music.composer
+                        : music.cover !== null
+                        ? music.cover
+                        : music.artist}
+                    </em>
+                  </span>
+                </button>
+                {selectedMusicId === music.id && (
+                  <div id={`music${music.id}`}>
+                    <YouTubeController videoId={music.videoid} start={music.start} vi={music.vvi} />
+                    <dl>
+                      <div>
+                        <dt>유튜브뮤직</dt>
+                        <dd>
+                          <Anchor href={`https://music.youtube.com/watch?v=${music.videoid}`}>
+                            <YTmusicIcon />
+                            <span>YouTube Music</span>에서 고음질로 듣기
+                          </Anchor>
+                        </dd>
+                      </div>
+                      <div>
+                        {music.cover !== null && (
                           <div>
-                            <dt>수록앨범</dt>
-                            <dd>{music.album}</dd>
-                          </div>
-                        </div>
-                        {music.composer === music.lyricist ? (
-                          <div>
-                            <div>
-                              <dt>작곡/작사</dt>
-                              <dd>{music.composer}</dd>
-                            </div>
-                          </div>
-                        ) : (
-                          <div>
-                            <div>
-                              <dt>작곡</dt>
-                              <dd>{music.composer}</dd>
-                            </div>
-                            {music.lyricist !== null && (
-                              <div>
-                                <dt>작사</dt>
-                                <dd>{music.lyricist}</dd>
-                              </div>
-                            )}
+                            <dt>원곡</dt>
+                            <dd>{music.artist}</dd>
                           </div>
                         )}
-                      </dl>
-                      {music.lyrics !== null && (
-                        <p dangerouslySetInnerHTML={{ __html: music.lyrics.replace(/\n/g, '<br />') }} />
+                        <div>
+                          <dt>수록앨범</dt>
+                          <dd>{music.album}</dd>
+                        </div>
+                      </div>
+                      {music.composer === music.lyricist ? (
+                        <div>
+                          <div>
+                            <dt>작곡/작사</dt>
+                            <dd>{music.composer}</dd>
+                          </div>
+                        </div>
+                      ) : (
+                        <div>
+                          <div>
+                            <dt>작곡</dt>
+                            <dd>{music.composer}</dd>
+                          </div>
+                          {music.lyricist !== null && (
+                            <div>
+                              <dt>작사</dt>
+                              <dd>{music.lyricist}</dd>
+                            </div>
+                          )}
+                        </div>
                       )}
-                      <button type="button" onClick={() => handleButtonClick(music.id)}>
-                        곡 정보 닫기
-                      </button>
-                    </div>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )}
+                    </dl>
+                    {music.lyrics !== null && (
+                      <p dangerouslySetInnerHTML={{ __html: music.lyrics.replace(/\n/g, '<br />') }} />
+                    )}
+                    <button type="button" onClick={() => handleButtonClick(music.id)}>
+                      곡 정보 닫기
+                    </button>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </main>
@@ -204,3 +157,48 @@ const Musics: NextPage<NoticeProps> = ({ musics }) => {
 };
 
 export default Musics;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  try {
+    let mergedData: MusicData[] = [];
+    let page = 1;
+    let isTotalSet = false;
+    let total = 0;
+
+    do {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/musics?page=${page}`);
+      const data = await response.json();
+
+      if (!isTotalSet) {
+        total = data.total;
+        isTotalSet = true;
+      }
+
+      if (data.rowsData.length === 0) {
+        break;
+      } else {
+        mergedData = mergedData.concat(data.rowsData);
+        page++;
+      }
+    } while (mergedData.length < total);
+
+    const sortedData = mergedData.sort((a, b) => {
+      if (a.music < b.music) return -1;
+      if (a.music > b.music) return 1;
+      return 0;
+    });
+
+    return {
+      props: {
+        musicsData: sortedData,
+      },
+    };
+  } catch (error) {
+    console.error('서버 사이드에서 데이터 가져오기 실패:', error);
+    return {
+      props: {
+        musicsData: [],
+      },
+    };
+  }
+};
