@@ -113,9 +113,11 @@ const Musics: NextPage<NoticeProps> = ({ musics }) => {
             <>
               <p>곡 목록을 가져오는 중입니다.</p>
               <p>잠시만 기다려 주세요!</p>
-              <p>
-                {total}개 곡 중 {loaded}곡 가져옴.
-              </p>
+              {total > 0 && (
+                <p>
+                  {total}개 곡 중 {loaded}곡 가져옴.
+                </p>
+              )}
             </>
           ) : (
             <ul>
