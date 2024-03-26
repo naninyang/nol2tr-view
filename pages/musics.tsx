@@ -34,35 +34,33 @@ const Musics: NextPage<NoticeProps> = ({ musics }) => {
   const [selectedMusicId, setSelectedMusicId] = useState<string | null>(null);
   const [musicsData, setMusicsData] = useState<MusicData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [total, setTotal] = useState(0);
+  const [loaded, setLoaded] = useState(0);
 
   const fetchData = async () => {
     try {
       setIsLoading(true);
       let mergedData: MusicData[] = [];
-      let hasMoreData = true;
       let page = 1;
+      let total = 0;
 
-      while (hasMoreData) {
+      do {
         const response = await fetch(`/api/musics?page=${page}`);
         const data = await response.json();
+        total = data.total;
 
-        if (data.length === 0) {
-          hasMoreData = false;
+        if (data.rowsData.length === 0) {
+          break;
         } else {
-          mergedData = mergedData.concat(data);
+          mergedData = mergedData.concat(data.rowsData);
+          setLoaded(mergedData.length);
           page++;
         }
-      }
+      } while (mergedData.length < total);
 
-      const sortedData = mergedData.sort((a, b) => {
-        if (a.music < b.music) return -1;
-        if (a.music > b.music) return 1;
-        return 0;
-      });
-
-      setMusicsData(sortedData);
+      setMusicsData(mergedData);
     } catch (error) {
-      console.error('왜 여기서 오류가 나와?', error);
+      console.error('Error fetching data', error);
     } finally {
       setIsLoading(false);
     }
@@ -116,6 +114,9 @@ const Musics: NextPage<NoticeProps> = ({ musics }) => {
             <>
               <p>곡 목록을 가져오는 중입니다.</p>
               <p>잠시만 기다려 주세요!</p>
+              <p>
+                {total}개 곡 중 {loaded}곡 가져옴.
+              </p>
             </>
           ) : (
             <ul>

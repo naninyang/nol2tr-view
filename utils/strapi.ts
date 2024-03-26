@@ -127,6 +127,7 @@ export async function getMusicsData(page: number, pageSize: number) {
   );
   const musicsResponse = await response.json();
   const musicsData = musicsResponse.data;
+  const total = musicsResponse.meta.pagination.total;
   const rowsData: MusicData[] = musicsData.map((data: any) => ({
     id: data.id,
     music: data.attributes.music,
@@ -141,7 +142,7 @@ export async function getMusicsData(page: number, pageSize: number) {
     start: data.attributes.start,
     vvi: data.attributes.vvi,
   }));
-  return rowsData;
+  return { rowsData, total };
 }
 
 export async function getNoticeData() {
