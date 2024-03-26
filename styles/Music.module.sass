@@ -69,90 +69,182 @@
             padding-left: rem(14)
             font-size: rem(14)
 
+.music
+  .dialog
+    position: fixed
+    display: flex
+    flex-direction: column
+    justify-content: center
+    top: 0
+    left: 0
+    z-index: 1070
+    border: 0
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)
+    width: 100%
+    height: 100%
+    background-color: $hex-white
+    backdrop-filter: blur(rem(20))
+
+    +mq(minMedium)
+      padding: rem(52)
+      background-color: rgba($hex-black, .7)
+
+    .container
+      display: flex
+      flex-direction: column
+      position: relative
+      gap: rem(27)
+      padding: rem(52) rem(27)
+      width: 100%
+      height: 100dvh
+      background-color: $hex-white
+      overflow: hidden
+
+      +mq(minMedium)
+        flex-direction: row
+        gap: rem(52)
+        padding: rem(52)
+        height: auto
+        max-height: calc(100vh - rem(104))
+
+      > button
+        position: absolute
+        top: rem(12)
+        right: rem(25)
+        width: rem(32)
+        height: rem(32)
+        background-color: $hex-white
+
+        +mq(minMedium)
+          right: rem(12)
+
+        i
+          display: inline-block
+          width: rem(32)
+          height: rem(32)
+
+        span
+          +screen-reader-only
+
+    .info, .lyrics
+      +mq(minMedium)
+        +col
+
+    .summary
+      h2
+        font-size: rem(20)
+
+    .info
+      display: flex
+      flex-direction: column
+
+      .yt
+        aspect-ratio: 1920 / 1080
+        width: 100%
+        max-height: 100vh
+
+        img
+          max-width: 100%
+
+      .summary
+        h2
+          padding-top: rem(12)
+
+    .lyrics
+      overflow: hidden
+      display: flex
+      flex-direction: column
+
+      .summary
+        h2
+          padding-bottom: rem(12)
+
       dl
-        display: flex
-        flex-direction: column
+        padding-top: 0
+
+    dl
+      display: flex
+      flex-direction: column
+      gap: rem(7)
+      padding: rem(17) 0
+
+      > div
+        display: inline-flex
         gap: rem(7)
-        padding: rem(17) 0
+
+        +mq(maxExtraSmall)
+          flex-direction: column
+
+        +mq(minSmall)
+          gap: rem(17)
+
+        &:first-of-type
+          dt
+            +screen-reader-only
+
+          a
+            display: inline-flex
+            gap: rem(3)
+            background-color: $hex-black
+            border-radius: rem(3)
+            padding: rem(6) rem(12)
+            color: $hex-white
+            font-size: rem(14)
+
+            i
+              display: inline-block
+              width: rem(67)
+              height: rem(20)
+
+            span
+              +screen-reader-only
 
         > div
           display: inline-flex
           gap: rem(7)
 
-          +mq(maxExtraSmall)
-            flex-direction: column
-
-          +mq(minSmall)
-            gap: rem(17)
-
-          &:first-of-type
-            dt
-              +screen-reader-only
-
-            a
-              display: inline-flex
-              gap: rem(3)
-              background-color: $hex-black
-              border-radius: rem(3)
-              padding: rem(6) rem(12)
-              color: $hex-white
-              font-size: rem(14)
-
-              i
-                display: inline-block
-                width: rem(67)
-                height: rem(20)
-
-              span
-                +screen-reader-only
-
-          > div
-            display: inline-flex
-            gap: rem(7)
-
-          dt, dd
-            font-size: rem(14)
-
-          dt
-            color: var(--txt-summary)
-            white-space: nowrap
-
-          dd
-            font-weight: 700
-            color: var(--txt-subject)
-            white-space: break-spaces
-            word-wrap: break-word
-            word-break: normal
-
-        & + button
-          justify-content: center
-          background-color: $hex-accent
-          margin: rem(17) 0
-          border-radius: rem(3)
-          width: 100%
+        dt, dd
           font-size: rem(14)
-          font-weight: 700
-          color: $hex-white
 
-      p
+        dt
+          color: var(--txt-summary)
+          white-space: nowrap
+
+        dd
+          font-weight: 700
+          color: var(--txt-subject)
+          white-space: break-spaces
+          word-wrap: break-word
+          word-break: normal
+
+      & + button
+        justify-content: center
+        background-color: $hex-accent
+        margin: rem(17) 0
+        border-radius: rem(3)
+        width: 100%
         font-size: rem(14)
-        color: var(--txt-subject)
-        text-align: left !important
-        white-space: break-spaces
-        word-wrap: break-word
-        word-break: keep-all
+        font-weight: 700
+        color: $hex-white
 
-        & + button
-          justify-content: center
-          background-color: $hex-accent
-          margin: rem(17) 0
-          border-radius: rem(3)
-          width: 100%
-          font-size: rem(14)
-          font-weight: 700
-          color: $hex-white
+    p
+      font-size: rem(16)
+      color: var(--txt-subject)
+      text-align: left !important
+      white-space: break-spaces
+      word-wrap: break-word
+      word-break: keep-all
 
-.music
+      & + button
+        justify-content: center
+        background-color: $hex-accent
+        margin: rem(17) 0
+        border-radius: rem(3)
+        width: 100%
+        font-size: rem(14)
+        font-weight: 700
+        color: $hex-white
+
   article
     margin: 0 auto
     padding: 0 rem(15)

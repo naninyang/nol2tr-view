@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { GetServerSideProps, NextPage } from 'next';
+import { GetServerSideProps } from 'next';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 import styled from '@emotion/styled';
 import { MusicData } from 'types';
 import Seo, { originTitle } from '@/components/Seo';
@@ -9,12 +10,13 @@ import { images } from '@/components/images';
 import YouTubeController from '@/components/YouTubeController';
 import content from '@/styles/Content.module.sass';
 import styles from '@/styles/Pages.module.sass';
-import music from '@/styles/Music.module.sass';
-import { env } from 'process';
+import musicStyles from '@/styles/Music.module.sass';
+import 'react-perfect-scrollbar/dist/css/styles.css';
 
-interface MusicProps {
-  musics: MusicData[];
-}
+type MusicDetailProps = {
+  music: MusicData;
+  onClose: () => void;
+};
 
 const BackButton = styled.i({
   display: 'block',
@@ -30,14 +32,163 @@ const YTmusicIcon = styled.i({
   background: `url(${images.misc.music}) no-repeat 50% 50%/contain`,
 });
 
+const CloseIcon = styled.i({
+  background: `url(${images.arrow.crossDark}) no-repeat 50% 50%/contain`,
+});
+
+const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
+  return (
+    <dialog className={musicStyles.dialog}>
+      <div className={musicStyles.container}>
+        <button type="button" onClick={onClose}>
+          <CloseIcon />
+          <span>닫기</span>
+        </button>
+        <div className={musicStyles.info}>
+          <PerfectScrollbar className={styles['scrollbar-container']}>
+            {music.lyrics === null && (
+              <div className={musicStyles.summary}>
+                <h2>{music.music}</h2>
+                <dl>
+                  <div>
+                    <dt>유튜브뮤직</dt>
+                    <dd>
+                      <Anchor href={`https://music.youtube.com/watch?v=${music.videoid}`}>
+                        <YTmusicIcon />
+                        <span>YouTube Music</span>에서 고음질로 듣기
+                      </Anchor>
+                    </dd>
+                  </div>
+                  <div>
+                    {music.cover !== null && (
+                      <div>
+                        <dt>원곡</dt>
+                        <dd>{music.artist}</dd>
+                      </div>
+                    )}
+                    <div>
+                      <dt>수록앨범</dt>
+                      <dd>{music.album}</dd>
+                    </div>
+                  </div>
+                  {music.composer === music.lyricist ? (
+                    <div>
+                      <div>
+                        <dt>작곡/작사</dt>
+                        <dd>{music.composer}</dd>
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <div>
+                        <dt>작곡</dt>
+                        <dd>{music.composer}</dd>
+                      </div>
+                      {music.lyricist !== null && (
+                        <div>
+                          <dt>작사</dt>
+                          <dd>{music.lyricist}</dd>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </dl>
+              </div>
+            )}
+            <div className={musicStyles.yt}>
+              <YouTubeController videoId={music.videoid} start={music.start} vi={music.vvi} />
+            </div>
+          </PerfectScrollbar>
+        </div>
+        {music.lyrics !== null && (
+          <div className={musicStyles.lyrics}>
+            <div className={musicStyles.summary}>
+              <h2>{music.music}</h2>
+            </div>
+            <dl>
+              <div>
+                <dt>유튜브뮤직</dt>
+                <dd>
+                  <Anchor href={`https://music.youtube.com/watch?v=${music.videoid}`}>
+                    <YTmusicIcon />
+                    <span>YouTube Music</span>에서 고음질로 듣기
+                  </Anchor>
+                </dd>
+              </div>
+              <div>
+                {music.cover !== null && (
+                  <div>
+                    <dt>원곡</dt>
+                    <dd>{music.artist}</dd>
+                  </div>
+                )}
+                <div>
+                  <dt>수록앨범</dt>
+                  <dd>{music.album}</dd>
+                </div>
+              </div>
+              {music.composer === music.lyricist ? (
+                <div>
+                  <div>
+                    <dt>작곡/작사</dt>
+                    <dd>{music.composer}</dd>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div>
+                    <dt>작곡</dt>
+                    <dd>{music.composer}</dd>
+                  </div>
+                  {music.lyricist !== null && (
+                    <div>
+                      <dt>작사</dt>
+                      <dd>{music.lyricist}</dd>
+                    </div>
+                  )}
+                </div>
+              )}
+            </dl>
+            <PerfectScrollbar className={styles['scrollbar-container']}>
+              <p dangerouslySetInnerHTML={{ __html: music.lyrics.replace(/\n/g, '<br />') }} />
+            </PerfectScrollbar>
+          </div>
+        )}
+      </div>
+    </dialog>
+  );
+};
+
 const Musics = ({ musicsData }: { musicsData: MusicData[] }) => {
   const router = useRouter();
   const [selectedMusicId, setSelectedMusicId] = useState<string | null>(null);
 
   const handleButtonClick = (id: string) => {
-    setSelectedMusicId(selectedMusicId === id ? null : id);
-    document.querySelector(`#music${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setSelectedMusicId(id);
   };
+
+  const handleCloseMusicDetail = () => {
+    setSelectedMusicId(null);
+  };
+
+  const selectedMusic = musicsData.find((music) => music.id === selectedMusicId);
+
+  useEffect(() => {
+    const preventScroll = (e: Event) => {
+      e.preventDefault();
+    };
+    if (selectedMusic !== undefined) {
+      window.addEventListener('wheel', preventScroll, { passive: false });
+      window.addEventListener('touchmove', preventScroll, { passive: false });
+    } else {
+      window.removeEventListener('wheel', preventScroll);
+      window.removeEventListener('touchmove', preventScroll);
+    }
+    return () => {
+      window.removeEventListener('wheel', preventScroll);
+      window.removeEventListener('touchmove', preventScroll);
+    };
+  }, [selectedMusic]);
 
   const previousPageHandler = () => {
     const previousPage = sessionStorage.getItem('location');
@@ -51,7 +202,7 @@ const Musics = ({ musicsData }: { musicsData: MusicData[] }) => {
   const timestamp = Date.now();
 
   return (
-    <main className={`${content.content} ${styles.pages} ${styles.music}`}>
+    <main className={`${content.content} ${styles.pages} ${styles.music} ${musicStyles.music}`}>
       <Seo
         pageTitles={`선곡표 - ${originTitle}`}
         pageTitle="선곡표"
@@ -72,7 +223,7 @@ const Musics = ({ musicsData }: { musicsData: MusicData[] }) => {
           <p>🎶 놀이터뷰에서 선곡한 곡 목록입니다 🎵</p>
           <p>👉 곡은 가나다 순으로 정렬됩니다 👉</p>
         </div>
-        <div className={music.musics}>
+        <div className={musicStyles.musics}>
           <hr />
           <ul>
             {musicsData.map((music, index) => (
@@ -92,66 +243,12 @@ const Musics = ({ musicsData }: { musicsData: MusicData[] }) => {
                     </em>
                   </span>
                 </button>
-                {selectedMusicId === music.id && (
-                  <div id={`music${music.id}`}>
-                    <YouTubeController videoId={music.videoid} start={music.start} vi={music.vvi} />
-                    <dl>
-                      <div>
-                        <dt>유튜브뮤직</dt>
-                        <dd>
-                          <Anchor href={`https://music.youtube.com/watch?v=${music.videoid}`}>
-                            <YTmusicIcon />
-                            <span>YouTube Music</span>에서 고음질로 듣기
-                          </Anchor>
-                        </dd>
-                      </div>
-                      <div>
-                        {music.cover !== null && (
-                          <div>
-                            <dt>원곡</dt>
-                            <dd>{music.artist}</dd>
-                          </div>
-                        )}
-                        <div>
-                          <dt>수록앨범</dt>
-                          <dd>{music.album}</dd>
-                        </div>
-                      </div>
-                      {music.composer === music.lyricist ? (
-                        <div>
-                          <div>
-                            <dt>작곡/작사</dt>
-                            <dd>{music.composer}</dd>
-                          </div>
-                        </div>
-                      ) : (
-                        <div>
-                          <div>
-                            <dt>작곡</dt>
-                            <dd>{music.composer}</dd>
-                          </div>
-                          {music.lyricist !== null && (
-                            <div>
-                              <dt>작사</dt>
-                              <dd>{music.lyricist}</dd>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </dl>
-                    {music.lyrics !== null && (
-                      <p dangerouslySetInnerHTML={{ __html: music.lyrics.replace(/\n/g, '<br />') }} />
-                    )}
-                    <button type="button" onClick={() => handleButtonClick(music.id)}>
-                      곡 정보 닫기
-                    </button>
-                  </div>
-                )}
               </li>
             ))}
           </ul>
         </div>
       </div>
+      {selectedMusicId && selectedMusic && <MusicDetail music={selectedMusic} onClose={handleCloseMusicDetail} />}
     </main>
   );
 };

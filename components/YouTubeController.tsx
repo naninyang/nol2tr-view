@@ -15,9 +15,6 @@ interface Props {
 const Container = styled.div<{ isDesktop?: boolean }>(({ isDesktop }) => ({
   position: 'relative',
   overflow: 'hidden',
-  '&:hover img': {
-    transform: isDesktop ? 'scale(1.02)' : undefined,
-  },
   '& img': {
     transition: 'all .4s cubic-bezier(.4,0,.2,1)',
     display: 'block',
@@ -25,6 +22,7 @@ const Container = styled.div<{ isDesktop?: boolean }>(({ isDesktop }) => ({
     width: '100%',
     height: 'auto',
     objectFit: 'cover',
+    borderRadius: rem(12),
     ...mixIn.imageRendering,
   },
   '& > button': {
@@ -70,6 +68,7 @@ const Container = styled.div<{ isDesktop?: boolean }>(({ isDesktop }) => ({
   },
   '& iframe': {
     border: 0,
+    borderRadius: rem(12),
     aspectRatio: '1920 / 1080',
     width: '100%',
     height: 'auto',
