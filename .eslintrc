@@ -18,11 +18,17 @@
   "rules": {
     "no-unused-vars": "off",
     "no-explicit-any": "off",
-    "no-unused-variable": "off"
+    "no-unused-variable": "off",
+    "import/no-unresolved": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-explicit-any": "off"
   },
   "settings": {
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx", ".js"]
+    },
+    "import/resolver": {
+      "typescript": {}
     }
   },
   "overrides": [

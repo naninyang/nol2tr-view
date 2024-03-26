@@ -13,7 +13,7 @@ async function fetchAllNewsicData() {
   );
   let data = await response.json();
   const pageCount = data.meta.pagination.pageCount;
-  let allNewsData = [];
+  const allNewsData = [];
   for (let page = 1; page <= pageCount; page++) {
     response = await fetch(
       `${process.env.STRAPI_URL}/api/newsic-nol2trs?sort[0]=id:desc&pagination[page]=${page}&pagination[pageSize]=100`,
