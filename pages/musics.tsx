@@ -49,6 +49,15 @@ const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
             {music.lyrics === null && (
               <div className={musicStyles.summary}>
                 <h2>{music.music}</h2>
+                <cite>
+                  {music.instrument
+                    ? music.artist !== null
+                      ? music.artist
+                      : music.composer
+                    : music.cover !== null
+                    ? music.cover
+                    : music.artist}
+                </cite>
                 <dl>
                   <div>
                     <dt>유튜브뮤직</dt>
@@ -104,6 +113,15 @@ const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
           <div className={musicStyles.lyrics}>
             <div className={musicStyles.summary}>
               <h2>{music.music}</h2>
+              <cite>
+                {music.instrument
+                  ? music.artist !== null
+                    ? music.artist
+                    : music.composer
+                  : music.cover !== null
+                  ? music.cover
+                  : music.artist}
+              </cite>
             </div>
             <dl>
               <div>
