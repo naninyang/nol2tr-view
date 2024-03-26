@@ -42,12 +42,11 @@ const Musics: NextPage<NoticeProps> = ({ musics }) => {
       setIsLoading(true);
       let mergedData: MusicData[] = [];
       let page = 1;
-      let total = 0;
 
       do {
         const response = await fetch(`/api/musics?page=${page}`);
         const data = await response.json();
-        total = data.total;
+        setTotal(data.total);
 
         if (data.rowsData.length === 0) {
           break;
