@@ -51,13 +51,15 @@ const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
               <div className={musicStyles.summary}>
                 <h2>{music.music}</h2>
                 <cite>
-                  {music.instrument
-                    ? music.artist !== null
-                      ? music.artist
-                      : music.composer
-                    : music.cover !== null
-                    ? music.cover
-                    : music.artist}
+                  {music.instrument ? (
+                    <>{music.artist !== null ? music.artist : music.composer}</>
+                  ) : music.cover !== null ? (
+                    <>
+                      {music.cover} 커버 ({music.artist} 원곡)
+                    </>
+                  ) : (
+                    music.artist
+                  )}
                 </cite>
                 <dl>
                   <div>
@@ -111,13 +113,15 @@ const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
             <div className={musicStyles.summary}>
               <h2>{music.music}</h2>
               <cite>
-                {music.instrument
-                  ? music.artist !== null
-                    ? music.artist
-                    : music.composer
-                  : music.cover !== null
-                  ? music.cover
-                  : music.artist}
+                {music.instrument ? (
+                  <>{music.artist !== null ? music.artist : music.composer}</>
+                ) : music.cover !== null ? (
+                  <>
+                    {music.cover} 커버 ({music.artist} 원곡)
+                  </>
+                ) : (
+                  music.artist
+                )}
               </cite>
             </div>
             <dl>
