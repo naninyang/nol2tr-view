@@ -77,25 +77,33 @@
       padding: rem(52)
       background-color: rgba($hex-black, .7)
 
-    &.tablet .container
-      flex-direction: column
+    &.tablet
+      &:not(.mv)
+        .container
+          .info
+            .yt
+              width: rem(170)
+              +coln
 
-      .info
-        flex-direction: row
+      .container
+        flex-direction: column
 
-        .yt, .summary
-          +col
+        .info
+          flex-direction: row
 
-        .summary
-          h2
-            padding-top: 0
+          .yt, .summary
+            +col
 
-          dl
-            padding-bottom: 0
+          .summary
+            h2
+              padding-top: 0
 
-      .info, .lyrics
-        flex: auto
-        gap: rem(23)
+            dl
+              padding-bottom: 0
+
+        .info, .lyrics
+          flex: auto
+          gap: rem(23)
 
     &:not(.mv)
       &.instrument
@@ -116,8 +124,10 @@
             .yt, .summary
               +col
 
-          .yt
-            aspect-ratio: 360 / 360
+      .info
+        .yt
+          +mq(maxSmall)
+            max-width: rem(370)
 
     .container
       display: flex
@@ -211,9 +221,9 @@
       flex-direction: column
 
       .yt
-        aspect-ratio: 1920 / 1080
         width: 100%
         max-height: 100vh
+        max-width: none
 
         img
           max-width: 100%
