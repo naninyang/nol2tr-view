@@ -68,27 +68,23 @@ const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
                       </Anchor>
                     </dd>
                   </div>
-                  <div>
-                    {music.cover !== null && (
-                      <div>
-                        <dt>원곡</dt>
-                        <dd>{music.artist}</dd>
-                      </div>
-                    )}
+                  {music.cover !== null && (
                     <div>
-                      <dt>수록앨범</dt>
-                      <dd>{music.album}</dd>
+                      <dt>원곡</dt>
+                      <dd>{music.artist}</dd>
                     </div>
+                  )}
+                  <div>
+                    <dt>수록앨범</dt>
+                    <dd>{music.album}</dd>
                   </div>
                   {music.composer === music.lyricist ? (
                     <div>
-                      <div>
-                        <dt>작곡/작사</dt>
-                        <dd>{music.composer}</dd>
-                      </div>
+                      <dt>작곡/작사</dt>
+                      <dd>{music.composer}</dd>
                     </div>
                   ) : (
-                    <div>
+                    <>
                       <div>
                         <dt>작곡</dt>
                         <dd>{music.composer}</dd>
@@ -99,7 +95,7 @@ const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
                           <dd>{music.lyricist}</dd>
                         </div>
                       )}
-                    </div>
+                    </>
                   )}
                 </dl>
               </div>
@@ -133,27 +129,23 @@ const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
                   </Anchor>
                 </dd>
               </div>
-              <div>
-                {music.cover !== null && (
-                  <div>
-                    <dt>원곡</dt>
-                    <dd>{music.artist}</dd>
-                  </div>
-                )}
+              {music.cover !== null && (
                 <div>
-                  <dt>수록앨범</dt>
-                  <dd>{music.album}</dd>
+                  <dt>원곡</dt>
+                  <dd>{music.artist}</dd>
                 </div>
+              )}
+              <div>
+                <dt>수록앨범</dt>
+                <dd>{music.album}</dd>
               </div>
               {music.composer === music.lyricist ? (
                 <div>
-                  <div>
-                    <dt>작곡/작사</dt>
-                    <dd>{music.composer}</dd>
-                  </div>
+                  <dt>작곡/작사</dt>
+                  <dd>{music.composer}</dd>
                 </div>
               ) : (
-                <div>
+                <>
                   <div>
                     <dt>작곡</dt>
                     <dd>{music.composer}</dd>
@@ -164,7 +156,7 @@ const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
                       <dd>{music.lyricist}</dd>
                     </div>
                   )}
-                </div>
+                </>
               )}
             </dl>
             <PerfectScrollbar className={styles['scrollbar-container']}>
