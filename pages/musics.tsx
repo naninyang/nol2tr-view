@@ -4,11 +4,13 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import styled from '@emotion/styled';
+import { useMediaQuery } from 'react-responsive';
 import { MusicData } from 'types';
 import Seo, { originTitle } from '@/components/Seo';
 import Anchor from '@/components/Anchor';
 import { images } from '@/components/images';
 import YouTubeController from '@/components/YouTubeController';
+import { rem } from '@/styles/designSystem';
 import content from '@/styles/Content.module.sass';
 import styles from '@/styles/Pages.module.sass';
 import musicStyles from '@/styles/Music.module.sass';
@@ -18,6 +20,15 @@ type MusicDetailProps = {
   music: MusicData;
   onClose: () => void;
 };
+
+export function useTablet() {
+  const [isTablet, setIsTablet] = useState(false);
+  const tablet = useMediaQuery({ query: `(min-width: ${rem(768)}) and (max-width: ${rem(992)}` });
+  useEffect(() => {
+    setIsTablet(tablet);
+  }, [tablet]);
+  return isTablet;
+}
 
 const BackButton = styled.i({
   display: 'block',
@@ -39,23 +50,37 @@ const CloseIcon = styled.i({
 
 const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
   const [infoVisible, setInfoVisible] = useState<boolean>(true);
-  const [buttonText, setButtonText] = useState<string>('정보 숨기기');
+  const [infoText, setInfoText] = useState<string>('정보 숨기기');
+  const [lyricsVisible, setLyricsVisible] = useState<boolean>(true);
+  const [lyricsText, setLyricsText] = useState<string>('가사 숨기기');
 
   const toggleInfo = () => {
     if (infoVisible) {
       setInfoVisible(false);
-      setButtonText('정보 보기');
+      setInfoText('정보 보기');
     } else {
       setInfoVisible(true);
-      setButtonText('정보 숨기기');
+      setInfoText('정보 숨기기');
     }
   };
+
+  const toggleLyrics = () => {
+    if (lyricsVisible) {
+      setLyricsVisible(false);
+      setLyricsText('가사 보기');
+    } else {
+      setLyricsVisible(true);
+      setLyricsText('가사 숨기기');
+    }
+  };
+
+  const isTablet = useTablet();
 
   return (
     <dialog
       className={`${musicStyles.dialog} ${music.isMV ? musicStyles.mv : ''} ${
         music.instrument ? musicStyles.instrument : ''
-      }`}
+      } ${isTablet ? musicStyles.tablet : ''}`}
     >
       <div className={musicStyles.container}>
         <button type="button" onClick={onClose}>
@@ -66,114 +91,182 @@ const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
           <YTmusicIcon />
           <span>YouTube Music</span>에서 고음질로 듣기
         </Anchor>
-        <div className={musicStyles.info}>
-          {music.lyrics === null && (
-            <div className={musicStyles.summary}>
-              <h2>{music.music}</h2>
-              <cite>
-                {music.instrument ? (
-                  <>{music.artist !== null ? music.artist : music.composer}</>
-                ) : music.cover !== null ? (
-                  <>
-                    {music.cover} 커버 ({music.artist} 원곡)
-                  </>
-                ) : (
-                  music.artist
-                )}
-              </cite>
-              <dl>
-                {music.cover !== null && (
-                  <div>
-                    <dt>원곡</dt>
-                    <dd>{music.artist}</dd>
-                  </div>
-                )}
-                <div>
-                  <dt>수록앨범</dt>
-                  <dd>{music.album}</dd>
-                </div>
-                {music.composer === music.lyricist ? (
-                  <div>
-                    <dt>작곡/작사</dt>
-                    <dd>{music.composer}</dd>
-                  </div>
-                ) : (
-                  <>
-                    <div>
-                      <dt>작곡</dt>
-                      <dd>{music.composer}</dd>
-                    </div>
-                    {music.lyricist !== null && (
-                      <div>
-                        <dt>작사</dt>
-                        <dd>{music.lyricist}</dd>
-                      </div>
-                    )}
-                  </>
-                )}
-              </dl>
-            </div>
-          )}
-          <div className={musicStyles.yt}>
-            <YouTubeController videoId={music.videoid} start={music.start} vi={music.vvi} mv={music.isMV} />
-          </div>
-        </div>
-        {music.lyrics !== null && (
-          <div className={musicStyles.lyrics}>
-            <div className={musicStyles.summary}>
-              <h2>{music.music}</h2>
-              <cite>
-                {music.instrument ? (
-                  <>{music.artist !== null ? music.artist : music.composer}</>
-                ) : music.cover !== null ? (
-                  <>
-                    {music.cover} 커버 ({music.artist} 원곡)
-                  </>
-                ) : (
-                  music.artist
-                )}
-                {music.isCC && (
-                  <button type="button" onClick={toggleInfo}>
-                    {buttonText}
-                  </button>
-                )}
-              </cite>
-            </div>
-            <dl className={infoVisible ? '' : musicStyles.hidden}>
-              {music.cover !== null && (
-                <div>
-                  <dt>원곡</dt>
-                  <dd>{music.artist}</dd>
-                </div>
-              )}
-              <div>
-                <dt>수록앨범</dt>
-                <dd>{music.album}</dd>
+        {isTablet && music.lyrics !== null ? (
+          <>
+            <div className={musicStyles.info}>
+              <div className={musicStyles.yt}>
+                <YouTubeController videoId={music.videoid} start={music.start} vi={music.vvi} mv={music.isMV} />
               </div>
-              {music.composer === music.lyricist ? (
-                <div>
-                  <dt>작곡/작사</dt>
-                  <dd>{music.composer}</dd>
-                </div>
-              ) : (
-                <>
-                  <div>
-                    <dt>작곡</dt>
-                    <dd>{music.composer}</dd>
-                  </div>
-                  {music.lyricist !== null && (
+              <div className={musicStyles.summary}>
+                <h2>{music.music}</h2>
+                <cite>
+                  {music.instrument ? (
+                    <>{music.artist !== null ? music.artist : music.composer}</>
+                  ) : music.cover !== null ? (
+                    <>
+                      {music.cover} 커버 ({music.artist} 원곡)
+                    </>
+                  ) : (
+                    music.artist
+                  )}
+                </cite>
+                <dl>
+                  {music.cover !== null && (
                     <div>
-                      <dt>작사</dt>
-                      <dd>{music.lyricist}</dd>
+                      <dt>원곡</dt>
+                      <dd>{music.artist}</dd>
                     </div>
                   )}
-                </>
+                  <div>
+                    <dt>수록앨범</dt>
+                    <dd>{music.album}</dd>
+                  </div>
+                  {music.composer === music.lyricist ? (
+                    <div>
+                      <dt>작곡/작사</dt>
+                      <dd>{music.composer}</dd>
+                    </div>
+                  ) : (
+                    <>
+                      <div>
+                        <dt>작곡</dt>
+                        <dd>{music.composer}</dd>
+                      </div>
+                      {music.lyricist !== null && (
+                        <div>
+                          <dt>작사</dt>
+                          <dd>{music.lyricist}</dd>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </dl>
+              </div>
+            </div>
+            <div className={musicStyles.lyrics}>
+              <PerfectScrollbar className={styles['scrollbar-container']}>
+                <p dangerouslySetInnerHTML={{ __html: music.lyrics.replace(/\n/g, '<br />') }} />
+              </PerfectScrollbar>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className={musicStyles.info}>
+              {music.lyrics === null && (
+                <div className={musicStyles.summary}>
+                  <h2>{music.music}</h2>
+                  <cite>
+                    {music.instrument ? (
+                      <>{music.artist !== null ? music.artist : music.composer}</>
+                    ) : music.cover !== null ? (
+                      <>
+                        {music.cover} 커버 ({music.artist} 원곡)
+                      </>
+                    ) : (
+                      music.artist
+                    )}
+                  </cite>
+                  <dl>
+                    {music.cover !== null && (
+                      <div>
+                        <dt>원곡</dt>
+                        <dd>{music.artist}</dd>
+                      </div>
+                    )}
+                    <div>
+                      <dt>수록앨범</dt>
+                      <dd>{music.album}</dd>
+                    </div>
+                    {music.composer === music.lyricist ? (
+                      <div>
+                        <dt>작곡/작사</dt>
+                        <dd>{music.composer}</dd>
+                      </div>
+                    ) : (
+                      <>
+                        <div>
+                          <dt>작곡</dt>
+                          <dd>{music.composer}</dd>
+                        </div>
+                        {music.lyricist !== null && (
+                          <div>
+                            <dt>작사</dt>
+                            <dd>{music.lyricist}</dd>
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </dl>
+                </div>
               )}
-            </dl>
-            <PerfectScrollbar className={styles['scrollbar-container']}>
-              <p dangerouslySetInnerHTML={{ __html: music.lyrics.replace(/\n/g, '<br />') }} />
-            </PerfectScrollbar>
-          </div>
+              <div className={musicStyles.yt}>
+                <YouTubeController videoId={music.videoid} start={music.start} vi={music.vvi} mv={music.isMV} />
+              </div>
+            </div>
+            {music.lyrics !== null && (
+              <div className={musicStyles.lyrics}>
+                <div className={musicStyles.summary}>
+                  <h2>{music.music}</h2>
+                  <cite>
+                    {music.instrument ? (
+                      <>{music.artist !== null ? music.artist : music.composer}</>
+                    ) : music.cover !== null ? (
+                      <>
+                        {music.cover} 커버 ({music.artist} 원곡)
+                      </>
+                    ) : (
+                      music.artist
+                    )}
+                    <button type="button" onClick={toggleInfo}>
+                      {infoText}
+                    </button>
+                    {music.isCC && (
+                      <button type="button" onClick={toggleLyrics}>
+                        {lyricsText}
+                      </button>
+                    )}
+                  </cite>
+                </div>
+                <dl className={infoVisible ? '' : musicStyles.hidden}>
+                  {music.cover !== null && (
+                    <div>
+                      <dt>원곡</dt>
+                      <dd>{music.artist}</dd>
+                    </div>
+                  )}
+                  <div>
+                    <dt>수록앨범</dt>
+                    <dd>{music.album}</dd>
+                  </div>
+                  {music.composer === music.lyricist ? (
+                    <div>
+                      <dt>작곡/작사</dt>
+                      <dd>{music.composer}</dd>
+                    </div>
+                  ) : (
+                    <>
+                      <div>
+                        <dt>작곡</dt>
+                        <dd>{music.composer}</dd>
+                      </div>
+                      {music.lyricist !== null && (
+                        <div>
+                          <dt>작사</dt>
+                          <dd>{music.lyricist}</dd>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </dl>
+                <PerfectScrollbar className={styles['scrollbar-container']}>
+                  <p
+                    dangerouslySetInnerHTML={{ __html: music.lyrics.replace(/\n/g, '<br />') }}
+                    className={lyricsVisible ? '' : musicStyles.hidden}
+                  />
+                </PerfectScrollbar>
+              </div>
+            )}
+          </>
         )}
       </div>
     </dialog>

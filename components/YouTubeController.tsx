@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
-import { isDesktop } from 'react-device-detect';
 import { mixIn, rem } from '@/styles/designSystem';
 import { images } from './images';
 import YouTubePlayer from './YouTubePlayer';
@@ -13,7 +12,7 @@ interface Props {
   mv?: boolean;
 }
 
-const Container = styled.div<{ isDesktop?: boolean; mv?: boolean }>(({ isDesktop, mv }) => ({
+const Container = styled.div<{ mv?: boolean }>(({ mv }) => ({
   position: 'relative',
   overflow: 'hidden',
   '& img': {
@@ -80,7 +79,7 @@ const YouTubeController = ({ videoId, start, vi, mv }: Props) => {
   };
 
   return (
-    <Container isDesktop={isDesktop} mv={mv}>
+    <Container mv={mv}>
       {!isPlaying ? (
         <>
           <Image

@@ -77,6 +77,26 @@
       padding: rem(52)
       background-color: rgba($hex-black, .7)
 
+    &.tablet .container
+      flex-direction: column
+
+      .info
+        flex-direction: row
+
+        .yt, .summary
+          +col
+
+        .summary
+          h2
+            padding-top: 0
+
+          dl
+            padding-bottom: 0
+
+      .info, .lyrics
+        flex: auto
+        gap: rem(23)
+
     &:not(.mv)
       &.instrument
         +mq(minMedium)
@@ -285,6 +305,10 @@
       white-space: break-spaces
       word-wrap: break-word
       word-break: keep-all
+
+      &.hidden
+        +mq(maxExtraSmall)
+          display: none
 
       & + button
         justify-content: center
