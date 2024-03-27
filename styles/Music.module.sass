@@ -62,6 +62,7 @@
     display: flex
     flex-direction: column
     justify-content: center
+    align-items: center
     top: 0
     left: 0
     z-index: 1070
@@ -76,12 +77,34 @@
       padding: rem(52)
       background-color: rgba($hex-black, .7)
 
+    &:not(.mv)
+      &.instrument
+        +mq(minMedium)
+          padding: rem(52) rem(140)
+
+        .container
+          max-width: rem(720)
+
+        .info
+          display: flex
+          flex-direction: column
+
+          +mq(minMedium)
+            flex-direction: row-reverse
+            gap: rem(23)
+
+            .yt, .summary
+              +col
+
+          .yt
+            aspect-ratio: 360 / 360
+
     .container
       display: flex
       flex-direction: column
       position: relative
-      gap: rem(27)
-      padding: rem(52) rem(27)
+      gap: rem(12)
+      padding: rem(52) rem(27) rem(27)
       width: 100%
       height: 100dvh
       background-color: $hex-white
@@ -90,9 +113,28 @@
       +mq(minMedium)
         flex-direction: row
         gap: rem(32)
-        padding: rem(52)
         height: auto
         max-height: calc(100vh - rem(104))
+
+      > a
+        position: absolute
+        top: rem(12)
+        left: rem(25)
+        display: inline-flex
+        gap: rem(3)
+        background-color: $hex-black
+        border-radius: rem(3)
+        padding: rem(6) rem(12)
+        color: $hex-white
+        font-size: rem(14)
+
+        i
+          display: inline-block
+          width: rem(67)
+          height: rem(20)
+
+        span
+          +screen-reader-only
 
       > button
         position: absolute
@@ -119,11 +161,30 @@
 
     .summary
       h2
-        font-size: rem(20)
+        font-size: rem(16)
+
+        +mq(minMedium)
+          font-size: rem(20)
 
       cite
-        font-size: rem(16)
+        font-size: rem(14)
         display: block
+
+        +mq(minMedium)
+          font-size: rem(16)
+
+        button
+          background-color: $hex-accent
+          margin-left: rem(7)
+          border: 0
+          border-radius: rem(3)
+          padding: rem(1) rem(5)
+          font-size: rem(14)
+          font-weight: 800
+          color: $hex-white
+
+          +mq(minSmall)
+            display: none
 
     .info
       display: flex
@@ -159,9 +220,17 @@
       gap: rem(7)
       padding: rem(17) 0
 
+      +mq(minSmall)
+        gap: rem(2)
+        padding: rem(23) 0
+
+      &.hidden
+        +mq(maxExtraSmall)
+          display: none
+
       > div
         display: inline-flex
-        gap: rem(7)
+        gap: rem(2)
 
         +mq(maxExtraSmall)
           flex-direction: column
@@ -169,37 +238,23 @@
         +mq(minSmall)
           gap: rem(17)
 
-        &:first-of-type
-          dt
-            +screen-reader-only
-
-          a
-            display: inline-flex
-            gap: rem(3)
-            background-color: $hex-black
-            border-radius: rem(3)
-            padding: rem(6) rem(12)
-            color: $hex-white
-            font-size: rem(14)
-
-            i
-              display: inline-block
-              width: rem(67)
-              height: rem(20)
-
-            span
-              +screen-reader-only
-
         > div
           display: inline-flex
-          gap: rem(7)
+          gap: rem(2)
+
+          +mq(minSmall)
+            gap: rem(7)
 
         dt, dd
           font-size: rem(14)
 
         dt
+          width: rem(57)
           color: var(--txt-summary)
           white-space: nowrap
+
+          +mq(maxExtraSmall)
+            line-height: 1
 
         dd
           font-weight: 700
@@ -207,6 +262,9 @@
           white-space: break-spaces
           word-wrap: break-word
           word-break: normal
+
+          +mq(minSmall)
+            +col
 
       & + button
         justify-content: center
@@ -219,6 +277,7 @@
         color: $hex-white
 
     p
+      padding-right: rem(17)
       font-size: rem(20)
       font-weight: 800
       color: var(--txt-subject)

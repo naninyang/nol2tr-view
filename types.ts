@@ -119,6 +119,8 @@ export interface MusicData {
   lyricist: string;
   lyrics: string;
   vvi: string;
+  isMV: boolean;
+  isCC: boolean;
 }
 
 export interface MusicParalinkData {

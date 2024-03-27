@@ -141,6 +141,8 @@ export async function getMusicsData(page: number, pageSize: number) {
     lyrics: data.attributes.lyrics,
     start: data.attributes.start,
     vvi: data.attributes.vvi,
+    isMV: data.attributes.isMV,
+    isCC: data.attributes.isCC,
   }));
   return { rowsData, total };
 }

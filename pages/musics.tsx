@@ -38,75 +38,85 @@ const CloseIcon = styled.i({
 });
 
 const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
+  const [infoVisible, setInfoVisible] = useState<boolean>(true);
+  const [buttonText, setButtonText] = useState<string>('정보 숨기기');
+
+  const toggleInfo = () => {
+    if (infoVisible) {
+      setInfoVisible(false);
+      setButtonText('정보 보기');
+    } else {
+      setInfoVisible(true);
+      setButtonText('정보 숨기기');
+    }
+  };
+
   return (
-    <dialog className={musicStyles.dialog}>
+    <dialog
+      className={`${musicStyles.dialog} ${music.isMV ? musicStyles.mv : ''} ${
+        music.instrument ? musicStyles.instrument : ''
+      }`}
+    >
       <div className={musicStyles.container}>
         <button type="button" onClick={onClose}>
           <CloseIcon />
           <span>닫기</span>
         </button>
+        <Anchor href={`https://music.youtube.com/watch?v=${music.videoid}`}>
+          <YTmusicIcon />
+          <span>YouTube Music</span>에서 고음질로 듣기
+        </Anchor>
         <div className={musicStyles.info}>
-          <PerfectScrollbar className={styles['scrollbar-container']}>
-            {music.lyrics === null && (
-              <div className={musicStyles.summary}>
-                <h2>{music.music}</h2>
-                <cite>
-                  {music.instrument ? (
-                    <>{music.artist !== null ? music.artist : music.composer}</>
-                  ) : music.cover !== null ? (
-                    <>
-                      {music.cover} 커버 ({music.artist} 원곡)
-                    </>
-                  ) : (
-                    music.artist
-                  )}
-                </cite>
-                <dl>
+          {music.lyrics === null && (
+            <div className={musicStyles.summary}>
+              <h2>{music.music}</h2>
+              <cite>
+                {music.instrument ? (
+                  <>{music.artist !== null ? music.artist : music.composer}</>
+                ) : music.cover !== null ? (
+                  <>
+                    {music.cover} 커버 ({music.artist} 원곡)
+                  </>
+                ) : (
+                  music.artist
+                )}
+              </cite>
+              <dl>
+                {music.cover !== null && (
                   <div>
-                    <dt>유튜브뮤직</dt>
-                    <dd>
-                      <Anchor href={`https://music.youtube.com/watch?v=${music.videoid}`}>
-                        <YTmusicIcon />
-                        <span>YouTube Music</span>에서 고음질로 듣기
-                      </Anchor>
-                    </dd>
+                    <dt>원곡</dt>
+                    <dd>{music.artist}</dd>
                   </div>
-                  {music.cover !== null && (
-                    <div>
-                      <dt>원곡</dt>
-                      <dd>{music.artist}</dd>
-                    </div>
-                  )}
+                )}
+                <div>
+                  <dt>수록앨범</dt>
+                  <dd>{music.album}</dd>
+                </div>
+                {music.composer === music.lyricist ? (
                   <div>
-                    <dt>수록앨범</dt>
-                    <dd>{music.album}</dd>
+                    <dt>작곡/작사</dt>
+                    <dd>{music.composer}</dd>
                   </div>
-                  {music.composer === music.lyricist ? (
+                ) : (
+                  <>
                     <div>
-                      <dt>작곡/작사</dt>
+                      <dt>작곡</dt>
                       <dd>{music.composer}</dd>
                     </div>
-                  ) : (
-                    <>
+                    {music.lyricist !== null && (
                       <div>
-                        <dt>작곡</dt>
-                        <dd>{music.composer}</dd>
+                        <dt>작사</dt>
+                        <dd>{music.lyricist}</dd>
                       </div>
-                      {music.lyricist !== null && (
-                        <div>
-                          <dt>작사</dt>
-                          <dd>{music.lyricist}</dd>
-                        </div>
-                      )}
-                    </>
-                  )}
-                </dl>
-              </div>
-            )}
-            <div className={musicStyles.yt}>
-              <YouTubeController videoId={music.videoid} start={music.start} vi={music.vvi} />
+                    )}
+                  </>
+                )}
+              </dl>
             </div>
-          </PerfectScrollbar>
+          )}
+          <div className={musicStyles.yt}>
+            <YouTubeController videoId={music.videoid} start={music.start} vi={music.vvi} mv={music.isMV} />
+          </div>
         </div>
         {music.lyrics !== null && (
           <div className={musicStyles.lyrics}>
@@ -122,18 +132,14 @@ const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
                 ) : (
                   music.artist
                 )}
+                {music.isCC && (
+                  <button type="button" onClick={toggleInfo}>
+                    {buttonText}
+                  </button>
+                )}
               </cite>
             </div>
-            <dl>
-              <div>
-                <dt>유튜브뮤직</dt>
-                <dd>
-                  <Anchor href={`https://music.youtube.com/watch?v=${music.videoid}`}>
-                    <YTmusicIcon />
-                    <span>YouTube Music</span>에서 고음질로 듣기
-                  </Anchor>
-                </dd>
-              </div>
+            <dl className={infoVisible ? '' : musicStyles.hidden}>
               {music.cover !== null && (
                 <div>
                   <dt>원곡</dt>

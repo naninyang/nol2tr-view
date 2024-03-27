@@ -164,6 +164,7 @@ export default function articleDetail({
             videoId={musicData.attributes.videoid}
             start={musicData.attributes.start}
             vi={musicData.attributes.vvi}
+            mv={musicData.attributes.mv}
           />
           <div className={styles.ytMusic}>
             <Anchor href={`https://music.youtube.com/watch?v=${musicData.attributes.videoid}`}>

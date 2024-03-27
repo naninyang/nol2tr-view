@@ -10,15 +10,16 @@ interface Props {
   videoId: string;
   start?: number;
   vi: string;
+  mv?: boolean;
 }
 
-const Container = styled.div<{ isDesktop?: boolean }>(({ isDesktop }) => ({
+const Container = styled.div<{ isDesktop?: boolean; mv?: boolean }>(({ isDesktop, mv }) => ({
   position: 'relative',
   overflow: 'hidden',
   '& img': {
     transition: 'all .4s cubic-bezier(.4,0,.2,1)',
     display: 'block',
-    aspectRatio: '1920 / 1080',
+    aspectRatio: mv ? '1920 / 1080' : '360 / 360',
     width: '100%',
     height: 'auto',
     objectFit: 'cover',
@@ -36,17 +37,13 @@ const Container = styled.div<{ isDesktop?: boolean }>(({ isDesktop }) => ({
     alignItems: 'center',
     border: 0,
     height: '100%',
-    aspectRatio: '1920 / 1080',
-    '&:hover i': {
-      opacity: isDesktop ? 1 : undefined,
-    },
+    aspectRatio: mv ? '1920 / 1080' : '360 / 360',
     '& i': {
       transition: 'all .4s cubic-bezier(.4,0,.2,1)',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: 'rgba(244, 246, 250, .7)',
-      opacity: isDesktop ? 0 : undefined,
       borderRadius: rem(52),
       width: rem(52),
       height: rem(52),
@@ -69,13 +66,13 @@ const Container = styled.div<{ isDesktop?: boolean }>(({ isDesktop }) => ({
   '& iframe': {
     border: 0,
     borderRadius: rem(12),
-    aspectRatio: '1920 / 1080',
+    aspectRatio: mv ? '1920 / 1080' : '360 / 360',
     width: '100%',
     height: 'auto',
   },
 }));
 
-const YouTubeController = ({ videoId, start, vi }: Props) => {
+const YouTubeController = ({ videoId, start, vi, mv }: Props) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlay = () => {
@@ -83,13 +80,13 @@ const YouTubeController = ({ videoId, start, vi }: Props) => {
   };
 
   return (
-    <Container isDesktop={isDesktop}>
+    <Container isDesktop={isDesktop} mv={mv}>
       {!isPlaying ? (
         <>
           <Image
             src={vi === 'missing' ? '/missing.webp' : `https://i.ytimg.com/vi_webp/${videoId}/${vi}.webp`}
-            width={640}
-            height={480}
+            width={mv ? 360 : 640}
+            height={mv ? 360 : 480}
             unoptimized
             priority
             alt=""
