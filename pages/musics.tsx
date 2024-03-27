@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import styled from '@emotion/styled';
 import { MusicData } from 'types';
@@ -12,7 +13,6 @@ import content from '@/styles/Content.module.sass';
 import styles from '@/styles/Pages.module.sass';
 import musicStyles from '@/styles/Music.module.sass';
 import 'react-perfect-scrollbar/dist/css/styles.css';
-import Image from 'next/image';
 
 type MusicDetailProps = {
   music: MusicData;
