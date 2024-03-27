@@ -6,53 +6,40 @@
   width: 100%
 
   ul
+    display: flex
+    flex-direction: column
+
+    +mq(minMedium)
+      flex-direction: row
+      flex-wrap: wrap
+
     li
       border-top: 1px solid var(--border)
 
-      &:first-of-type
-        border-top: 0
+      +mq(minMedium)
+        width: 50%
 
       > button
         display: flex
-        justify-content: space-between
         align-items: center
+        gap: rem(23)
         background: none
         padding: rem(17) 0
         width: 100%
-        text-align: left
+
+        img
+          width: rem(72)
+          height: rem(72)
 
         span
-          position: relative
+          display: flex
+          flex-direction: column
+          gap: rem(5)
+          padding-right: rem(12)
 
-          &::before
-            content: ''
-            display: block
-            position: absolute
-            top: 0
-            left: 0
-            width: 0
-            height: 100%
-            border-radius: rem(7)
-            background-color: var(--default-bg)
-            transition: all .4s cubic-bezier(.4,0,.2,1)
-
-          i
-            display: inline-flex
-            justify-content: center
-            align-items: center
-            background-color: $hex-accent
-            border-radius: rem(7)
-            padding: 0 rem(12) 0 rem(10)
-            height: rem(30)
-            font-size: rem(12)
-            font-weight: 900
-            color: $hex-black
-            vertical-align: top
-
-          strong, em
+          strong, cite
             justify-content: flex-start
             position: relative
-            padding: rem(7) rem(17)
             color: var(--txt-subject)
             text-align: left
             transition: all .4s cubic-bezier(.4,0,.2,1)
@@ -61,13 +48,13 @@
             word-break: normal
 
           strong
-            padding-right: 0
             font-size: rem(16)
+            line-height: 1.125
 
-          em
+          cite
             display: inline-block
-            padding-left: rem(14)
             font-size: rem(14)
+            line-height: 1.28571429
 
 .music
   .dialog

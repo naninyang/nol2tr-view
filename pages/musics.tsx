@@ -12,6 +12,7 @@ import content from '@/styles/Content.module.sass';
 import styles from '@/styles/Pages.module.sass';
 import musicStyles from '@/styles/Music.module.sass';
 import 'react-perfect-scrollbar/dist/css/styles.css';
+import Image from 'next/image';
 
 type MusicDetailProps = {
   music: MusicData;
@@ -234,15 +235,20 @@ const Musics = ({ musicsData }: { musicsData: MusicData[] }) => {
           <p>👉 곡은 가나다 순으로 정렬됩니다 👉</p>
         </div>
         <div className={musicStyles.musics}>
-          <hr />
           <ul>
-            {musicsData.map((music, index) => (
+            {musicsData.map((music) => (
               <li key={music.id}>
                 <button type="button" onClick={() => handleButtonClick(music.id)}>
+                  <Image
+                    src={`https://cdn.dev1stud.io/nol2tr/_/${music.videoid}.webp`}
+                    width={360}
+                    height={360}
+                    alt=""
+                    unoptimized
+                  />
                   <span>
-                    <i>{index + 1}</i>
                     <strong>{music.music}</strong>
-                    <em>
+                    <cite>
                       {music.instrument
                         ? music.artist !== null
                           ? music.artist
@@ -250,7 +256,7 @@ const Musics = ({ musicsData }: { musicsData: MusicData[] }) => {
                         : music.cover !== null
                         ? music.cover
                         : music.artist}
-                    </em>
+                    </cite>
                   </span>
                 </button>
               </li>
