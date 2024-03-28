@@ -30,6 +30,15 @@ export function useTablet() {
   return isTablet;
 }
 
+export function useMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  const mobile = useMediaQuery({ query: `(max-width: ${rem(767)}` });
+  useEffect(() => {
+    setIsMobile(mobile);
+  }, [mobile]);
+  return isMobile;
+}
+
 const BackButton = styled.i({
   display: 'block',
   'body[data-theme="dark"] &': {
@@ -75,12 +84,13 @@ const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
   };
 
   const isTablet = useTablet();
+  const isMobile = useMobile();
 
   return (
     <dialog
       className={`${musicStyles.dialog} ${music.isMV ? musicStyles.mv : ''} ${
         music.instrument ? musicStyles.instrument : ''
-      } ${isTablet ? musicStyles.tablet : ''}`}
+      } ${isTablet ? musicStyles.tablet : ''} ${isMobile && music.isMV === false ? musicStyles.onlyMusic : ''}`}
     >
       <div className={musicStyles.container}>
         <button type="button" onClick={onClose}>
@@ -148,6 +158,66 @@ const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
                 <p dangerouslySetInnerHTML={{ __html: music.lyrics.replace(/\n/g, '<br />') }} />
               </PerfectScrollbar>
             </div>
+          </>
+        ) : isMobile && music.isMV === false ? (
+          <>
+            <div className={musicStyles.info}>
+              <div className={musicStyles.yt}>
+                <YouTubeController videoId={music.videoid} start={music.start} vi={music.vvi} mv={music.isMV} />
+              </div>
+              <div className={musicStyles.summary}>
+                <h2>{music.music}</h2>
+                <cite>
+                  {music.instrument ? (
+                    <>{music.artist !== null ? music.artist : music.composer}</>
+                  ) : music.cover !== null ? (
+                    <>
+                      {music.cover} 커버 ({music.artist} 원곡)
+                    </>
+                  ) : (
+                    music.artist
+                  )}
+                </cite>
+                <dl>
+                  {music.cover !== null && (
+                    <div>
+                      <dt>원곡</dt>
+                      <dd>{music.artist}</dd>
+                    </div>
+                  )}
+                  <div>
+                    <dt>수록앨범</dt>
+                    <dd>{music.album}</dd>
+                  </div>
+                  {music.composer === music.lyricist ? (
+                    <div>
+                      <dt>작곡/작사</dt>
+                      <dd>{music.composer}</dd>
+                    </div>
+                  ) : (
+                    <>
+                      <div>
+                        <dt>작곡</dt>
+                        <dd>{music.composer}</dd>
+                      </div>
+                      {music.lyricist !== null && (
+                        <div>
+                          <dt>작사</dt>
+                          <dd>{music.lyricist}</dd>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </dl>
+              </div>
+            </div>
+            {music.lyrics !== null && (
+              <div className={musicStyles.lyrics}>
+                <PerfectScrollbar className={styles['scrollbar-container']}>
+                  <p dangerouslySetInnerHTML={{ __html: music.lyrics.replace(/\n/g, '<br />') }} />
+                </PerfectScrollbar>
+              </div>
+            )}
           </>
         ) : (
           <>
