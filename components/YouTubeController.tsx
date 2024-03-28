@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import styled from '@emotion/styled';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { mixIn, rem } from '@/styles/designSystem';
 import { images } from './images';
 import YouTubePlayer from './YouTubePlayer';
@@ -12,13 +12,13 @@ interface Props {
   mv?: boolean;
 }
 
-const Container = styled.div<{ mv?: boolean }>(({ mv }) => ({
+const Container = styled.div<{ isVideo?: boolean }>(({ isVideo }) => ({
   position: 'relative',
   overflow: 'hidden',
   '& img': {
     transition: 'all .4s cubic-bezier(.4,0,.2,1)',
     display: 'block',
-    aspectRatio: mv ? '1920 / 1080' : '360 / 360',
+    aspectRatio: isVideo ? '1920 / 1080' : '360 / 360',
     width: '100%',
     height: 'auto',
     objectFit: 'cover',
@@ -36,13 +36,13 @@ const Container = styled.div<{ mv?: boolean }>(({ mv }) => ({
     alignItems: 'center',
     border: 0,
     height: '100%',
-    aspectRatio: mv ? '1920 / 1080' : '360 / 360',
+    aspectRatio: isVideo ? '1920 / 1080' : '360 / 360',
     '& i': {
       transition: 'all .4s cubic-bezier(.4,0,.2,1)',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: 'rgba(244, 246, 250, .7)',
+      backgroundColor: 'rgba(244, 246, 250, .9)',
       borderRadius: rem(52),
       width: rem(52),
       height: rem(52),
@@ -65,7 +65,7 @@ const Container = styled.div<{ mv?: boolean }>(({ mv }) => ({
   '& iframe': {
     border: 0,
     borderRadius: rem(12),
-    aspectRatio: mv ? '1920 / 1080' : '360 / 360',
+    aspectRatio: isVideo ? '1920 / 1080' : '360 / 360',
     width: '100%',
     height: 'auto',
   },
@@ -73,19 +73,24 @@ const Container = styled.div<{ mv?: boolean }>(({ mv }) => ({
 
 const YouTubeController = ({ videoId, start, vi, mv }: Props) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isVideo, setIsVideo] = useState(mv);
+
+  useEffect(() => {
+    if (mv === undefined || mv === true) setIsVideo(true);
+  }, [mv]);
 
   const handlePlay = () => {
     setIsPlaying(true);
   };
 
   return (
-    <Container mv={mv}>
+    <Container isVideo={isVideo}>
       {!isPlaying ? (
         <>
           <Image
             src={vi === 'missing' ? '/missing.webp' : `https://i.ytimg.com/vi_webp/${videoId}/${vi}.webp`}
-            width={mv ? 360 : 640}
-            height={mv ? 360 : 480}
+            width={isVideo ? 360 : 640}
+            height={isVideo ? 360 : 480}
             unoptimized
             priority
             alt=""

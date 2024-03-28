@@ -153,78 +153,161 @@ export default function articleDetail({
           <h2>
             <strong>추천곡</strong> {musicData.attributes.music}
           </h2>
-          <YouTubeController
-            videoId={musicData.attributes.videoid}
-            start={musicData.attributes.start}
-            vi={musicData.attributes.vvi}
-            mv={musicData.attributes.mv}
-          />
-          <div className={styles.ytMusic}>
-            <Anchor href={`https://music.youtube.com/watch?v=${musicData.attributes.videoid}`}>
-              <YTmusicIcon />
-              <span>YouTube Music</span>에서 고음질로 듣기
-            </Anchor>
-          </div>
-          <div className={styles.info}>
-            <dl>
-              <div>
-                {musicData.attributes.instrument ? (
-                  <div>
-                    <dt>아티스트</dt>
-                    {musicData.attributes.artist !== null ? (
-                      <dd>{musicData.attributes.artist}</dd>
-                    ) : (
-                      <dd>{musicData.attributes.composer}</dd>
-                    )}
-                  </div>
-                ) : musicData.attributes.cover !== null ? (
-                  <>
-                    <div>
-                      <dt>커버</dt>
-                      <dd>{musicData.attributes.cover}</dd>
-                    </div>
-                    <div>
-                      <dt>원곡</dt>
-                      <dd>{musicData.attributes.artist}</dd>
-                    </div>
-                  </>
-                ) : (
-                  <div>
-                    <dt>노래</dt>
-                    <dd>{musicData.attributes.artist}</dd>
-                  </div>
-                )}
-                <div>
-                  <dt>수록앨범</dt>
-                  <dd>{musicData.attributes.album}</dd>
-                </div>
+          {musicData.attributes.isMV ? (
+            <>
+              <YouTubeController
+                videoId={musicData.attributes.videoid}
+                start={musicData.attributes.start}
+                vi={musicData.attributes.vvi}
+                mv={musicData.attributes.isMV}
+              />
+              <div className={styles.ytMusic}>
+                <Anchor href={`https://music.youtube.com/watch?v=${musicData.attributes.videoid}`}>
+                  <YTmusicIcon />
+                  <span>YouTube Music</span>에서 고음질로 듣기
+                </Anchor>
               </div>
-              {musicData.attributes.composer === musicData.attributes.lyricist ? (
-                <div>
+              <div className={styles.info}>
+                <dl>
                   <div>
-                    <dt>작곡/작사</dt>
-                    <dd>{musicData.attributes.composer}</dd>
-                  </div>
-                </div>
-              ) : (
-                <div>
-                  <div>
-                    <dt>작곡</dt>
-                    <dd>{musicData.attributes.composer}</dd>
-                  </div>
-                  {musicData.attributes.lyricist !== null && (
+                    {musicData.attributes.instrument ? (
+                      <div>
+                        <dt>아티스트</dt>
+                        {musicData.attributes.artist !== null ? (
+                          <dd>{musicData.attributes.artist}</dd>
+                        ) : (
+                          <dd>{musicData.attributes.composer}</dd>
+                        )}
+                      </div>
+                    ) : musicData.attributes.cover !== null ? (
+                      <>
+                        <div>
+                          <dt>커버</dt>
+                          <dd>{musicData.attributes.cover}</dd>
+                        </div>
+                        <div>
+                          <dt>원곡</dt>
+                          <dd>{musicData.attributes.artist}</dd>
+                        </div>
+                      </>
+                    ) : (
+                      <div>
+                        <dt>노래</dt>
+                        <dd>{musicData.attributes.artist}</dd>
+                      </div>
+                    )}
                     <div>
-                      <dt>작사</dt>
-                      <dd>{musicData.attributes.lyricist}</dd>
+                      <dt>수록앨범</dt>
+                      <dd>{musicData.attributes.album}</dd>
+                    </div>
+                  </div>
+                  {musicData.attributes.composer === musicData.attributes.lyricist ? (
+                    <div>
+                      <div>
+                        <dt>작곡/작사</dt>
+                        <dd>{musicData.attributes.composer}</dd>
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <div>
+                        <dt>작곡</dt>
+                        <dd>{musicData.attributes.composer}</dd>
+                      </div>
+                      {musicData.attributes.lyricist !== null && (
+                        <div>
+                          <dt>작사</dt>
+                          <dd>{musicData.attributes.lyricist}</dd>
+                        </div>
+                      )}
                     </div>
                   )}
+                </dl>
+                {musicData.attributes.lyrics !== null && (
+                  <p dangerouslySetInnerHTML={{ __html: musicData.attributes.lyrics.replace(/\n/g, '<br />') }} />
+                )}
+              </div>
+            </>
+          ) : (
+            <>
+              <div className={styles['music-info']}>
+                <YouTubeController
+                  videoId={musicData.attributes.videoid}
+                  start={musicData.attributes.start}
+                  vi={musicData.attributes.vvi}
+                  mv={musicData.attributes.isMV}
+                />
+                <div className={styles.info}>
+                  <div className={styles.ytMusic}>
+                    <Anchor href={`https://music.youtube.com/watch?v=${musicData.attributes.videoid}`}>
+                      <YTmusicIcon />
+                      <span>YouTube Music</span>에서 고음질로 듣기
+                    </Anchor>
+                  </div>
+                  <dl>
+                    <div>
+                      {musicData.attributes.instrument ? (
+                        <div>
+                          <dt>아티스트</dt>
+                          {musicData.attributes.artist !== null ? (
+                            <dd>{musicData.attributes.artist}</dd>
+                          ) : (
+                            <dd>{musicData.attributes.composer}</dd>
+                          )}
+                        </div>
+                      ) : musicData.attributes.cover !== null ? (
+                        <>
+                          <div>
+                            <dt>커버</dt>
+                            <dd>{musicData.attributes.cover}</dd>
+                          </div>
+                          <div>
+                            <dt>원곡</dt>
+                            <dd>{musicData.attributes.artist}</dd>
+                          </div>
+                        </>
+                      ) : (
+                        <div>
+                          <dt>노래</dt>
+                          <dd>{musicData.attributes.artist}</dd>
+                        </div>
+                      )}
+                      <div>
+                        <dt>수록앨범</dt>
+                        <dd>{musicData.attributes.album}</dd>
+                      </div>
+                    </div>
+                    {musicData.attributes.composer === musicData.attributes.lyricist ? (
+                      <div>
+                        <div>
+                          <dt>작곡/작사</dt>
+                          <dd>{musicData.attributes.composer}</dd>
+                        </div>
+                      </div>
+                    ) : (
+                      <div>
+                        <div>
+                          <dt>작곡</dt>
+                          <dd>{musicData.attributes.composer}</dd>
+                        </div>
+                        {musicData.attributes.lyricist !== null && (
+                          <div>
+                            <dt>작사</dt>
+                            <dd>{musicData.attributes.lyricist}</dd>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </dl>
                 </div>
-              )}
-            </dl>
-            {musicData.attributes.lyrics !== null && (
-              <p dangerouslySetInnerHTML={{ __html: musicData.attributes.lyrics.replace(/\n/g, '<br />') }} />
-            )}
-          </div>
+              </div>
+              <div className={styles.lyrics}>
+                {musicData.attributes.lyrics !== null && (
+                  <p dangerouslySetInnerHTML={{ __html: musicData.attributes.lyrics.replace(/\n/g, '<br />') }} />
+                )}
+              </div>
+            </>
+          )}
         </div>
       </article>
     </main>
