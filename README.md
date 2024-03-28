@@ -13,17 +13,8 @@
 - SASS
 - Google YouTube iframe API
 - PWA
-- Notion Client
-- Strapi API
+- Strapi rest API
 - Node 18
-- vercel deployment
-
-### Web Opengraph Scrap API Server
-
-- Next.js
-- TypeScript
-- iconv
-- cheerio
 - vercel deployment
 
 ### Backend
