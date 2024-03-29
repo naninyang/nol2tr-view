@@ -273,11 +273,22 @@
       dl
         display: flex
         flex-direction: column
-        gap: rem(7)
+        gap: rem(3)
 
         > div
           display: inline-flex
           gap: rem(7)
+
+          +mq(minMedium)
+            display: grid
+            grid-template-columns: 1fr 1fr
+
+          &:first-of-type, &[data-staff], &[data-single="true"]
+            display: inline-flex
+            gap: rem(7)
+
+            +mq(maxSmall)
+              flex-direction: row
 
           +mq(maxSmall)
             flex-direction: column
@@ -295,10 +306,11 @@
           dt
             color: var(--txt-summary)
             white-space: nowrap
+            +coln
             width: rem(57)
 
           dd
-            +coln
+            +col
             font-weight: 700
             color: var(--txt-subject)
 

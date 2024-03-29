@@ -170,6 +170,14 @@ export default function articleDetail({
               <div className={styles.info}>
                 <dl>
                   <div>
+                    <div>
+                      <dt>수록앨범</dt>
+                      <dd>{musicData.attributes.album}</dd>
+                    </div>
+                  </div>
+                  <div
+                    data-single={musicData.attributes.instrument || musicData.attributes.cover === null ? true : false}
+                  >
                     {musicData.attributes.instrument ? (
                       <div>
                         <dt>아티스트</dt>
@@ -196,13 +204,9 @@ export default function articleDetail({
                         <dd>{musicData.attributes.artist}</dd>
                       </div>
                     )}
-                    <div>
-                      <dt>수록앨범</dt>
-                      <dd>{musicData.attributes.album}</dd>
-                    </div>
                   </div>
                   {musicData.attributes.composer === musicData.attributes.lyricist ? (
-                    <div>
+                    <div data-staff="+">
                       <div>
                         <dt>작곡/작사</dt>
                         <dd>{musicData.attributes.composer}</dd>
@@ -246,6 +250,14 @@ export default function articleDetail({
                   </div>
                   <dl>
                     <div>
+                      <dt>수록앨범</dt>
+                      <dd>{musicData.attributes.album}</dd>
+                    </div>
+                    <div
+                      data-single={
+                        musicData.attributes.instrument || musicData.attributes.cover === null ? true : false
+                      }
+                    >
                       {musicData.attributes.instrument ? (
                         <div>
                           <dt>아티스트</dt>
@@ -272,13 +284,9 @@ export default function articleDetail({
                           <dd>{musicData.attributes.artist}</dd>
                         </div>
                       )}
-                      <div>
-                        <dt>수록앨범</dt>
-                        <dd>{musicData.attributes.album}</dd>
-                      </div>
                     </div>
                     {musicData.attributes.composer === musicData.attributes.lyricist ? (
-                      <div>
+                      <div data-staff="+">
                         <div>
                           <dt>작곡/작사</dt>
                           <dd>{musicData.attributes.composer}</dd>
