@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import { InterviewParalinkData, MusicParalinkData } from 'types';
+import { formatDate } from '@/utils/strapi';
 import Seo, { originTitle } from '@/components/Seo';
 import YouTubeController from '@/components/YouTubeController';
 import Anchor from '@/components/Anchor';
@@ -63,16 +64,146 @@ export default function articleDetail({
     if (timeoutReached) {
       return (
         <main className={styles.article}>
-          <p className={styles.error}>
-            기사를 불러오지 못했습니다. 삭제된 기사이거나 인터넷 속도가 느립니다.{' '}
-            <Anchor href="/articles">뒤로가기</Anchor>
-          </p>
+          <div className="top-link">
+            <Anchor href="/interviews">
+              <BackButton />
+              <span>뒤로가기</span>
+            </Anchor>
+          </div>
+          <article>
+            <div className={styles.news}>
+              <YouTubeController videoId={'q2iExQiqiyg'} vi={'hq720'} />
+              <header>
+                <h1>
+                  페이지를 찾을 수 없습니다. 404 Not Found 에러 <span>추천곡_ 체념</span>
+                </h1>
+              </header>
+              <p>찾고자 하는 페이지가 존재하지 않으니 체념하고 뒤로 돌아가세요.</p>
+            </div>
+            <hr />
+            <div className={styles.music}>
+              <h2>
+                <strong>추천곡</strong> 체념
+              </h2>
+              <YouTubeController videoId={'Ezo69U5bar4'} start={0} vi={'hq720'} mv={true} />
+              <div className={styles.ytMusic}>
+                <Anchor href={`https://music.youtube.com/watch?v=Ezo69U5bar4`}>
+                  <YTmusicIcon />
+                  <span>YouTube Music</span>에서 고음질로 듣기
+                </Anchor>
+              </div>
+              <div className={styles.info}>
+                <dl>
+                  <div>
+                    <div>
+                      <dt>수록앨범</dt>
+                      <dd>Like The Bible (2003)</dd>
+                    </div>
+                  </div>
+                  <div data-single={false}>
+                    <div>
+                      <dt>커버</dt>
+                      <dd>이영현</dd>
+                    </div>
+                    <div>
+                      <dt>원곡</dt>
+                      <dd>빅마마 (이영현 솔로곡)</dd>
+                    </div>
+                  </div>
+                  <div data-staff="+">
+                    <div>
+                      <dt>작곡/작사</dt>
+                      <dd>이영현</dd>
+                    </div>
+                  </div>
+                </dl>
+                <p>
+                  행복했어 너와의 시간들
+                  <br />
+                  아마도 너는 힘들었겠지
+                  <br />
+                  너의 마음을 몰랐던 건 아니야
+                  <br />
+                  나도 느꼈었지만
+                  <br />널 보내는게 널 떠나보내는게
+                  <br />
+                  아직은 익숙하지가 않아
+                  <br />
+                  그렇게 밖에 할 수 없던 니가 원망스러워
+                  <br />왜 말 안했니 아님 못한거니
+                  <br />
+                  조금도 날 생각하지 않았니
+                  <br />
+                  좋아한다며 사랑한다며
+                  <br />
+                  이렇게 끝낼거면서
+                  <br />왜 그런말을 했니
+                  <br />널 미워해야만 하는 거니
+                  <br />
+                  아니면 내 탓을 해야만 하는 거니
+                  <br />
+                  시간을 돌릴수만 있다면
+                  <br />
+                  다시 예전으로 돌아가고 싶은 마음뿐이야
+                  <br />왜 말 안했니 아님 못한거니
+                  <br />
+                  조금도 날 생각하지 않았니
+                  <br />
+                  좋아한다며 사랑한다며
+                  <br />
+                  이렇게 끝낼거면서 왜 그런말을 했니
+                  <br />널 미워해야만 하는 거니
+                  <br />
+                  아니면 내 탓을 해야만 하는 거니
+                  <br />
+                  시간을 돌릴수만 있다면
+                  <br />
+                  다시 예전으로 돌아가고 싶은 마음뿐이야
+                  <br />
+                  그래 더 이상 묻지 않을게
+                  <br />
+                  내곁을 떠나고 싶다면 돌아보지 말고 떠나가
+                  <br />
+                  눈물은 흘리지 않을게
+                  <br />
+                  괜히 마음만 약해지니깐
+                  <br />
+                  내게서 멀어진 니 모습이 흐릿하게 보여
+                  <br />
+                  눈물이 나나봐
+                  <br />널 많이 그리워할것 같아
+                  <br />
+                  참아야만 하겠지
+                  <br />
+                  잊혀질 수 있도록
+                  <br />
+                  다시 사랑같은거 하지 않을래
+                  <br />내 마지막 사랑은
+                  <br />
+                  돌아선 너에게 주고 싶어서
+                  <br />
+                  행복하길 바래 나보다 좋은 여자
+                  <br />
+                  만나기를...
+                </p>
+              </div>
+            </div>
+          </article>
         </main>
       );
     } else {
       return (
         <main className={styles.article}>
-          <p className={styles.loading}>기사 읽는 중...</p>
+          <Seo
+            pageTitles={`404 NOT FOUND - ${originTitle}`}
+            pageTitle={`404 NOT FOUND`}
+            pageDescription={`서버 에러 또는 삭제/비공개된 영상`}
+            pageImg={`https://nol2tr.dev1stud.io/missing.webp`}
+            pageOgType={'video.other'}
+            pageImgWidth={1920}
+            pageImgHeight={1080}
+          />
+          <p className={styles.loading}>기사 읽어오는 중...</p>
         </main>
       );
     }
@@ -337,12 +468,15 @@ export const getStaticProps: GetStaticProps = async (context) => {
   if (interviewId && typeof interviewId === 'string') {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/interview?id=${interviewId.substring(14)}`);
     const articleResponse = (await response.json()) as { data: InterviewParalinkData };
-    articleData = articleResponse.data;
-    const musicResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/musics?musicId=${articleData.attributes.music}`,
-    );
-    const musicResponseData = (await musicResponse.json()) as { data: MusicParalinkData };
-    musicData = musicResponseData.data;
+    const createdAt = articleResponse.data?.attributes?.createdAt;
+    if (createdAt && formatDate(createdAt) === interviewId.substring(0, 14)) {
+      articleData = articleResponse.data;
+      const musicResponse = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/musics?musicId=${articleData.attributes.music}`,
+      );
+      const musicResponseData = (await musicResponse.json()) as { data: MusicParalinkData };
+      musicData = musicResponseData.data;
+    }
   }
 
   if (!articleData) {

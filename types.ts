@@ -33,6 +33,7 @@ export interface InterviewParalinkData {
     interviewee: string;
     music: string;
     created: string;
+    createdAt: string;
   };
   musicData: any;
 }
@@ -78,6 +79,7 @@ export interface NewsicParalinkData {
     lyricist: string;
     lyrics: string;
     created: string;
+    createdAt: string;
   };
   musicData: any;
 }
