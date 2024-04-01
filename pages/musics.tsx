@@ -57,6 +57,10 @@ const CloseIcon = styled.i({
   background: `url(${images.arrow.crossDark}) no-repeat 50% 50%/contain`,
 });
 
+const WarningIcon = styled.i({
+  background: `url(${images.misc.warning}) no-repeat 50% 50%/contain`,
+});
+
 const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
   const [infoVisible, setInfoVisible] = useState<boolean>(true);
   const [infoText, setInfoText] = useState<string>('정보 숨기기');
@@ -85,6 +89,44 @@ const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
 
   const isTablet = useTablet();
   const isMobile = useMobile();
+
+  const ReportVideo = ({ videoId }: { videoId: string }) => {
+    const handleReport = async (event: React.MouseEvent<HTMLButtonElement>) => {
+      const jejeupVideo = event.currentTarget.getAttribute('data-video');
+
+      try {
+        const response = await fetch('/api/unpublish', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ jejeupVideo: jejeupVideo }),
+        });
+
+        if (response.ok) {
+          alert('신고 성공! 감사합니다 ☺️');
+        } else {
+          const errorData = await response.json();
+          console.log(errorData.error);
+          alert('서버 오류입니다. 잠시 뒤 다시 시도해 주세요 😭');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('서버 오류입니다. 잠시 뒤 다시 시도해 주세요 😭');
+      }
+    };
+
+    return (
+      <p className={musicStyles['report-video']}>
+        <WarningIcon />
+        유튜브 영상에 문제가 있을 때는{' '}
+        <button type="button" onClick={handleReport} data-video={videoId}>
+          제보
+        </button>
+        해 주세요. 알려주시면 문제가 없는 영상으로 교체합니다.
+      </p>
+    );
+  };
 
   return (
     <dialog
@@ -154,6 +196,7 @@ const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
               </div>
             </div>
             <div className={musicStyles.lyrics}>
+              <ReportVideo videoId={music.videoid} />
               <PerfectScrollbar className={styles['scrollbar-container']}>
                 <p dangerouslySetInnerHTML={{ __html: music.lyrics.replace(/\n/g, '<br />') }} />
               </PerfectScrollbar>
@@ -209,6 +252,7 @@ const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
                     </>
                   )}
                 </dl>
+                <ReportVideo videoId={music.videoid} />
               </div>
             </div>
             {music.lyrics !== null && (
@@ -267,6 +311,7 @@ const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
                       </>
                     )}
                   </dl>
+                  <ReportVideo videoId={music.videoid} />
                 </div>
               )}
               <div className={musicStyles.yt}>
@@ -328,6 +373,7 @@ const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
                     </>
                   )}
                 </dl>
+                <ReportVideo videoId={music.videoid} />
                 <PerfectScrollbar className={styles['scrollbar-container']}>
                   <p
                     dangerouslySetInnerHTML={{ __html: music.lyrics.replace(/\n/g, '<br />') }}
@@ -383,6 +429,34 @@ const Musics = ({ musicsData }: { musicsData: MusicData[] }) => {
     }
   };
 
+  function MusicItem({ music }: { music: any }) {
+    return (
+      <>
+        <button type="button" onClick={() => handleButtonClick(music.id)}>
+          <Image
+            src={`https://cdn.dev1stud.io/nol2tr/_/${music.videoid}.webp`}
+            width={360}
+            height={360}
+            alt=""
+            unoptimized
+          />
+          <span>
+            <strong>{music.music}</strong>
+            <cite>
+              {music.instrument
+                ? music.artist !== null
+                  ? music.artist
+                  : music.composer
+                : music.cover !== null
+                ? music.cover
+                : music.artist}
+            </cite>
+          </span>
+        </button>
+      </>
+    );
+  }
+
   const timestamp = Date.now();
 
   return (
@@ -411,27 +485,7 @@ const Musics = ({ musicsData }: { musicsData: MusicData[] }) => {
           <ul>
             {musicsData.map((music) => (
               <li key={music.id}>
-                <button type="button" onClick={() => handleButtonClick(music.id)}>
-                  <Image
-                    src={`https://cdn.dev1stud.io/nol2tr/_/${music.videoid}.webp`}
-                    width={360}
-                    height={360}
-                    alt=""
-                    unoptimized
-                  />
-                  <span>
-                    <strong>{music.music}</strong>
-                    <cite>
-                      {music.instrument
-                        ? music.artist !== null
-                          ? music.artist
-                          : music.composer
-                        : music.cover !== null
-                        ? music.cover
-                        : music.artist}
-                    </cite>
-                  </span>
-                </button>
+                <MusicItem music={music} />
               </li>
             ))}
           </ul>

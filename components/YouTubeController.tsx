@@ -74,7 +74,6 @@ const Container = styled.div<{ isVideo?: boolean }>(({ isVideo }) => ({
 const YouTubeController = ({ videoId, start, vi, mv }: Props) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isVideo, setIsVideo] = useState(mv);
-  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     if (mv === undefined || mv === true) setIsVideo(true);
@@ -89,17 +88,12 @@ const YouTubeController = ({ videoId, start, vi, mv }: Props) => {
       {!isPlaying ? (
         <>
           <Image
-            src={
-              imageError
-                ? `https://i.ytimg.com/vi_webp/${videoId}/${vi}.webp`
-                : `https://i.ytimg.com/vi/${videoId}/${vi}.jpg`
-            }
+            src={`https://i.ytimg.com/vi/${videoId}/${vi}.jpg`}
             width={isVideo ? 360 : 640}
             height={isVideo ? 360 : 480}
             unoptimized
             priority
             alt=""
-            onError={() => setImageError(true)}
           />
           <button type="button" onClick={handlePlay}>
             <i />

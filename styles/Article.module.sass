@@ -189,6 +189,29 @@
       flex-direction: column
       gap: rem(17)
 
+      p.report-video
+        font-size: rem(14)
+        line-height: 1.28571429
+        padding-bottom: rem(12)
+        padding-left: rem(17)
+        text-indent: rem(-17)
+
+        i
+          display: inline-block
+          margin-right: rem(3)
+          width: rem(14)
+          height: rem(14)
+          vertical-align: middle
+
+        button
+          background: 0
+          border: 0
+          padding: 0
+          font-size: rem(14)
+          font-weight: 800
+          color: red
+          vertical-align: text-bottom
+
       .ytMusic
         a
           display: inline-flex
@@ -212,39 +235,6 @@
         flex-direction: column
         gap: rem(17)
 
-      dl
-        display: inline-flex
-        gap: rem(17)
-
-        > div
-          display: inline-flex
-          gap: rem(7)
-
-          +mq(maxExtraSmall)
-            flex-direction: column
-
-          +mq(minSmall)
-            gap: rem(17)
-
-          > div
-            display: inline-flex
-            gap: rem(7)
-
-          dt, dd
-            font-size: rem(14)
-
-          dt
-            color: var(--txt-summary)
-            white-space: nowrap
-
-          dd
-            font-weight: 700
-            color: var(--txt-subject)
-
-      p
-        font-size: rem(14)
-        color: var(--txt-subject)
-
       .music-info
         display: flex
         flex-direction: column
@@ -259,16 +249,6 @@
 
           .info
             +col
-
-    .music
-      display: flex
-      flex-direction: column
-      gap: rem(17)
-
-      .info
-        display: flex
-        flex-direction: column
-        gap: rem(17)
 
       dl
         display: flex

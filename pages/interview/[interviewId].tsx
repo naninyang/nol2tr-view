@@ -7,6 +7,7 @@ import Seo, { originTitle } from '@/components/Seo';
 import YouTubeController from '@/components/YouTubeController';
 import Anchor from '@/components/Anchor';
 import { images } from '@/components/images';
+import ReportVideo from '@/components/Report';
 import styled from '@emotion/styled';
 import styles from '@/styles/Article.module.sass';
 
@@ -305,6 +306,7 @@ export default function articleDetail({
                   <span>YouTube Music</span>에서 고음질로 듣기
                 </Anchor>
               </div>
+              <ReportVideo videoId={musicData.attributes.videoid} />
               <div className={styles.info}>
                 <dl>
                   <div>
@@ -445,6 +447,7 @@ export default function articleDetail({
                       </div>
                     )}
                   </dl>
+                  <ReportVideo videoId={musicData.attributes.videoid} />
                 </div>
               </div>
               <div className={styles.lyrics}>

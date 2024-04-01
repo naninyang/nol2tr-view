@@ -19,7 +19,10 @@
       +mq(minMedium)
         width: 50%
 
-      > button
+      > img
+        +screen-reader-only
+
+      > button, > div
         display: flex
         align-items: center
         gap: rem(23)
@@ -77,6 +80,33 @@
       padding: rem(52)
       background-color: rgba($hex-black, .7)
 
+    dl + p.report-video
+      padding-top: rem(12)
+      padding-bottom: 0
+
+    p.report-video
+      font-size: rem(14)
+      line-height: 1.28571429
+      padding-bottom: rem(12)
+      padding-left: rem(17)
+      text-indent: rem(-17)
+
+      i
+        display: inline-block
+        margin-right: rem(3)
+        width: rem(14)
+        height: rem(14)
+        vertical-align: middle
+
+      button
+        background: 0
+        border: 0
+        padding: 0
+        font-size: rem(14)
+        font-weight: 800
+        color: red
+        vertical-align: text-bottom
+
     &.tablet, &.onlyMusic
       &:not(.mv)
         .container
@@ -100,6 +130,9 @@
 
             dl
               padding-bottom: 0
+
+              & + p.report-video
+                padding-top: rem(12)
 
         .info, .lyrics
           flex: auto
@@ -295,6 +328,10 @@
 
           +mq(minSmall)
             +col
+
+      & + p.report-video
+        padding-top: 0
+        padding-bottom: rem(12)
 
       & + button
         justify-content: center
