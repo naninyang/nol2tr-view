@@ -18,17 +18,21 @@
 
       +mq(minMedium)
         width: 50%
+        display: flex
 
       > img
         +screen-reader-only
 
-      > button, > div
+      > button
         display: flex
         align-items: center
         gap: rem(23)
         background: none
         padding: rem(17) 0
         width: 100%
+
+        +mq(minMedium)
+          flex-grow: 1
 
         img
           width: rem(72)
