@@ -54,7 +54,12 @@ const YTmusicIcon = styled.i({
 });
 
 const CloseIcon = styled.i({
-  background: `url(${images.arrow.crossDark}) no-repeat 50% 50%/contain`,
+  'body[data-theme="dark"] &': {
+    background: `url(${images.arrow.crossLight}) no-repeat 50% 50%/contain`,
+  },
+  'body &, body[data-theme="light"] &': {
+    background: `url(${images.arrow.crossDark}) no-repeat 50% 50%/contain`,
+  },
 });
 
 const WarningIcon = styled.i({
