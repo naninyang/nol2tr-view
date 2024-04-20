@@ -67,10 +67,10 @@ const WarningIcon = styled.i({
 });
 
 const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
-  const [infoVisible, setInfoVisible] = useState<boolean>(true);
-  const [infoText, setInfoText] = useState<string>('정보 숨기기');
-  const [lyricsVisible, setLyricsVisible] = useState<boolean>(true);
-  const [lyricsText, setLyricsText] = useState<string>('가사 숨기기');
+  const [infoVisible, setInfoVisible] = useState<boolean>(false);
+  const [infoText, setInfoText] = useState<string>('정보 보기');
+  const [lyricsVisible, setLyricsVisible] = useState<boolean>(false);
+  const [lyricsText, setLyricsText] = useState<string>('가사 보기');
 
   const toggleInfo = () => {
     if (infoVisible) {
