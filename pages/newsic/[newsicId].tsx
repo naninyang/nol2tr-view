@@ -277,10 +277,12 @@ export default function articleDetail({
             </div>
           </header>
           <DescriptionContent data={articleData.attributes.content} />
-          <p
-            dangerouslySetInnerHTML={{ __html: articleData.attributes.fin.replace(/\n/g, '<br />') }}
-            aria-label="큐레이터 코멘트"
-          />
+          {articleData.attributes.fin !== null && (
+            <p
+              dangerouslySetInnerHTML={{ __html: articleData.attributes.fin.replace(/\n/g, '<br />') }}
+              aria-label="큐레이터 코멘트"
+            />
+          )}
         </div>
         <hr />
         <div className={styles.music}>
