@@ -66,9 +66,22 @@
       align-items: center
       padding: rem(7) 0
 
+      dl
+        display: flex
+        gap: rem(7)
+
+        dt
+          font-size: rem(14)
+          color: var(--txt-summary)
+
+          +mq(minMedium)
+            font-size: rem(16)
+
+        dd
+          font-weight: 800
+          color: $hex-accent
+
       time, button span
-        font-size: rem(14)
-        color: var(--txt-subject)
         line-height: 1
 
         +mq(minMedium)
@@ -81,6 +94,9 @@
         background-color: transparent
         padding: 0
         font-weight: 600
+
+        span
+          color: var(--txt-subject)
 
         i
           display: inline-block
@@ -110,7 +126,7 @@
       flex-direction: column
       gap: rem(17)
 
-      dl
+      > dl
         display: inline-flex
         gap: rem(2)
 

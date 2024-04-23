@@ -273,7 +273,12 @@ export default function articleDetail({
               <button onClick={copyToClipboard}>
                 <ClipboardIcon /> <span>URL 복사</span>
               </button>
-              <time>기사 작성일 {articleData.attributes.created}</time>
+              <dl>
+                <dt>기사 작성일</dt>
+                <dd>
+                  <time>{articleData.attributes.created}</time>
+                </dd>
+              </dl>
             </div>
           </header>
           <dl>
