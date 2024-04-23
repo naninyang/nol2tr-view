@@ -1,4 +1,4 @@
-import { NewsicData, InterviewData, NoticeData, MusicData, MusicParalinkData } from 'types';
+import { NewsData, NoticeData, MusicData, MusicParalinkData } from 'types';
 
 export const formatDate = (datetime: string) => {
   const date = new Date(datetime);
@@ -25,7 +25,7 @@ export async function getInterviewData(page?: number) {
   const interviewResponse = await response.json();
   const interviewData = interviewResponse.data;
   const pageCount = interviewResponse.meta.pagination.pageCount;
-  const articles: InterviewData[] = await Promise.all(
+  const articles: NewsData[] = await Promise.all(
     interviewData.map(async (data: any) => {
       const musicData = await getMusicData(data.attributes.music);
       return {
@@ -65,7 +65,7 @@ export async function getNewsicData(page?: number) {
   const newsicResponse = await response.json();
   const newsicData = newsicResponse.data;
   const pageCount = newsicResponse.meta.pagination.pageCount;
-  const articles: NewsicData[] = await Promise.all(
+  const articles: NewsData[] = await Promise.all(
     newsicData.map(async (data: any) => {
       const musicData = await getMusicData(data.attributes.music);
       return {
