@@ -164,25 +164,53 @@
           max-width: 100%
           height: auto
 
-      p
-        font-size: rem(14)
-        line-height: 1.6
-        color: var(--txt-blockquote)
+      .description
+        display: flex
+        flex-direction: column
+        gap: rem(14)
 
         +mq(minMedium)
-          font-size: rem(16)
+          gap: rem(16)
 
-        &:nth-of-type(2)
+        strong
+          font-weight: 800
+
+        p, ul, ol
+          margin: rem(7) 0
+
+        p, li
+          font-size: rem(14)
+          line-height: 1.375
+
+          +mq(minSmall)
+            font-size: rem(16)
+
+        ol, ul
+          margin-left: rem(16)
+          padding-left: rem(16)
+
+          li
+            margin: rem(3) 0
+
+        ol
+          list-style-type: decimal
+
+        ul
+          list-style-type: disc
+
+        a
+          color: $hex-accent
+          text-decoration: underline
+
+        & + p
           margin-top: rem(15)
           border-top: 1px solid var(--border)
           padding-top: rem(15)
-          font-size: rem(14)
           color: var(--txt-summary)
 
           +mq(minMedium)
             margin-top: rem(25)
             padding-top: rem(25)
-            font-size: rem(16)
 
     .music
       display: flex

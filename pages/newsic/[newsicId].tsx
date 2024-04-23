@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
-import { MusicParalinkData, NewsicParalinkData } from 'types';
+import { MusicParalinkData, NewsParalinkData } from 'types';
 import { formatDate } from '@/utils/strapi';
 import Seo, { originTitle } from '@/components/Seo';
 import YouTubeController from '@/components/YouTubeController';
@@ -10,6 +10,7 @@ import { images } from '@/components/images';
 import ReportVideo from '@/components/Report';
 import styled from '@emotion/styled';
 import styles from '@/styles/Article.module.sass';
+import { DescriptionContent } from '@/components/Description';
 
 const BackButton = styled.i({
   display: 'block',
@@ -38,7 +39,7 @@ export default function articleDetail({
   articleData,
   musicData,
 }: {
-  articleData: NewsicParalinkData | null;
+  articleData: NewsParalinkData | null;
   musicData: any;
 }) {
   const router = useRouter();
@@ -275,10 +276,11 @@ export default function articleDetail({
               <time>기사 작성일 {articleData.attributes.created}</time>
             </div>
           </header>
-          <p dangerouslySetInnerHTML={{ __html: articleData.attributes.description.replace(/\n/g, '<br />') }} />
-          {articleData.attributes.fin !== null && (
-            <p dangerouslySetInnerHTML={{ __html: articleData.attributes.fin.replace(/\n/g, '<br />') }} />
-          )}
+          <DescriptionContent data={articleData.attributes.content} />
+          <p
+            dangerouslySetInnerHTML={{ __html: articleData.attributes.fin.replace(/\n/g, '<br />') }}
+            aria-label="큐레이터 코멘트"
+          />
         </div>
         <hr />
         <div className={styles.music}>
@@ -463,7 +465,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   if (newsicId && typeof newsicId === 'string') {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/newsic?id=${newsicId.substring(14)}`);
-    const articleResponse = (await response.json()) as { data: NewsicParalinkData };
+    const articleResponse = (await response.json()) as { data: NewsParalinkData };
     const createdAt = articleResponse.data?.attributes?.createdAt;
     if (createdAt && formatDate(createdAt) === newsicId.substring(0, 14)) {
       articleData = articleResponse.data;

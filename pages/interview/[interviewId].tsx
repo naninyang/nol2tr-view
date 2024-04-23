@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
-import { InterviewParalinkData, MusicParalinkData } from 'types';
+import { NewsParalinkData, MusicParalinkData } from 'types';
 import { formatDate } from '@/utils/strapi';
 import Seo, { originTitle } from '@/components/Seo';
 import YouTubeController from '@/components/YouTubeController';
 import Anchor from '@/components/Anchor';
 import { images } from '@/components/images';
+import { DescriptionContent } from '@/components/Description';
 import ReportVideo from '@/components/Report';
 import styled from '@emotion/styled';
 import styles from '@/styles/Article.module.sass';
@@ -38,7 +39,7 @@ export default function articleDetail({
   articleData,
   musicData,
 }: {
-  articleData: InterviewParalinkData | null;
+  articleData: NewsParalinkData | null;
   musicData: any;
 }) {
   const router = useRouter();
@@ -285,7 +286,14 @@ export default function articleDetail({
               <dd>{articleData.attributes.interviewee}</dd>
             </div>
           </dl>
-          <p dangerouslySetInnerHTML={{ __html: articleData.attributes.description.replace(/\n/g, '<br />') }} />
+          <hr />
+          <DescriptionContent data={articleData.attributes.content} />
+          {articleData.attributes.fin !== null && (
+            <p
+              dangerouslySetInnerHTML={{ __html: articleData.attributes.fin.replace(/\n/g, '<br />') }}
+              aria-label="큐레이터 코멘트"
+            />
+          )}
         </div>
         <hr />
         <div className={styles.music}>
@@ -470,7 +478,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   if (interviewId && typeof interviewId === 'string') {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/interview?id=${interviewId.substring(14)}`);
-    const articleResponse = (await response.json()) as { data: InterviewParalinkData };
+    const articleResponse = (await response.json()) as { data: NewsParalinkData };
     const createdAt = articleResponse.data?.attributes?.createdAt;
     if (createdAt && formatDate(createdAt) === interviewId.substring(0, 14)) {
       articleData = articleResponse.data;

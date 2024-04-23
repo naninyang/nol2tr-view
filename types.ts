@@ -1,4 +1,4 @@
-export interface InterviewData {
+export interface NewsData {
   id: string;
   idx: string;
   subject: string;
@@ -10,52 +10,14 @@ export interface InterviewData {
   thumbnail: string;
   summary: string;
   description: string;
-  interviewer: string;
-  interviewee: string;
+  interviewer?: string;
+  interviewee?: string;
   musicData: any;
-  created: string;
-}
-
-export interface InterviewParalinkData {
-  attributes: {
-    idx: string;
-    subject: string;
-    platform: string;
-    vi: string;
-    vid: string;
-    oid: string;
-    aid: string;
-    opengraph: string;
-    thumbnail: string;
-    summary: string;
-    description: string;
-    interviewer: string;
-    interviewee: string;
-    music: string;
-    created: string;
-    createdAt: string;
-  };
-  musicData: any;
-}
-
-export interface NewsicData {
-  id: string;
-  idx: string;
-  subject: string;
-  platform: string;
-  vid: string;
-  oid: string;
-  aid: string;
-  opengraph: string;
-  thumbnail: string;
-  summary: string;
-  description: string;
   fin: string;
-  musicData: any;
   created: string;
 }
 
-export interface NewsicParalinkData {
+export interface NewsParalinkData {
   attributes: {
     idx: string;
     subject: string;
@@ -67,17 +29,11 @@ export interface NewsicParalinkData {
     opengraph: string;
     thumbnail: string;
     summary: string;
-    description: string;
-    fin: string;
+    content: any;
+    interviewer?: string;
+    interviewee?: string;
     music: string;
-    videoid: string;
-    vvi: string;
-    start: number;
-    artist: string;
-    album: string;
-    composer: string;
-    lyricist: string;
-    lyrics: string;
+    fin: string;
     created: string;
     createdAt: string;
   };

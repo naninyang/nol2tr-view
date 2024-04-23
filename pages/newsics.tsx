@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { NewsicData } from 'types';
+import { NewsData } from 'types';
 import Seo, { originTitle } from '@/components/Seo';
 import PageName from '@/components/PageName';
 import { Pagination } from '@/components/Pagination';
@@ -39,7 +39,7 @@ function Newsics({ articles, error, currentPage }: { articles: any; error: strin
           <div className={styles['article-content']}>
             {Array.isArray(articles.articles) && (
               <div className={styles['article-list']}>
-                {articles.articles.map((article: NewsicData) => (
+                {articles.articles.map((article: NewsData) => (
                   <article key={article.idx}>
                     <Link key={article.idx} href={`/newsic/${article.idx}`} scroll={false} shallow={true}>
                       {article.platform === 'youtube' ? (
