@@ -55,6 +55,7 @@ export interface NoticeParalinkData {
     platform: string;
     subject: string;
     description: string;
+    content: any;
     created: string;
     createdAt: string;
   };
