@@ -65,7 +65,7 @@ const NoticeContent = ({ data }: { data: any }) => {
     });
   };
 
-  return <div className={styles.description}>{renderContent(data)}</div>;
+  return <div className={notices.description}>{renderContent(data)}</div>;
 };
 
 const Notice = ({ notice }: { notice: NoticeParalinkData | null }) => {
