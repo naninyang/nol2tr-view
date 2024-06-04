@@ -13,7 +13,7 @@
 - SASS
 - Google YouTube iframe API
 - PWA
-- Strapi rest API
+- Strapi API
 - Node 18
 - vercel deployment
 
@@ -37,7 +37,9 @@
 
 ## TO-DO
 
-- Not yet
+- 홈을 없애고 홈 내용을 별도의 페이지로 이전
+- 여러개의 기사, 여러개의 노래를 하나로 묶어서 보여주는 서비스 탭 추가
+- ESC 누르면 음악재생 모달 닫히게 처리
 
 ## Supported PWA App. Download
 
