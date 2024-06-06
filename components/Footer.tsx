@@ -162,7 +162,7 @@ const Site = styled.div({
 
 const Copyright = styled.div({
   '& p': {
-    fontSize: rem(12),
+    fontSize: rem(14),
     fontWeight: 400,
     'body[data-theme="dark"] &': {
       color: hex.light,
