@@ -1,0 +1,78 @@
+@import './designSystem'
+
+.page
+  display: flex
+  align-items: center
+  flex-direction: column
+
+  h1.usage-headline:before
+    content: '이용 안내 usage'
+
+  h1.licenses-headline:before
+    content: '저작권 안내 licenses'
+
+  .page-content
+    display: flex
+    flex-direction: column
+    align-items: center
+    gap: rem(25)
+    margin-bottom: calc(env(safe-area-inset-bottom) + rem(68))
+    padding: rem(15)
+    width: 100%
+    color: var(--txt-blockquote)
+
+    +mq(minLarge)
+      gap: rem(50)
+      padding: rem(25)
+
+    .container
+      margin: rem(50) auto 0
+      width: 100%
+      max-width: rem(720)
+      display: flex
+      flex-direction: column
+      gap: rem(27)
+      margin: rem(17) 0
+
+      article
+        display: flex
+        flex-direction: column
+        gap: rem(7)
+
+      +mq(minSmall)
+        gap: rem(52)
+        margin: rem(52) 0
+
+      h2
+        font-size: rem(20)
+        text-align: center
+
+        +mq(minSmall)
+          font-size: rem(24)
+
+      section
+        display: flex
+        flex-direction: column
+        gap: rem(7)
+        padding: rem(17)
+        text-align: center
+
+      p
+        display: flex
+        flex-direction: column
+        font-size: rem(16)
+        line-height: 1.3
+        color: var(--txt-blockquote)
+
+        +mq(minSmall)
+          font-size: rem(20)
+
+@keyframes foreground
+  0%
+    opacity: 0
+
+  33.333%,50%
+    opacity: 1
+
+  16.667%,66.667%
+    opacity: 0

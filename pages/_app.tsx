@@ -8,6 +8,7 @@ import Header from '@/components/Header';
 import Services from '@/components/Services';
 import { GA_TRACKING_ID, pageview } from '@/lib/gtag';
 import 'styles/globals.sass';
+import Footer from '@/components/Footer';
 
 const fontKR = Noto_Sans_KR({
   weight: ['400', '700'],
@@ -54,6 +55,8 @@ export default function App({ Component, pageProps }: AppProps) {
   const noticePage = router.pathname.includes('/notices');
   const contactPage = router.pathname.includes('/contact-us');
   const openPage = router.pathname.includes('/open-sources');
+  const licensePage = router.pathname.includes('/licenses');
+  const usagePage = router.pathname.includes('/usage');
 
   return (
     <>
@@ -88,7 +91,7 @@ export default function App({ Component, pageProps }: AppProps) {
       </style>
       <Header />
       <Component {...pageProps} />
-      {musicPage || noticePage || contactPage || openPage ? undefined : <Services />}
+      {musicPage || noticePage || contactPage || openPage || licensePage || usagePage ? <Footer /> : <Services />}
     </>
   );
 }

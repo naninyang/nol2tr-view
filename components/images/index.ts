@@ -50,6 +50,8 @@ export const images = {
     develogDark: require('./services/develogDark.svg'),
     velogDark: require('./services/velogDark.svg'),
     dev1studioDark: require('./services/dev1studioDark.svg'),
+    studioDark: require('./services/studioDark.svg'),
+    studioLight: require('./services/studioLight.svg'),
   },
   home: {
     downloadDefaultBefore: require('./home/download-default-before.svg'),
