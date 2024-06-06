@@ -131,7 +131,7 @@ const MenuContainer = styled.div({
     transform: `translateX(0)`,
     opacity: 1,
   },
-  '& ol': {
+  '& ol.primary': {
     display: 'flex',
     flexDirection: 'column',
     gap: rem(10),
@@ -232,8 +232,29 @@ const MenuContainer = styled.div({
       },
     },
   },
+  '& ol.secondary': {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    gap: rem(12),
+    paddingBottom: rem(17),
+    '& li': {
+      display: 'flex',
+      gap: rem(12),
+      '&::before': {
+        content: "'/'",
+        color: 'var(--border)',
+      },
+      '&:first-of-type::before': {
+        display: 'none',
+      },
+      '& a': {
+        color: 'var(--bg-reverse-opacity)',
+      },
+    },
+  },
   '& ul': {
     display: 'flex',
+    justifyContent: 'flex-end',
     gap: rem(5),
     '& a': {
       display: 'flex',
@@ -253,11 +274,20 @@ const MenuContainer = styled.div({
   },
   '& p': {
     fontSize: rem(14),
+    textAlign: 'right',
     'body[data-theme="dark"] &': {
       color: 'rgba(255, 255, 255, .5)',
     },
     'body &, body[data-theme="light"] &': {
       color: 'rgba(0, 0, 0, .5)',
+    },
+    '& strong': {
+      ...mixIn.screenReaderOnly,
+    },
+    '& i': {
+      display: 'inline-block',
+      aspectRatio: '385 / 50',
+      height: rem(14),
     },
   },
 });
@@ -314,6 +344,15 @@ const Github = styled.i({
   },
   'body &, body[data-theme="light"] &': {
     background: `url(${images.services.githubDark}) no-repeat 50% 50%/contain`,
+  },
+});
+
+const Studio = styled.i({
+  'body[data-theme="dark"] &': {
+    background: `url(${images.services.studioLight}) no-repeat 50% 50%/contain`,
+  },
+  'body &, body[data-theme="light"] &': {
+    background: `url(${images.services.studioDark}) no-repeat 50% 50%/contain`,
   },
 });
 
@@ -467,7 +506,7 @@ export default function Header() {
                 <span>메뉴 닫기</span>
               </button>
             </Close>
-            <ol>
+            <ol className="primary">
               <li>
                 <Anchor href="/musics" onClick={closeMenu}>
                   선곡표
@@ -500,6 +539,14 @@ export default function Header() {
                 </li>
               )}
             </ol>
+            <ol className="secondary">
+              <li>
+                <Anchor href="licenses">저작권 안내</Anchor>
+              </li>
+              <li>
+                <Anchor href="usage">이용 안내</Anchor>
+              </li>
+            </ol>
             <ul>
               <li>
                 <Anchor href="https://dev1stud.io">
@@ -526,7 +573,10 @@ export default function Header() {
                 </Anchor>
               </li>
             </ul>
-            <p>&copy; nol2tr_view, 2024</p>
+            <p>
+              &copy; <Studio />
+              <strong>DEV1L.studios</strong>. 2024.
+            </p>
           </MenuContainer>
         </Menu>
       )}
