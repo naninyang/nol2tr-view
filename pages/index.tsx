@@ -133,16 +133,6 @@ export default function Home({ interviews, newsics, error }: { interviews: any; 
                         )}
                         <h3>{article.subject}</h3>
                         <p className={styles.summary}>{article.summary}</p>
-                        <dl className={styles.people}>
-                          <div>
-                            <dt>인터뷰어</dt>
-                            <dd>{article.interviewer}</dd>
-                          </div>
-                          <div>
-                            <dt>인터뷰이</dt>
-                            <dd>{article.interviewee}</dd>
-                          </div>
-                        </dl>
                         <dl className={styles.recommended}>
                           <dt>
                             <i />
