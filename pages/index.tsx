@@ -113,7 +113,7 @@ export default function Home({ interviews, newsics, error }: { interviews: any; 
                 <Headline>
                   <Anchor href="/newsics">
                     <i data-page="/newsics" />
-                    <span>Latest 2nterview</span>
+                    <span>Latest Newsic</span>
                   </Anchor>
                 </Headline>
                 <Anchor href="/newsics">
