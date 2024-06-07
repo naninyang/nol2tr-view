@@ -12,9 +12,9 @@ export const formatDate = (datetime: string) => {
   return `${year}${month}${day}${hours}${minutes}${seconds}`;
 };
 
-export async function getInterviewData(page?: number) {
+export async function getInterviewData(page?: number, pageSize?: number) {
   const response = await fetch(
-    `${process.env.STRAPI_URL}/api/interview-nol2trs?sort[0]=id:desc&pagination[page]=${page}&pagination[pageSize]=48`,
+    `${process.env.STRAPI_URL}/api/interview-nol2trs?sort[0]=id:desc&pagination[page]=${page}&pagination[pageSize]=${pageSize}`,
     {
       method: 'GET',
       headers: {
@@ -52,9 +52,9 @@ export async function getInterviewData(page?: number) {
   return { articles, pageCount: pageCount };
 }
 
-export async function getNewsicData(page?: number) {
+export async function getNewsicData(page?: number, pageSize?: number) {
   const response = await fetch(
-    `${process.env.STRAPI_URL}/api/newsic-nol2trs?sort[0]=id:desc&pagination[page]=${page}&pagination[pageSize]=48`,
+    `${process.env.STRAPI_URL}/api/newsic-nol2trs?sort[0]=id:desc&pagination[page]=${page}&pagination[pageSize]=${pageSize}`,
     {
       method: 'GET',
       headers: {

@@ -249,6 +249,9 @@ const MenuContainer = styled.div({
       },
       '& a': {
         color: 'var(--bg-reverse-opacity)',
+        '&:hover, &:focus': {
+          textDecoration: 'underline',
+        },
       },
     },
   },
@@ -468,20 +471,9 @@ export default function Header() {
         )}
         <Primary>
           <h1>
-            {router.pathname === '/interviews' || router.pathname === '/newsics' ? (
-              <button
-                type="button"
-                onClick={() => {
-                  (window.location.reload as (cache: boolean) => void)(true);
-                }}
-              >
-                <span>놀이터뷰 nol2tr_view</span>
-              </button>
-            ) : (
-              <Anchor href="/">
-                <span>놀이터뷰 nol2tr_view</span>
-              </Anchor>
-            )}
+            <Anchor href="/">
+              <span>놀이터뷰 nol2tr_view</span>
+            </Anchor>
           </h1>
           <ThemeChangeButton type="button" themeMode={themeMode === 'dark'} onClick={themeModeHandle}>
             {themeMode === 'dark' ? <span>라이트 모드로 변경</span> : <span>라이트 모드로 변경</span>}

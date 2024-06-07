@@ -5,9 +5,6 @@
   align-items: center
   flex-direction: column
 
-  h1.usage-headline:before
-    content: '이용 안내 usage'
-
   h1.licenses-headline:before
     content: '저작권 안내 licenses'
 
@@ -67,6 +64,405 @@
         +mq(minSmall)
           font-size: rem(20)
 
+    h1
+      display: flex
+      justify-content: center
+      margin-top: rem(25)
+
+      span
+        +screen-reader-only
+
+      i
+        display: block
+        position: relative
+        width: rem(267)
+        height: rem(99)
+
+        svg
+          position: absolute
+
+          &.svg1
+            left: 0
+            top: 0
+
+            path
+              body[data-theme="dark"] &
+                fill: #EEF5FF
+
+          &.svg2, &.svg3
+            top: 0
+
+          &.svg2
+            left: rem(68)
+            animation: svg2 1s cubic-bezier(.4,0,.2,1)
+
+            path
+              body[data-theme="dark"] &
+                fill: #FFBC42
+
+          &.svg3
+            left: rem(223)
+            animation: svg3 2s cubic-bezier(.4,0,.2,1)
+
+            path
+              &:nth-of-type(1)
+                body[data-theme="dark"] &
+                  fill: #73D2DE
+
+              &:nth-of-type(2)
+                body[data-theme="dark"] &
+                  fill: #EEF5FF
+
+          &.svg4
+            right: 0
+            bottom: 0
+            animation: svg4 3s cubic-bezier(.4,0,.2,1)
+
+            path
+              &:nth-of-type(1), &:nth-of-type(2), &:nth-of-type(3), &:nth-of-type(4)
+                body[data-theme="dark"] &
+                  fill: #73D2DE
+
+            path
+              &:nth-of-type(5), &:nth-of-type(6), &:nth-of-type(7), &:nth-of-type(8), &:nth-of-type(9), &:nth-of-type(10)
+                body[data-theme="dark"] &
+                  fill: #FFBC42
+
+            path
+              &:nth-of-type(11)
+                body[data-theme="dark"] &
+                  fill: #EEF5FF
+
+    .summary
+      display: flex
+      flex-direction: column
+      font-size: rem(20)
+      line-height: 1.3
+      gap: rem(15)
+
+      p
+        display: flex
+        flex-direction: column
+        justify-content: center
+        text-align: center
+
+    .sections
+      display: flex
+      flex-direction: column
+      align-items: center
+      gap: rem(92)
+
+      +mq(minLarge)
+        gap: rem(27)
+
+      section
+        display: flex
+        gap: rem(12)
+
+        +mq(maxMedium)
+          flex-direction: column
+
+        +mq(minLarge)
+          gap: rem(17)
+
+        .preview, .content
+          width: 100%
+
+        .preview
+          display: flex
+          flex-direction: column
+          border-radius: rem(7)
+          max-width: rem(520)
+          user-select: none
+          cursor: default
+
+          +mq(minLarge)
+            width: rem(370)
+
+        &.interview .preview
+          gap: rem(15)
+          overflow: hidden
+          border: 1px solid var(--border)
+          padding-bottom: rem(27)
+
+          span
+            padding-right: rem(10)
+            padding-left: rem(10)
+            font-size: rem(16)
+            font-weight: 700
+            line-height: 1.25
+            color: var(--default-text)
+
+            +mq(minSmall)
+              padding-right: rem(20)
+              padding-left: rem(20)
+              font-size: rem(20)
+
+          img
+            display: block
+            aspect-ratio: 1920 / 1080
+            object-fit: cover
+            width: 100%
+            height: auto
+
+          dl
+            display: inline-flex
+            gap: rem(17)
+            padding-left: rem(10)
+
+            +mq(minSmall)
+              padding-left: rem(20)
+
+            div
+              display: inline-flex
+              gap: rem(7)
+
+              dt, dd
+                font-size: rem(14)
+                color: var(--txt-summary)
+
+              dd
+                font-weight: 700
+
+          p
+            padding-right: rem(10)
+            padding-left: rem(10)
+
+            +mq(minSmall)
+              padding-right: rem(20)
+              padding-left: rem(20)
+              font-size: rem(16)
+
+            &.summary
+              font-size: rem(14)
+              color: var(--txt-subject)
+              line-height: 1.25
+
+              +mq(minSmall)
+                font-size: rem(16)
+
+            &.recommended
+              font-size: rem(12)
+              color: var(--txt-summary)
+              line-height: 1.33333333
+
+              &::before
+                content: '🎵'
+                padding-right: rem(3)
+
+              +mq(minSmall)
+                font-size: rem(14)
+
+        &.newsic
+          flex-direction: row-reverse
+
+          +mq(maxMedium)
+            flex-direction: column
+
+          .preview
+            gap: rem(15)
+            overflow: hidden
+            border: 1px solid var(--border)
+            padding-bottom: rem(27)
+
+            span
+              padding-right: rem(10)
+              padding-left: rem(10)
+              font-size: rem(16)
+              font-weight: 700
+              line-height: 1.25
+              color: var(--default-text)
+
+              +mq(minSmall)
+                padding-right: rem(20)
+                padding-left: rem(20)
+                font-size: rem(20)
+
+            img
+              display: block
+              aspect-ratio: 1920 / 1080
+              object-fit: cover
+              width: 100%
+              height: auto
+
+            dl
+              display: inline-flex
+              gap: rem(17)
+              padding-left: rem(10)
+
+              +mq(minSmall)
+                padding-left: rem(20)
+
+              div
+                display: inline-flex
+                gap: rem(7)
+
+                dt, dd
+                  font-size: rem(14)
+
+                dd
+                  font-weight: 700
+
+            p
+              padding-right: rem(10)
+              padding-left: rem(10)
+
+              +mq(minSmall)
+                padding-right: rem(20)
+                padding-left: rem(20)
+                font-size: rem(16)
+
+              &.summary
+                font-size: rem(14)
+                color: var(--txt-subject)
+                line-height: 1.25
+
+                +mq(minSmall)
+                  font-size: rem(16)
+
+              &.recommended
+                font-size: rem(12)
+                color: var(--txt-summary)
+                line-height: 1.33333333
+
+                &::before
+                  content: '🎵'
+                  padding-right: rem(3)
+
+                +mq(minSmall)
+                  font-size: rem(14)
+
+          .content
+            .headline
+              display: flex
+              flex-direction: row-reverse
+
+              +mq(maxMedium)
+                flex-direction: column
+                justify-content: center
+
+            .description
+              text-align: center
+
+              +mq(minLarge)
+                text-align: right
+
+        .content
+          display: flex
+          flex-direction: column
+          gap: rem(12)
+          +col
+
+          +mq(minLarge)
+            padding-top: rem(27)
+
+          .headline
+            display: flex
+            align-items: center
+
+            +mq(maxMedium)
+              flex-direction: column
+              justify-content: center
+
+            +mq(minLarge)
+              gap: rem(7)
+
+            svg
+              width: rem(52)
+              height: rem(52)
+
+              +mq(minLarge)
+                width: rem(20)
+                height: rem(20)
+
+            h2
+              font-size: rem(20)
+              color: $hex-accent
+
+          .description
+            display: flex
+            flex-direction: column
+            gap: rem(7)
+
+            p
+              font-size: rem(16)
+              line-height: 1.25
+
+              +mq(maxMedium)
+                text-align: center
+
+    > dl
+      border-top: 1px solid var(--border)
+      padding-top: rem(75)
+      display: flex
+      flex-direction: column
+      align-items: center
+      gap: rem(25)
+      text-align: center
+
+      +mq(minLarge)
+        flex-direction: row
+        justify-content: center
+        gap: 0
+        border: 0
+        padding-top: 0
+
+        div
+          position: relative
+          padding: 0 rem(75)
+
+          &::before
+            content: ''
+            display: block
+            position: absolute
+            top: 0
+            left: 0
+            width: 1px
+            height: 100%
+            background-color: var(--border)
+
+          &:first-of-type::before
+            display: none
+
+      dt
+        font-size: rem(14)
+        font-weight: 300
+        color: var(--txt-subject)
+
+        +mq(minLarge)
+          font-size: rem(16)
+
+      dd
+        margin-top: rem(5)
+        font-size: rem(58)
+        font-weight: 900
+        line-height: 1
+
+        +mq(minLarge)
+          font-size: rem(50)
+
+    .apple
+      border-top: 1px solid var(--border)
+      padding-top: rem(75)
+      text-align: center
+
+      h2
+        margin-bottom: rem(50)
+
+      p
+        text-align: center
+        font-weight: 300
+
+        +mq(minLarge)
+          display: flex
+          flex-direction: column
+
+        i
+          display: inline-block
+          width: rem(32)
+          height: rem(32)
+          vertical-align: bottom
+
 @keyframes foreground
   0%
     opacity: 0
@@ -76,3 +472,34 @@
 
   16.667%,66.667%
     opacity: 0
+
+@keyframes svg2
+  0%
+    opacity: 0
+    transform: translateY(rem(-14))
+
+  100%
+    opacity: 1
+    transform: translateY(0)
+
+@keyframes svg3
+  0%
+    opacity: 0
+
+  50%
+    opacity: 0
+    transform: translateX(rem(-14))
+
+  100%
+    opacity: 1
+    transform: translateX(0)
+
+@keyframes svg4
+  0%
+    opacity: 0
+
+  66%
+    opacity: 0
+
+  100%
+    opacity: 1

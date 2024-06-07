@@ -38,6 +38,8 @@ export const images = {
     crossLight: require('./arrow/crossLight.svg'),
     downDark: require('./arrow/downDark.svg'),
     downLight: require('./arrow/downLight.svg'),
+    moreDark: require('./arrow/moreDark.svg'),
+    moreLight: require('./arrow/moreLight.svg'),
   },
   services: {
     githubLight: require('./services/githubLight.svg'),
@@ -62,10 +64,12 @@ export const images = {
     secondary: require('./home/secondary.svg'),
   },
   tab: {
-    home: {
-      active: require('./tab/home/active.svg'),
-      dark: require('./tab/home/dark.svg'),
-      light: require('./tab/home/light.svg'),
+    playlist: {
+      active: require('./tab/playlist/active.svg'),
+      dark: require('./tab/playlist/dark.svg'),
+      light: require('./tab/playlist/light.svg'),
+      defaultDark: require('./tab/playlist/defaultDark.svg'),
+      defaultLight: require('./tab/playlist/defaultLight.svg'),
     },
     interview: {
       active: require('./tab/interview/active.svg'),

@@ -51,6 +51,7 @@ export default function App({ Component, pageProps }: AppProps) {
       registInit();
     }
   }, []);
+  const homePage = router.pathname === '/';
   const musicPage = router.pathname.includes('/musics');
   const noticePage = router.pathname.includes('/notices');
   const contactPage = router.pathname.includes('/contact-us');
@@ -91,7 +92,11 @@ export default function App({ Component, pageProps }: AppProps) {
       </style>
       <Header />
       <Component {...pageProps} />
-      {musicPage || noticePage || contactPage || openPage || licensePage || usagePage ? <Footer /> : <Services />}
+      {homePage || musicPage || noticePage || contactPage || openPage || licensePage || usagePage ? (
+        <Footer />
+      ) : (
+        <Services />
+      )}
     </>
   );
 }

@@ -44,12 +44,12 @@ const Nav = styled.nav({
       display: 'inline-block',
       width: rem(20),
       height: rem(20),
-      '&[data-icon="home"]': {
+      '&[data-icon="playlist"]': {
         'body[data-theme="dark"] &': {
-          background: `url(${images.tab.home.light}) no-repeat 50% 50%/contain`,
+          background: `url(${images.tab.playlist.light}) no-repeat 50% 50%/contain`,
         },
         'body &, body[data-theme="light"] &': {
-          background: `url(${images.tab.home.dark}) no-repeat 50% 50%/contain`,
+          background: `url(${images.tab.playlist.dark}) no-repeat 50% 50%/contain`,
         },
       },
       '&[data-icon="interview"]': {
@@ -81,8 +81,10 @@ const MenuItem = styled.li<{ currentRouter?: boolean }>(({ currentRouter }) => (
     color: currentRouter ? hex.accent : 'var(--txt-subject)',
     fontWeight: currentRouter ? '900' : '400',
     '& i': {
-      '&[data-icon="home"]': {
-        background: currentRouter ? `url(${images.tab.home.active}) no-repeat 50% 50%/contain !important` : undefined,
+      '&[data-icon="playlist"]': {
+        background: currentRouter
+          ? `url(${images.tab.playlist.active}) no-repeat 50% 50%/contain !important`
+          : undefined,
       },
       '&[data-icon="interview"]': {
         background: currentRouter
@@ -101,12 +103,6 @@ export default function Services() {
   return (
     <Nav>
       <ol>
-        <MenuItem currentRouter={router.pathname === '/' ? true : false}>
-          <Anchor href="/">
-            <i data-icon="home" />
-            <span>Playground</span>
-          </Anchor>
-        </MenuItem>
         <MenuItem
           currentRouter={router.pathname === '/interviews' || router.pathname.includes('/interview') ? true : false}
         >
