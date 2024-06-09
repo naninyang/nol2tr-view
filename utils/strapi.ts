@@ -1,4 +1,4 @@
-import { NewsData, NoticeData, MusicData, MusicParalinkData } from 'types';
+import { NewsData, NoticeData, MusicData, MusicParalinkData, PlaylistData } from 'types';
 
 export const formatDate = (datetime: string) => {
   const date = new Date(datetime);
@@ -88,6 +88,51 @@ export async function getNewsicData(page?: number, pageSize?: number) {
   );
 
   return { articles, pageCount: pageCount };
+}
+
+export async function getPlaylistData(page?: number, pageSize?: number) {
+  const response = await fetch(
+    `${process.env.STRAPI_URL}/api/playlist-nol2trs?sort[0]=id:desc&pagination[page]=${page}&pagination[pageSize]=${pageSize}`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_BEARER_TOKEN}`,
+      },
+    },
+  );
+  const playlistResponse = await response.json();
+  const playlistData = playlistResponse.data;
+  const pageCount = playlistResponse.meta.pagination.pageCount;
+  const articles: PlaylistData[] = await Promise.all(
+    playlistData.map(async (data: any) => {
+      const musicIds = data.attributes.music.match(/\d+/g);
+      const articleIds = data.attributes.article.match(/\d+/g);
+      const musicData = await getMusicData(musicIds[0]);
+      const articleData = await getArticleData(articleIds[0]);
+      return {
+        id: data.id,
+        idx: `${formatDate(data.attributes.createdAt)}${data.id}`,
+        subject: data.attributes.subject,
+        summary: data.attributes.summary,
+        opengraph: data.attributes.opengraph,
+        musicData,
+        articleData,
+        created: data.attributes.created,
+      };
+    }),
+  );
+
+  return { articles, pageCount: pageCount };
+}
+
+export async function getArticleData(articleId: string) {
+  const response = await fetch(`${process.env.STRAPI_URL}/api/newsic-nol2trs/${articleId}`, {
+    headers: {
+      Authorization: `Bearer ${process.env.STRAPI_BEARER_TOKEN}`,
+    },
+  });
+  const articleData = await response.json();
+  return articleData;
 }
 
 export async function getMusicData(music: string) {

@@ -35,10 +35,28 @@ const Headline = styled.h2({
         background: `url(${images.tab.newsic.defaultDark}) no-repeat 50% 50%/contain`,
       },
     },
+    '&[data-page="/playlists"]': {
+      'body[data-theme="dark"] &': {
+        background: `url(${images.tab.playlist.defaultLight}) no-repeat 50% 50%/contain`,
+      },
+      'body &, body[data-theme="light"] &': {
+        background: `url(${images.tab.playlist.defaultDark}) no-repeat 50% 50%/contain`,
+      },
+    },
   },
 });
 
-export default function Home({ interviews, newsics, error }: { interviews: any; newsics: any; error: string }) {
+export default function Home({
+  interviews,
+  newsics,
+  playlists,
+  error,
+}: {
+  interviews: any;
+  newsics: any;
+  playlists: any;
+  error: string;
+}) {
   useEffect(() => {
     localStorage.removeItem('currentPage');
   }, []);
@@ -146,6 +164,40 @@ export default function Home({ interviews, newsics, error }: { interviews: any; 
                 </div>
               )}
             </section>
+            <section>
+              <div className={styles.headline}>
+                <Headline>
+                  <Anchor href="/playlists">
+                    <i data-page="/playlists" />
+                    <span>Latest Playlist</span>
+                  </Anchor>
+                </Headline>
+                <Anchor href="/playlists">
+                  <MoreIcon />
+                  <span>더 보기</span>
+                </Anchor>
+              </div>
+              {Array.isArray(playlists.articles) && (
+                <div className={styles['article-list']}>
+                  {playlists.articles.map((article: NewsData) => (
+                    <article key={article.idx}>
+                      <Link key={article.idx} href={`/playlist/${article.idx}`} scroll={false} shallow={true}>
+                        <img src={`https://cdn.dev1stud.io/nol2tr/${article.opengraph}.webp`} alt="" />
+                        <h3>{article.subject}</h3>
+                        <p className={styles.summary}>{article.summary}</p>
+                        <dl className={styles.recommended}>
+                          <dt>
+                            <i />
+                            <span>추천곡</span>
+                          </dt>
+                          <dd>{article.musicData.music}</dd>
+                        </dl>
+                      </Link>
+                    </article>
+                  ))}
+                </div>
+              )}
+            </section>
           </div>
         )}
       </div>
@@ -156,6 +208,7 @@ export default function Home({ interviews, newsics, error }: { interviews: any; 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   let interviews = null;
   let newsics = null;
+  let playlists = null;
   let error = null;
 
   try {
@@ -169,6 +222,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       throw new Error('Network response was not ok');
     }
     newsics = await newsicResponse.json();
+    const playlistResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/playlist?page=1&pageSize=4`);
+    if (!playlistResponse.ok) {
+      throw new Error('Network response was not ok');
+    }
+    playlists = await playlistResponse.json();
   } catch (err) {
     error = err instanceof Error ? err.message : 'An unknown error occurred';
   }
@@ -177,6 +235,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       interviews,
       newsics,
+      playlists,
       error,
     },
   };

@@ -40,6 +40,14 @@ const Container = styled.h2({
         background: `url(${images.tab.newsic.defaultDark}) no-repeat 50% 50%/contain`,
       },
     },
+    '&[data-page="/playlists"]': {
+      'body[data-theme="dark"] &': {
+        background: `url(${images.tab.playlist.defaultLight}) no-repeat 50% 50%/contain`,
+      },
+      'body &, body[data-theme="light"] &': {
+        background: `url(${images.tab.playlist.defaultDark}) no-repeat 50% 50%/contain`,
+      },
+    },
   },
 });
 

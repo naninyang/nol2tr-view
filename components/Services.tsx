@@ -117,6 +117,14 @@ export default function Services() {
             <span>Newsic</span>
           </Anchor>
         </MenuItem>
+        <MenuItem
+          currentRouter={router.pathname === '/playlists' || router.pathname.includes('/playlist') ? true : false}
+        >
+          <Anchor href="/playlists">
+            <i data-icon="playlist" />
+            <span>Playlist</span>
+          </Anchor>
+        </MenuItem>
       </ol>
     </Nav>
   );

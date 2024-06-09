@@ -40,6 +40,32 @@ export interface NewsParalinkData {
   musicData: any;
 }
 
+export interface PlaylistData {
+  id: string;
+  idx: string;
+  subject: string;
+  summary: string;
+  opengraph: string;
+  musicData: any;
+  articleData: any;
+  created: string;
+}
+
+export interface PlaylistParalinkData {
+  attributes: {
+    idx: string;
+    subject: string;
+    summary: string;
+    opengraph: string;
+    music: any;
+    article: any;
+    created: string;
+    createdAt: string;
+  };
+  musicData: any;
+  articleData: any;
+}
+
 export interface NoticeData {
   id: string;
   idx: string;
