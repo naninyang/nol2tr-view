@@ -16,12 +16,30 @@
       display: inline-flex
       justify-content: center
       align-items: center
-      border: 1px solid $hex-black
       border-radius: rem(3)
       width: rem(30)
       height: rem(30)
       font-size: rem(12)
-      color: $hex-black
+      transition: all .4s cubic-bezier(.4,0,.2,1)
+
+      body[data-theme="dark"] &
+        border: 1px solid $hex-white
+        color: $hex-white
+
+      body &, body[data-theme="light"] &
+        border: 1px solid $hex-black
+        color: $hex-black
+
+      &:hover, &:focus
+        border: 1px solid $hex-accent
+        background-color: $hex-accent
+        font-weight: 900
+
+        body[data-theme="dark"] &
+          color: $hex-black
+
+        body &, body[data-theme="light"] &
+          color: $hex-white
 
   .pager span
     +screen-reader-only
@@ -31,5 +49,10 @@
       a
         border: 1px solid $hex-accent
         background-color: $hex-accent
-        color: $hex-white
         font-weight: 900
+
+        body[data-theme="dark"] &
+          color: $hex-black
+
+        body &, body[data-theme="light"] &
+          color: $hex-white
