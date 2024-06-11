@@ -1,3 +1,16 @@
+export interface BannerData {
+  id: number;
+  idx: number;
+  type: string;
+  order: number;
+  subject: string;
+  description: string;
+  color: string;
+  isLTR: boolean;
+  isLight: boolean;
+  interview: any;
+}
+
 export interface NewsData {
   id: string;
   idx: string;

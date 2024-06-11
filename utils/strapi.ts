@@ -1,4 +1,4 @@
-import { NewsData, NoticeData, MusicData, MusicParalinkData, PlaylistData } from 'types';
+import { NewsData, NoticeData, MusicData, MusicParalinkData, PlaylistData, BannerData } from 'types';
 
 export const formatDate = (datetime: string) => {
   const date = new Date(datetime);
@@ -11,6 +11,34 @@ export const formatDate = (datetime: string) => {
 
   return `${year}${month}${day}${hours}${minutes}${seconds}`;
 };
+
+export async function getBannerData() {
+  const response = await fetch(
+    `${process.env.STRAPI_URL}/api/banner-nol2trs?sort[0]=id:desc&pagination[page]=1&pagination[pageSize]=10`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_BEARER_TOKEN}`,
+      },
+    },
+  );
+  const bannerResponse = await response.json();
+  const bannerData = bannerResponse.data;
+  const banner: BannerData[] = bannerData.map((data: any) => ({
+    id: data.id,
+    idx: data.attributes.idx,
+    type: data.attributes.type,
+    order: data.attributes.order,
+    subject: data.attributes.subject,
+    description: data.attributes.description,
+    interview: data.attributes.interview,
+    color: data.attributes.color,
+    isLTR: data.attributes.isLTR,
+    isLight: data.attributes.isLight,
+  }));
+
+  return banner;
+}
 
 export async function getInterviewData(page?: number, pageSize?: number) {
   const response = await fetch(

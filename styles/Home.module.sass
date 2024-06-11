@@ -29,9 +29,275 @@
     min-height: 100dvh
     background-color: var(--default-bg)
     transition: all .4s cubic-bezier(.4,0,.2,1)
+    padding-top: rem(25)
 
-    +mq(minSmall)
-      padding-top: rem(25)
+    .banner
+      position: relative
+      margin-bottom: rem(52)
+
+      a
+        position: relative
+        display: block
+        overflow: hidden
+        border-radius: rem(12)
+
+        +mq(maxExtraSmall)
+          aspect-ratio: 590 / 478
+
+        &.ltr
+          .summary, .nol2tr
+            left: 0
+
+          .nol2tr
+            flex-direction: row-reverse
+
+        &.rtl
+          .summary, .nol2tr
+            right: 0
+
+        .summary
+          position: absolute
+          z-index: 1
+          bottom: 0
+          display: flex
+          flex-direction: column
+          justify-content: center
+          gap: rem(3)
+          padding: 0 rem(50)
+
+          +mq(maxExtraSmall)
+            gap: rem(12)
+            padding: rem(27)
+
+          +mq(minSmall)
+            top: 0
+            gap: rem(7)
+            width: 48.89%
+            padding: rem(23)
+
+          +mq(minLarge)
+            padding: rem(37)
+            gap: rem(12)
+
+          p
+            font-size: rem(16)
+            font-weight: 800
+            line-height: 1.27
+            letter-spacing: -.07em
+            +line-abbr(1, 25, 1.27)
+
+            +mq(maxExtraSmall)
+              font-size: rem(18)
+              color: var(--txt-subject)
+
+            +mq(minMedium)
+              font-size: rem(20)
+              letter-spacing: -.05em
+              +line-abbr(2, 50, 1.27)
+
+            +mq(minLarge)
+              font-size: rem(24)
+              +line-abbr(2, 58, 1.27)
+
+          .tail
+            display: flex
+            flex-direction: column
+            gap: rem(7)
+
+          em
+            font-size: rem(14)
+            font-style: normal
+            font-weight: 500
+            line-height: 1.27
+            +line-abbr(2, 42, 1.27)
+
+            +mq(maxExtraSmall)
+              font-size: rem(14)
+              color: var(--txt-summary)
+
+            +mq(minLarge)
+              font-size: rem(16)
+              +line-abbr(2, 42, 1.27)
+
+          dl
+            display: flex
+            flex-direction: column
+            gap: rem(5)
+
+            +mq(maxSmall)
+              display: none
+
+            div
+              display: flex
+              gap: rem(7)
+
+            dt, dd
+              font-size: rem(12)
+              line-height: 1
+
+              +mq(minSmall)
+
+              +mq(minMedium)
+
+              +mq(minLarge)
+                font-size: rem(14)
+                +line-abbr(2, 48, 1)
+
+        .nol2tr
+          position: absolute
+          bottom: 0
+          display: flex
+          width: 100%
+
+          +mq(maxExtraSmall)
+            flex-direction: column
+            height: rem(152)
+
+            div
+              width: 100%
+
+              &:nth-of-type(1)
+                height: rem(57)
+
+              &:nth-of-type(2)
+                height: rem(57)
+
+          +mq(minSmall)
+            top: 0
+            width: 68.98%
+
+            div
+              &:nth-of-type(1)
+                width: 25.22%
+
+              &:nth-of-type(2)
+                width: 74.78%
+
+      .paging
+        position: absolute
+        bottom: rem(-37)
+        left: 50%
+        transform: translateX(-50%)
+        display: flex
+        align-items: center
+
+        .stat
+          margin-right: rem(12)
+          background-color: transparent
+          width: rem(22)
+          height: rem(23)
+
+          +mq(minSmall)
+            width: rem(32)
+            height: rem(32)
+
+          i
+            display: inline-block
+            width: rem(23)
+            height: rem(22)
+
+            +mq(minSmall)
+              width: rem(32)
+              height: rem(32)
+
+          span
+            +screen-reader-only
+
+        .pager
+          display: flex
+          justify-content: center
+          align-items: center
+          background-color: transparent
+          width: rem(23)
+          height: rem(23)
+
+          +mq(minSmall)
+            width: rem(32)
+            height: rem(32)
+
+          &.active
+            i
+              opacity: 1
+              width: rem(23)
+
+              +mq(minSmall)
+                width: rem(32)
+
+          i
+            display: block
+            opacity: .27
+            transition: all .5s cubic-bezier(.4,0,.2,1)
+            border-radius: rem(3)
+            width: rem(7)
+            height: rem(7)
+
+            body[data-theme="dark"] &
+              background-color: $hex-light
+
+            body[data-theme="light"] &
+              background-color: $hex-dark
+
+            +mq(minSmall)
+              border-radius: rem(6)
+              width: rem(12)
+              height: rem(12)
+
+          span
+            +screen-reader-only
+
+      .move
+        background-color: transparent
+        position: absolute
+        bottom: rem(-37)
+        height: rem(23)
+
+        +mq(minSmall)
+          top: 0
+          width: 13.4%
+          height: 100%
+
+        i
+          display: inline-block
+          width: rem(23)
+          height: rem(23)
+
+          +mq(minSmall)
+            width: rem(72)
+            height: rem(72)
+
+          +mq(minLarge)
+            width: rem(102)
+            height: rem(102)
+
+        span
+          +screen-reader-only
+
+        &.prev
+          left: rem(15)
+
+          +mq(minSmall)
+            left: 0
+
+            body[data-theme="dark"] &
+              background: linear-gradient(270deg, rgba($hex-black, .5) 0%, rgba($hex-black, 1) 100%)
+
+            body[data-theme="light"] &
+              background: linear-gradient(270deg, rgba($hex-white, .5) 0%, rgba($hex-white, 1) 100%)
+
+        &.next
+          right: rem(15)
+
+          +mq(minSmall)
+            right: 0
+
+            body[data-theme="dark"] &
+              background: linear-gradient(-270deg, rgba($hex-black, .5) 0%, rgba($hex-black, 1) 100%)
+
+            body[data-theme="light"] &
+              background: linear-gradient(-270deg, rgba($hex-white, .5) 0%, rgba($hex-white, 1) 100%)
+
+    section
+      padding-top: rem(27)
 
     .headline
       display: flex

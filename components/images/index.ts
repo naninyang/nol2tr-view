@@ -63,6 +63,16 @@ export const images = {
     primary: require('./home/primary.svg'),
     secondary: require('./home/secondary.svg'),
   },
+  slide: {
+    nextLight: require('./slide/nextLight.svg'),
+    pauseLight: require('./slide/pauseLight.svg'),
+    playLight: require('./slide/playLight.svg'),
+    prevLight: require('./slide/prevLight.svg'),
+    nextDark: require('./slide/nextDark.svg'),
+    pauseDark: require('./slide/pauseDark.svg'),
+    playDark: require('./slide/playDark.svg'),
+    prevDark: require('./slide/prevDark.svg'),
+  },
   tab: {
     playlist: {
       active: require('./tab/playlist/active.svg'),
