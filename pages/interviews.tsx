@@ -41,7 +41,7 @@ function Interviews({ articles, error, currentPage }: { articles: any; error: st
               <div className={styles['article-list']}>
                 {articles.articles.map((article: NewsData) => (
                   <article key={article.idx}>
-                    <Link key={article.idx} href={`/interview/${article.idx}`} scroll={false} shallow={true}>
+                    <Link key={article.idx} href={`/interview/${article.idx}`} scroll={true} shallow={true}>
                       {article.platform === 'youtube' ? (
                         <img src={`https://i.ytimg.com/vi_webp/${article.vid}/maxresdefault.webp`} alt="" />
                       ) : (

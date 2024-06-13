@@ -345,7 +345,7 @@ export default function Home({
                 <div className={styles['article-list']}>
                   {interviews.articles.map((article: NewsData) => (
                     <article key={article.idx}>
-                      <Link key={article.idx} href={`/interview/${article.idx}`} scroll={false} shallow={true}>
+                      <Link key={article.idx} href={`/interview/${article.idx}`} scroll={true} shallow={true}>
                         {article.platform === 'youtube' ? (
                           <img src={`https://i.ytimg.com/vi_webp/${article.vid}/maxresdefault.webp`} alt="" />
                         ) : (
@@ -393,7 +393,7 @@ export default function Home({
                 <div className={styles['article-list']}>
                   {newsics.articles.map((article: NewsData) => (
                     <article key={article.idx}>
-                      <Link key={article.idx} href={`/interview/${article.idx}`} scroll={false} shallow={true}>
+                      <Link key={article.idx} href={`/newsic/${article.idx}`} scroll={true} shallow={true}>
                         {article.platform === 'youtube' ? (
                           <img src={`https://i.ytimg.com/vi_webp/${article.vid}/maxresdefault.webp`} alt="" />
                         ) : (
@@ -431,7 +431,7 @@ export default function Home({
                 <div className={styles['article-list']}>
                   {playlists.articles.map((article: NewsData) => (
                     <article key={article.idx}>
-                      <Link key={article.idx} href={`/playlist/${article.idx}`} scroll={false} shallow={true}>
+                      <Link key={article.idx} href={`/playlist/${article.idx}`} scroll={true} shallow={true}>
                         <img src={`https://cdn.dev1stud.io/nol2tr/${article.opengraph}.webp`} alt="" />
                         <h3>{article.subject}</h3>
                         <p className={styles.summary}>{article.summary}</p>

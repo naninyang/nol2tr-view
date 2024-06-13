@@ -41,7 +41,7 @@ function Playlist({ articles, error, currentPage }: { articles: any; error: stri
               <div className={styles['article-list']}>
                 {articles.articles.map((article: NewsData) => (
                   <article key={article.idx}>
-                    <Link key={article.idx} href={`/playlist/${article.idx}`} scroll={false} shallow={true}>
+                    <Link key={article.idx} href={`/playlist/${article.idx}`} scroll={true} shallow={true}>
                       <img src={`https://cdn.dev1stud.io/nol2tr/${article.opengraph}.webp`} alt="" />
                       <h3>{article.subject}</h3>
                       <p className={styles.summary}>{article.summary}</p>
