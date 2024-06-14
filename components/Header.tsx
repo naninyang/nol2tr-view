@@ -125,7 +125,7 @@ const MenuContainer = styled.div({
   opacity: 0,
   padding: `calc(env(safe-area-inset-top) + ${rem(10)}) calc(env(safe-area-inset-right) + ${rem(
     25,
-  )}) calc(env(safe-area-inset-bottom) + ${rem(25)}) ${rem(25)}`,
+  )}) calc(env(safe-area-inset-bottom) + ${rem(25)}) calc(env(safe-area-inset-right) + ${rem(25)})`,
   width: rem(320),
   '.expanded &': {
     transform: `translateX(0)`,

@@ -31,7 +31,9 @@ const Studio = styled.i({
 });
 
 const Container = styled.footer({
-  padding: `${rem(52)} ${rem(25)}`,
+  padding: `${rem(52)} calc(env(safe-area-inset-right) + ${rem(25)}) calc(env(safe-area-inset-bottom) + ${rem(
+    52,
+  )}) calc(env(safe-area-inset-left) + ${rem(25)})`,
   'body[data-theme="dark"] &': {
     backgroundColor: hex.dark,
   },
