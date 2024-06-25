@@ -20,6 +20,39 @@
         width: 50%
         display: flex
 
+      .skeleton
+        background: linear-gradient(90deg, #EEEEEE 25%, #DDDDDD 50%, #EEEEEE 75%)
+        background-size: 200% 100%
+        animation: loading 1.5s infinite
+
+      &.loading-indicator
+        .button
+          display: flex
+          align-items: center
+          gap: rem(23)
+          padding: rem(17) 0
+          width: 100%
+
+        i
+          display: block
+          width: rem(72)
+          height: rem(72)
+
+        span
+          display: flex
+          flex-direction: column
+          gap: rem(5)
+          padding-right: rem(12)
+
+          strong, cite
+            height: rem(18)
+
+          strong
+            width: rem(102)
+
+          cite
+            width: rem(72)
+
       > img
         +screen-reader-only
 
@@ -399,3 +432,10 @@
         font-size: rem(16)
         line-height: 1.25
         color: var(--txt-summary)
+
+@keyframes loading
+  0%
+    background-position: 200% 0
+
+  100%
+    background-position: -200% 0

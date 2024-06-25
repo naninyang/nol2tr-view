@@ -66,6 +66,25 @@ const WarningIcon = styled.i({
   background: `url(${images.misc.warning}) no-repeat 50% 50%/contain`,
 });
 
+const LoadingIndicator = ({ length }: { length: number }) => {
+  const loadingBlocks = Array.from({ length: length }, (_, index) => index);
+  return (
+    <>
+      {loadingBlocks.map((_, index) => (
+        <li key={index} className={musicStyles['loading-indicator']} aria-hidden="true">
+          <div className={musicStyles.button}>
+            <i className={musicStyles.skeleton} />
+            <span>
+              <strong className={musicStyles.skeleton} />
+              <cite className={musicStyles.skeleton} />
+            </span>
+          </div>
+        </li>
+      ))}
+    </>
+  );
+};
+
 const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
   const [infoVisible, setInfoVisible] = useState<boolean>(false);
   const [infoText, setInfoText] = useState<string>('정보 보기');
@@ -394,9 +413,53 @@ const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
   );
 };
 
-const Musics = ({ musicsData }: { musicsData: MusicData[] }) => {
+const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: string }) => {
   const router = useRouter();
   const [selectedMusicId, setSelectedMusicId] = useState<string | null>(null);
+  const [musicsData, setMusicsData] = useState<MusicData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchMusicData = async () => {
+      try {
+        let mergedData: MusicData[] = [];
+        let page = 1;
+        let isTotalSet = false;
+        let total = 0;
+
+        do {
+          const response = await fetch(`/api/musics?page=${page}`);
+          const data: { total: number; rowsData: MusicData[] } = await response.json();
+
+          if (!isTotalSet) {
+            total = data.total;
+            isTotalSet = true;
+          }
+
+          if (data.rowsData.length === 0) {
+            break;
+          } else {
+            mergedData = mergedData.concat(data.rowsData);
+            page++;
+          }
+        } while (mergedData.length < total);
+
+        const sortedData = mergedData.sort((a, b) => {
+          if (a.music < b.music) return -1;
+          if (a.music > b.music) return 1;
+          return 0;
+        });
+
+        setMusicsData(sortedData);
+      } catch (error) {
+        console.error('API 서버 오류', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMusicData();
+  }, []);
 
   const handleButtonClick = (id: string) => {
     setSelectedMusicId(id);
@@ -485,16 +548,25 @@ const Musics = ({ musicsData }: { musicsData: MusicData[] }) => {
         <div>
           <p>🎶 놀이터뷰에서 선곡한 곡 목록입니다 🎵</p>
           <p>👉 곡은 가나다 순으로 정렬됩니다 👉</p>
+          {musicError && <p>API 서버에 오류가 있습니다. 잠시 후 이용해 주세요.</p>}
         </div>
-        <div className={musicStyles.musics}>
-          <ul>
-            {musicsData.map((music) => (
-              <li key={music.id}>
-                <MusicItem music={music} />
-              </li>
-            ))}
-          </ul>
-        </div>
+        {!musicError && (
+          <div className={musicStyles.musics}>
+            {!loading ? (
+              <ul>
+                {musicsData.map((music) => (
+                  <li key={music.id}>
+                    <MusicItem music={music} />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <ul>
+                <LoadingIndicator length={musicTotal} />
+              </ul>
+            )}
+          </div>
+        )}
       </div>
       {selectedMusicId && selectedMusic && <MusicDetail music={selectedMusic} onClose={handleCloseMusicDetail} />}
     </main>
@@ -504,46 +576,25 @@ const Musics = ({ musicsData }: { musicsData: MusicData[] }) => {
 export default Musics;
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  let musicData = null;
+  let musicTotal = null;
+  let musicError = null;
+
   try {
-    let mergedData: MusicData[] = [];
-    let page = 1;
-    let isTotalSet = false;
-    let total = 0;
-
-    do {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/musics?page=${page}`);
-      const data = await response.json();
-
-      if (!isTotalSet) {
-        total = data.total;
-        isTotalSet = true;
-      }
-
-      if (data.rowsData.length === 0) {
-        break;
-      } else {
-        mergedData = mergedData.concat(data.rowsData);
-        page++;
-      }
-    } while (mergedData.length < total);
-
-    const sortedData = mergedData.sort((a, b) => {
-      if (a.music < b.music) return -1;
-      if (a.music > b.music) return 1;
-      return 0;
-    });
-
-    return {
-      props: {
-        musicsData: sortedData,
-      },
-    };
-  } catch (error) {
-    console.error('서버 사이드에서 데이터 가져오기 실패:', error);
-    return {
-      props: {
-        musicsData: [],
-      },
-    };
+    const music = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/musics?page=1&pageSize=1`);
+    if (!music.ok) {
+      throw new Error('Network response was not ok');
+    }
+    musicData = await music.json();
+    musicTotal = musicData.total;
+  } catch (err) {
+    musicError = err instanceof Error ? err.message : 'An unknown error occurred';
   }
+
+  return {
+    props: {
+      musicTotal,
+      musicError,
+    },
+  };
 };
