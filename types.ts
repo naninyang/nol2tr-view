@@ -12,6 +12,24 @@ export interface BannerData {
 }
 
 export interface NewsData {
+  articles: {
+    id: string;
+    idx: string;
+    subject: string;
+    platform: string;
+    vid: string;
+    oid: string;
+    aid: string;
+    opengraph: string;
+    thumbnail: string;
+    summary: string;
+    description: string;
+    interviewer?: string;
+    interviewee?: string;
+    musicData: any;
+    fin: string;
+    created: string;
+  };
   id: string;
   idx: string;
   subject: string;

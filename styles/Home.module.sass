@@ -353,7 +353,12 @@
         &:nth-of-type(4)
           display: flex
 
-  article
+    .skeleton
+      background: linear-gradient(90deg, #EEEEEE 25%, #DDDDDD 50%, #EEEEEE 75%)
+      background-size: 200% 100%
+      animation: loading 1.5s infinite
+
+  article, .article
     display: flex
     flex-direction: column
     gap: rem(12)
@@ -372,6 +377,47 @@
     +mq(minExtraLarge)
       width: calc(25% - rem(21))
 
+  .article
+    .fake
+      display: flex
+      flex-direction: column
+      gap: rem(12)
+
+      i
+        display: block
+        aspect-ratio: 1920 / 1080
+        object-fit: cover
+        width: 100%
+        height: auto
+
+      .headline
+        width: 100%
+        height: rem(25)
+
+        +mq(minLarge)
+          height: rem(20)
+
+      .paragraph
+        width: 100%
+        height: rem(20)
+
+      .dl
+        display: inline-flex
+        flex-direction: column
+        gap: rem(2)
+
+        +mq(minLarge)
+          gap: rem(3)
+
+        div
+          width: rem(172)
+          height: rem(21)
+
+      .music
+        width: rem(122)
+        height: rem(27)
+
+  article
     a
       display: flex
       flex-direction: column
@@ -385,7 +431,6 @@
     h3
       padding: 0
       font-size: rem(16)
-      line-height: 1.2
       color: var(--default-text)
       line-height: 1.25
 
@@ -421,6 +466,7 @@
 
     .recommended
       display: flex
+      align-items: center
       gap: rem(7)
 
       dt
@@ -449,3 +495,10 @@
 
       +mq(minLarge)
         font-size: rem(16)
+
+@keyframes loading
+  0%
+    background-position: 200% 0
+
+  100%
+    background-position: -200% 0

@@ -503,7 +503,7 @@ const Musics = ({ musicsData }: { musicsData: MusicData[] }) => {
 
 export default Musics;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   try {
     let mergedData: MusicData[] = [];
     let page = 1;
