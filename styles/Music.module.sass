@@ -1,7 +1,27 @@
 @import './designSystem'
 
 .musics
-  margin: 0 auto
+  width: 100%
+
+  &.loading
+    max-height: calc(100vh - rem(380))
+    overflow: hidden
+    position: relative
+
+    +mq(maxMedium)
+      max-height: calc(100vh - rem(297))
+
+    &::after
+      content: ''
+      position: absolute
+      bottom: 0
+      left: 0
+      width: 100%
+      height: rem(72)
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0), #fff 100%)
+
+      body[data-theme="dark"] &
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0), #000 100%)
 
   ul
     display: flex
@@ -28,6 +48,11 @@
         background: linear-gradient(90deg, #EEEEEE 25%, #DDDDDD 50%, #EEEEEE 75%)
         background-size: 200% 100%
         animation: loading 1.5s infinite
+
+        body[data-theme="dark"] &
+          background: linear-gradient(90deg, #111111 25%, #222222 50%, #111111 75%)
+          background-size: 200% 100%
+          animation: loading 1.5s infinite
 
       &.loading-indicator
         .button

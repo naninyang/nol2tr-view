@@ -551,7 +551,7 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
           {musicError && <p>API 서버에 오류가 있습니다. 잠시 후 이용해 주세요.</p>}
         </div>
         {!musicError && (
-          <div className={musicStyles.musics}>
+          <div className={`${musicStyles.musics} ${loading ? musicStyles.loading : ''}`}>
             {!loading ? (
               <ul>
                 {musicsData.map((music) => (
