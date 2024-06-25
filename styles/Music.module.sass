@@ -2,23 +2,27 @@
 
 .musics
   margin: 0 auto
-  max-width: rem(720)
-  width: 100%
 
   ul
     display: flex
     flex-direction: column
 
-    +mq(minMedium)
+    +mq(minSmall)
       flex-direction: row
       flex-wrap: wrap
 
     li
       border-top: 1px solid var(--border)
 
-      +mq(minMedium)
-        width: 50%
+      +mq(minSmall)
         display: flex
+        width: 50%
+
+      +mq(minLarge)
+        width: 33.33%
+
+      +mq(minExtraLarge)
+        width: 25%
 
       .skeleton
         background: linear-gradient(90deg, #EEEEEE 25%, #DDDDDD 50%, #EEEEEE 75%)
