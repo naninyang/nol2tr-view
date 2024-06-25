@@ -67,7 +67,8 @@
 
           +mq(maxExtraSmall)
             gap: rem(12)
-            padding: rem(27)
+            bottom: rem(12)
+            padding: 0
 
           +mq(minSmall)
             top: 0
@@ -114,6 +115,7 @@
             +mq(maxExtraSmall)
               font-size: rem(14)
               color: var(--txt-summary)
+              +line-abbr(1, 21, 1.27)
 
             +mq(minLarge)
               font-size: rem(16)
@@ -151,16 +153,13 @@
 
           +mq(maxExtraSmall)
             flex-direction: column
-            height: rem(152)
+            aspect-ratio: 545 / 191
 
             div
               width: 100%
 
               &:nth-of-type(1)
-                height: rem(57)
-
-              &:nth-of-type(2)
-                height: rem(57)
+                aspect-ratio: 545 / 57
 
           +mq(minSmall)
             top: 0
