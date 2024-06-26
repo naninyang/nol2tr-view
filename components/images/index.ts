@@ -15,6 +15,13 @@ export const images = {
   },
   misc: {
     play: require('./misc/play.svg'),
+    pause: require('./misc/pause.svg'),
+    prev: require('./misc/prev.svg'),
+    next: require('./misc/next.svg'),
+    repeat: require('./misc/repeat.svg'),
+    repeating: require('./misc/repeating.svg'),
+    select: require('./misc/select.svg'),
+    unselect: require('./misc/unselect.svg'),
     error: require('./misc/error.svg'),
     menuLight: require('./misc/menuLight.svg'),
     menuDark: require('./misc/menuDark.svg'),

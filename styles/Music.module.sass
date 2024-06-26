@@ -126,6 +126,24 @@
             line-height: 1.28571429
 
 .music
+  .control
+    display: flex
+    justify-content: center
+    gap: rem(17)
+    padding: rem(12)
+
+    label
+      display: flex
+      gap: rem(5)
+
+      input
+        +screen-reader-only
+
+      i
+        display: inline-block
+        width: rem(25)
+        height: rem(25)
+
   .dialog
     position: fixed
     display: flex
@@ -435,6 +453,103 @@
         font-size: rem(14)
         font-weight: 700
         color: $hex-white
+
+  &.mpb
+    + footer
+      margin-bottom: rem(81)
+
+  .player-bar
+    background-color: $hex-dark
+    position: fixed
+    bottom: 0
+    left: 0
+    width: 100%
+
+    .hidden
+      +screen-reader-only
+
+    .player
+      position: relative
+      display: flex
+      justify-content: space-between
+      width: 100%
+      padding: rem(17) rem(23)
+
+      button
+        background-color: transparent
+
+      .song
+        display: flex
+        gap: rem(17)
+        max-width: calc(100vw - rem(227))
+
+        +mq(minMedium)
+          max-width: 50%
+
+        .cover, .cover img
+          display: block
+
+        .info
+          display: flex
+          flex-direction: column
+          justify-content: center
+          gap: rem(7)
+
+          strong
+            font-size: rem(16)
+            font-weight: 800
+            color: $hex-light-subject
+            +line-abbr(1, 16, 1)
+
+            span
+              +screen-reader-only
+
+          cite
+            font-size: rem(14)
+            color: $hex-light-summary
+            +line-abbr(1, 14, 1)
+
+      .play
+        position: absolute
+        top: 50%
+        display: flex
+        align-items: center
+
+        +mq(maxSmall)
+          right: rem(62)
+          transform: translateY(-50%)
+
+        +mq(minMedium)
+          left: 50%
+          transform: translate(-50%, -50%)
+
+        span
+          +screen-reader-only
+
+        .skip-button
+          i
+            display: block
+            width: rem(37)
+            height: rem(37)
+
+        .play-button
+          i
+            display: block
+            width: rem(52)
+            height: rem(52)
+
+      .repeat
+        display: flex
+        justify-content: center
+        align-items: center
+
+        i
+          display: block
+          width: rem(27)
+          height: rem(27)
+
+        span
+          +screen-reader-only
 
   article
     margin: 0 auto

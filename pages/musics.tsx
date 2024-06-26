@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { isIOS } from 'react-device-detect';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import YouTube, { YouTubeProps, YouTubeEvent } from 'react-youtube';
 import styled from '@emotion/styled';
 import { useMediaQuery } from 'react-responsive';
 import { MusicData } from 'types';
@@ -20,6 +22,50 @@ type MusicDetailProps = {
   music: MusicData;
   onClose: () => void;
 };
+
+interface PlayerProps {
+  currentSong: MusicData;
+  onEnd: () => void;
+  onPrevious: () => void;
+  onNext: () => void;
+  isLooping: boolean;
+  toggleLoop: () => void;
+  handlePlayPauseClick: (play: boolean, fromButton: boolean) => void;
+  isPlaying: boolean;
+  onReady: (event: YouTubeEvent<any>) => void;
+}
+
+const PlayIcon = styled.i({
+  background: `url(${images.misc.play}) no-repeat 50% 50%/contain`,
+});
+
+const PauseIcon = styled.i({
+  background: `url(${images.misc.pause}) no-repeat 50% 50%/contain`,
+});
+
+const PrevIcon = styled.i({
+  background: `url(${images.misc.prev}) no-repeat 50% 50%/contain`,
+});
+
+const NextIcon = styled.i({
+  background: `url(${images.misc.next}) no-repeat 50% 50%/contain`,
+});
+
+const RepeatIcon = styled.i({
+  background: `url(${images.misc.repeat}) no-repeat 50% 50%/contain`,
+});
+
+const RepeatingIcon = styled.i({
+  background: `url(${images.misc.repeating}) no-repeat 50% 50%/contain`,
+});
+
+const SelectIcon = styled.i({
+  background: `url(${images.misc.select}) no-repeat 50% 50%/contain`,
+});
+
+const UnselectIcon = styled.i({
+  background: `url(${images.misc.unselect}) no-repeat 50% 50%/contain`,
+});
 
 export function useTablet() {
   const [isTablet, setIsTablet] = useState(false);
@@ -82,6 +128,117 @@ const LoadingIndicator = ({ length }: { length: number }) => {
         </li>
       ))}
     </>
+  );
+};
+
+const Player: React.FC<PlayerProps> = ({
+  currentSong,
+  onEnd,
+  onPrevious,
+  onNext,
+  isLooping,
+  toggleLoop,
+  handlePlayPauseClick,
+  isPlaying,
+  onReady,
+}) => {
+  const opts: YouTubeProps['opts'] = {
+    height: '0',
+    width: '0',
+    playerVars: {
+      autoplay: 1 as 0 | 1 | undefined,
+    },
+  };
+
+  return (
+    <div className={musicStyles['player-bar']}>
+      <div tabIndex={-1} className={musicStyles.hidden}>
+        <YouTube
+          videoId={currentSong.videoid}
+          opts={opts}
+          onReady={onReady}
+          onEnd={onEnd}
+          onStateChange={(event: YouTubeEvent<any>) => {
+            if (event.data === 1) {
+              handlePlayPauseClick(true, false);
+            } else if (event.data === 2) {
+              handlePlayPauseClick(false, false);
+            } else if (event.data === 0) {
+              onEnd();
+            }
+          }}
+        />
+      </div>
+      <div className={musicStyles.player}>
+        <div className={musicStyles.song}>
+          <div className={musicStyles.cover}>
+            <Image
+              src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
+              width={47}
+              height={47}
+              alt=""
+              unoptimized
+            />
+          </div>
+          <div className={musicStyles.info}>
+            <strong>
+              {currentSong.music} <span>재생 중</span>
+            </strong>
+            <cite>
+              {currentSong.instrument
+                ? currentSong.artist !== null
+                  ? currentSong.artist
+                  : currentSong.composer
+                : currentSong.cover !== null
+                ? currentSong.cover
+                : currentSong.artist}
+            </cite>
+          </div>
+        </div>
+        <div className={musicStyles.play}>
+          <button className={musicStyles['skip-button']} type="button" onClick={onPrevious}>
+            <PrevIcon />
+            <span>이전곡 재생</span>
+          </button>
+          <button
+            className={musicStyles['play-button']}
+            type="button"
+            onClick={() => handlePlayPauseClick(!isPlaying, true)}
+          >
+            {isPlaying ? (
+              <>
+                <PauseIcon />
+                <span>일시중지 하기</span>
+              </>
+            ) : (
+              <>
+                <PlayIcon />
+                <span>계속재생 하기</span>
+              </>
+            )}
+          </button>
+          <button className={musicStyles['skip-button']} type="button" onClick={onNext}>
+            <NextIcon />
+            <span>다음곡 재생</span>
+          </button>
+        </div>
+        <div className={musicStyles.repeat}>
+          <button onClick={toggleLoop}>
+            {isLooping ? (
+              <>
+                <RepeatingIcon />
+                <span>한곡 반복 중</span>
+              </>
+            ) : (
+              <>
+                <RepeatIcon />
+                <span>전체 곡 반복 중</span>
+              </>
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -418,6 +575,12 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
   const [selectedMusicId, setSelectedMusicId] = useState<string | null>(null);
   const [musicsData, setMusicsData] = useState<MusicData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [ios, setIos] = useState<string>();
+  useEffect(() => {
+    if (isIOS) {
+      setIos('isIOS');
+    }
+  }, []);
 
   useEffect(() => {
     const fetchMusicData = async () => {
@@ -525,10 +688,112 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
     );
   }
 
+  function SongItem({ music }: { music: any }) {
+    return (
+      <>
+        <button type="button" onClick={() => handleSongClick(music.id)}>
+          <Image
+            src={`https://cdn.dev1stud.io/nol2tr/_/${music.videoid}.webp`}
+            width={360}
+            height={360}
+            alt=""
+            unoptimized
+          />
+          <span>
+            <strong>{music.music}</strong>
+            <cite>
+              {music.instrument
+                ? music.artist !== null
+                  ? music.artist
+                  : music.composer
+                : music.cover !== null
+                ? music.cover
+                : music.artist}
+            </cite>
+          </span>
+        </button>
+      </>
+    );
+  }
+
+  const [playMode, setPlayMode] = useState<'one' | 'all'>('one');
+  const [currentSongId, setCurrentSongId] = useState<string | null>(null);
+  const [isLooping, setIsLooping] = useState<boolean>(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const playerRef = useRef<any>(null);
+
+  const handleSongClick = (id: string) => {
+    setCurrentSongId(id);
+    setIsPlaying(true);
+  };
+
+  const handleEnd = () => {
+    if (isLooping) {
+      playerRef.current.playVideo();
+    } else {
+      handleNext();
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentSongId !== null) {
+      const currentIndex = musicsData.findIndex((music) => music.id === currentSongId);
+      const newIndex = (currentIndex - 1 + musicsData.length) % musicsData.length;
+      setCurrentSongId(musicsData[newIndex].id);
+      if (playerRef.current) {
+        playerRef.current.loadVideoById(musicsData[newIndex].videoid);
+      }
+      setIsPlaying(true);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentSongId !== null) {
+      const currentIndex = musicsData.findIndex((music) => music.id === currentSongId);
+      const newIndex = (currentIndex + 1) % musicsData.length;
+      setCurrentSongId(musicsData[newIndex].id);
+      if (playerRef.current) {
+        playerRef.current.loadVideoById(musicsData[newIndex].videoid);
+      }
+      setIsPlaying(true);
+    }
+  };
+
+  const toggleLoop = () => {
+    setIsLooping(!isLooping);
+  };
+
+  const onReady = (event: YouTubeEvent<any>) => {
+    playerRef.current = event.target;
+    if (currentSongId) {
+      const currentSong = musicsData.find((music) => music.id === currentSongId);
+      if (currentSong) {
+        playerRef.current.loadVideoById(currentSong.videoid);
+      }
+    }
+  };
+
+  const handlePlayPauseClick = (play: boolean, fromButton: boolean) => {
+    if (playerRef.current) {
+      if (play) {
+        playerRef.current.playVideo();
+      } else {
+        playerRef.current.pauseVideo();
+      }
+      if (fromButton) {
+        setIsPlaying(play);
+      }
+    }
+  };
+
   const timestamp = Date.now();
 
   return (
-    <main className={`${content.content} ${styles.pages} ${styles.music} ${musicStyles.music}`}>
+    <main
+      className={`${content.content} ${styles.pages} ${styles.music} ${musicStyles.music} ${
+        currentSongId !== null ? musicStyles.mpb : ''
+      }`}
+    >
       <Seo
         pageTitles={`선곡표 - ${originTitle}`}
         pageTitle="선곡표"
@@ -548,17 +813,66 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
         <div>
           <p>🎶 놀이터뷰에서 선곡한 곡 목록입니다 🎵</p>
           <p>👉 곡은 가나다 순으로 정렬됩니다 👉</p>
-          {musicError && <p>API 서버에 오류가 있습니다. 잠시 후 이용해 주세요.</p>}
+          {musicError ? (
+            <p>API 서버에 오류가 있습니다. 잠시 후 이용해 주세요.</p>
+          ) : (
+            <>
+              {ios !== 'isIOS' && (
+                <div className={musicStyles.control}>
+                  <label>
+                    <input type="radio" value="one" checked={playMode === 'one'} onChange={() => setPlayMode('one')} />
+                    {playMode === 'one' ? (
+                      <>
+                        <SelectIcon />
+                        <strong>한곡 재생</strong>
+                      </>
+                    ) : (
+                      <>
+                        <UnselectIcon />
+                        <span>한곡 재생</span>
+                      </>
+                    )}
+                  </label>
+                  <label>
+                    <input type="radio" value="all" checked={playMode === 'all'} onChange={() => setPlayMode('all')} />
+                    {playMode === 'one' ? (
+                      <>
+                        <UnselectIcon />
+                        <span>전곡 재생</span>
+                      </>
+                    ) : (
+                      <>
+                        <SelectIcon />
+                        <strong>전곡 재생</strong>
+                      </>
+                    )}
+                  </label>
+                </div>
+              )}
+            </>
+          )}
         </div>
         {!musicError && (
           <div className={`${musicStyles.musics} ${loading ? musicStyles.loading : ''}`}>
             {!loading ? (
               <ul>
-                {musicsData.map((music) => (
-                  <li key={music.id}>
-                    <MusicItem music={music} />
-                  </li>
-                ))}
+                {playMode === 'one' ? (
+                  <>
+                    {musicsData.map((music) => (
+                      <li key={music.id}>
+                        <MusicItem music={music} />
+                      </li>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {musicsData.map((music) => (
+                      <li key={music.id}>
+                        <SongItem music={music} />
+                      </li>
+                    ))}
+                  </>
+                )}
               </ul>
             ) : (
               <ul>
@@ -569,6 +883,19 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
         )}
       </div>
       {selectedMusicId && selectedMusic && <MusicDetail music={selectedMusic} onClose={handleCloseMusicDetail} />}
+      {currentSongId !== null && (
+        <Player
+          currentSong={musicsData.find((music) => music.id === currentSongId)!}
+          onEnd={handleEnd}
+          onPrevious={handlePrevious}
+          onNext={handleNext}
+          isLooping={isLooping}
+          toggleLoop={toggleLoop}
+          handlePlayPauseClick={handlePlayPauseClick}
+          isPlaying={isPlaying}
+          onReady={onReady}
+        />
+      )}
     </main>
   );
 };
