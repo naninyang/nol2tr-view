@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -33,6 +33,7 @@ interface PlayerProps {
   handlePlayPauseClick: (play: boolean, fromButton: boolean) => void;
   isPlaying: boolean;
   onReady: (event: YouTubeEvent<any>) => void;
+  onSeek: (time: number) => void;
 }
 
 const PlayIcon = styled.i({
@@ -131,6 +132,14 @@ const LoadingIndicator = ({ length }: { length: number }) => {
   );
 };
 
+const formatTime = (time: number) => {
+  const minutes = Math.floor(time / 60);
+  const seconds = Math.floor(time % 60)
+    .toString()
+    .padStart(2, '0');
+  return `${minutes}:${seconds}`;
+};
+
 const Player: React.FC<PlayerProps> = ({
   currentSong,
   onEnd,
@@ -141,6 +150,7 @@ const Player: React.FC<PlayerProps> = ({
   handlePlayPauseClick,
   isPlaying,
   onReady,
+  onSeek,
 }) => {
   const opts: YouTubeProps['opts'] = {
     height: '0',
@@ -150,13 +160,48 @@ const Player: React.FC<PlayerProps> = ({
     },
   };
 
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const playerRef = useRef<any>(null);
+
+  const updateCurrentTimeAndDuration = useCallback(() => {
+    if (playerRef.current && playerRef.current.getCurrentTime && playerRef.current.getDuration) {
+      const currentTime = playerRef.current.getCurrentTime();
+      const duration = playerRef.current.getDuration();
+      setCurrentTime(currentTime);
+      setDuration(duration);
+    } else {
+      console.log('Player is not ready');
+    }
+  }, [playerRef]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      updateCurrentTimeAndDuration();
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [updateCurrentTimeAndDuration]);
+
+  const handleSeekBarClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if (!playerRef.current) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left;
+    const newTime = (offsetX / rect.width) * duration;
+    onSeek(newTime);
+  };
+
   return (
     <div className={musicStyles['player-bar']}>
       <div tabIndex={-1} className={musicStyles.hidden}>
         <YouTube
           videoId={currentSong.videoid}
           opts={opts}
-          onReady={onReady}
+          onReady={(event) => {
+            onReady(event);
+            playerRef.current = event.target;
+            updateCurrentTimeAndDuration();
+          }}
           onEnd={onEnd}
           onStateChange={(event: YouTubeEvent<any>) => {
             if (event.data === 1) {
@@ -170,6 +215,21 @@ const Player: React.FC<PlayerProps> = ({
         />
       </div>
       <div className={musicStyles.player}>
+        <button type="button" className={musicStyles.seekbar} onClick={handleSeekBarClick}>
+          <span
+            style={{
+              width: `${(currentTime / duration) * 100}%`,
+            }}
+          />
+          <em
+            style={{
+              left: `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
+            }}
+          >
+            <i>{formatTime(currentTime)}</i>
+          </em>
+        </button>
+        <div className={musicStyles.duration}>{formatTime(duration)}</div>
         <div className={musicStyles.song}>
           <div className={musicStyles.cover}>
             <Image
@@ -730,6 +790,8 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
   const handleEnd = () => {
     if (isLooping) {
       playerRef.current.playVideo();
+    } else if (playMode === 'one') {
+      // do nothing
     } else {
       handleNext();
     }
@@ -786,6 +848,12 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
     }
   };
 
+  const handleSeek = (time: number) => {
+    if (playerRef.current) {
+      playerRef.current.seekTo(time);
+    }
+  };
+
   const timestamp = Date.now();
 
   return (
@@ -818,36 +886,49 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
           ) : (
             <>
               {ios !== 'isIOS' && (
-                <div className={musicStyles.control}>
-                  <label>
-                    <input type="radio" value="one" checked={playMode === 'one'} onChange={() => setPlayMode('one')} />
-                    {playMode === 'one' ? (
-                      <>
-                        <SelectIcon />
-                        <strong>한곡 재생</strong>
-                      </>
-                    ) : (
-                      <>
-                        <UnselectIcon />
-                        <span>한곡 재생</span>
-                      </>
-                    )}
-                  </label>
-                  <label>
-                    <input type="radio" value="all" checked={playMode === 'all'} onChange={() => setPlayMode('all')} />
-                    {playMode === 'one' ? (
-                      <>
-                        <UnselectIcon />
-                        <span>전곡 재생</span>
-                      </>
-                    ) : (
-                      <>
-                        <SelectIcon />
-                        <strong>전곡 재생</strong>
-                      </>
-                    )}
-                  </label>
-                </div>
+                <>
+                  <div className={`${musicStyles.control} ${playMode === 'all' ? musicStyles.all : ''}`}>
+                    <label>
+                      <input
+                        type="radio"
+                        value="one"
+                        checked={playMode === 'one'}
+                        onChange={() => setPlayMode('one')}
+                      />
+                      {playMode === 'one' ? (
+                        <>
+                          <SelectIcon />
+                          <strong>한곡 재생</strong>
+                        </>
+                      ) : (
+                        <>
+                          <UnselectIcon />
+                          <span>한곡 재생</span>
+                        </>
+                      )}
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        value="all"
+                        checked={playMode === 'all'}
+                        onChange={() => setPlayMode('all')}
+                      />
+                      {playMode === 'one' ? (
+                        <>
+                          <UnselectIcon />
+                          <span>전곡 재생</span>
+                        </>
+                      ) : (
+                        <>
+                          <SelectIcon />
+                          <strong>전곡 재생</strong>
+                        </>
+                      )}
+                    </label>
+                  </div>
+                  {playMode === 'all' && <p>전곡 재생 선택시 곡을 누르면 자동으로 재생됩니다.</p>}
+                </>
               )}
             </>
           )}
@@ -894,6 +975,7 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
           handlePlayPauseClick={handlePlayPauseClick}
           isPlaying={isPlaying}
           onReady={onReady}
+          onSeek={handleSeek}
         />
       )}
     </main>
