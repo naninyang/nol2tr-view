@@ -225,6 +225,9 @@ const Player: React.FC<PlayerProps> = ({
             style={{
               left: `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
             }}
+            className={`${(currentTime / duration) * 100 < 5 ? musicStyles.left : ''} ${
+              (currentTime / duration) * 100 > 95 ? musicStyles.right : ''
+            }`}
           >
             <i>{formatTime(currentTime)}</i>
           </em>
@@ -964,7 +967,7 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
         )}
       </div>
       {selectedMusicId && selectedMusic && <MusicDetail music={selectedMusic} onClose={handleCloseMusicDetail} />}
-      {currentSongId !== null && (
+      {playMode === 'all' && currentSongId !== null && (
         <Player
           currentSong={musicsData.find((music) => music.id === currentSongId)!}
           onEnd={handleEnd}
