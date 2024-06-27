@@ -153,10 +153,16 @@ const Player: React.FC<PlayerProps> = ({
   onSeek,
 }) => {
   const opts: YouTubeProps['opts'] = {
-    height: '1080',
-    width: '1920',
+    width: 1920,
+    height: 1080,
     playerVars: {
       autoplay: 1 as 0 | 1 | undefined,
+      controls: 0,
+      modestbranding: 1,
+      rel: 0,
+      disablekb: 0,
+      iv_load_policy: 3,
+      start: currentSong.start,
     },
   };
 
@@ -201,6 +207,18 @@ const Player: React.FC<PlayerProps> = ({
         className={showPlayer ? musicStyles.show : musicStyles.hidden}
       >
         <div className={`${musicStyles.cover} ${isYouTube ? musicStyles.YouTube : ''}`}>
+          {!isYouTube && (
+            <div className={musicStyles.background}>
+              <Image
+                src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
+                width={47}
+                height={47}
+                alt=""
+                unoptimized
+              />
+              <div className={musicStyles.dummy} />
+            </div>
+          )}
           {currentSong.isMV && (
             <>
               <div className={musicStyles.switching}>
@@ -294,13 +312,15 @@ const Player: React.FC<PlayerProps> = ({
             </>
           )}
           <div className={musicStyles.thumbnail}>
-            <Image
-              src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
-              width={47}
-              height={47}
-              alt=""
-              unoptimized
-            />
+            <div>
+              <Image
+                src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
+                width={47}
+                height={47}
+                alt=""
+                unoptimized
+              />
+            </div>
             <div className={musicStyles.summary}>
               <h2>{currentSong.music}</h2>
               <cite>

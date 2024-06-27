@@ -7,8 +7,6 @@ interface Props {
 }
 
 const YouTubePlayer = ({ videoId, start }: Props) => {
-  const playerRef = useRef<any>(null);
-
   const opts: YouTubeProps['opts'] = {
     width: 560,
     height: 315,

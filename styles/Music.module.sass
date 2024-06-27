@@ -482,13 +482,18 @@
       +screen-reader-only
 
     .show
+      background-color: $hex-black
       height: calc(100vh - rem(93))
 
       .cover
         display: flex
         flex-direction: column
+        gap: rem(27)
         padding: rem(32) rem(52)
         height: calc(100vh - rem(93))
+
+        +mq(portrait)
+          padding: rem(32) 0
 
         &.YouTube
           .youtube
@@ -499,22 +504,30 @@
             flex-grow: 1
             gap: rem(27)
 
-            > div
+            +mq(landscape)
+              gap: rem(27)
+
+            > div:not(.summary)
               display: flex
-              justify-content: center
-              align-items: center
-              flex-grow: 1
               width: 100%
 
+              +mq(landscape)
+                justify-content: center
+                align-items: flex-end
+                flex-grow: 1
+                width: 90%
+                height: calc(100vh - rem(420))
+
             iframe
-              width: 77%
-              height: auto
               aspect-ratio: 1920 / 1080
 
-            .summary
-              justify-content: flex-start
-              align-items: flex-start
-              width: 77%
+              +mq(landscape)
+                width: 100%
+                height: 100%
+
+              +mq(portrait)
+                width: 100%
+                height: auto
 
           .thumbnail
             position: absolute
@@ -523,6 +536,30 @@
             overflow: hidden
 
         &:not(.YouTube)
+          .background
+            position: absolute
+            top: 0
+            left: 0
+            width: 100%
+            height: 100%
+
+            img
+              width: 100%
+              height: 100%
+              object-fit: cover
+
+            .dummy
+              position: absolute
+              top: 0
+              left: 0
+              width: 100%
+              height: 100%
+              background-color: rgba($hex-black, .7)
+              backdrop-filter: blur(rem(20))
+
+          div:not(.background)
+            z-index: 2
+
           .youtube
             position: absolute
             width: 0
@@ -537,10 +574,31 @@
             flex-grow: 1
             gap: rem(27)
 
+            > div:not(.summary)
+              display: flex
+              width: 100%
+
+              +mq(landscape)
+                justify-content: center
+                align-items: flex-end
+                flex-grow: 1
+                width: 90%
+                height: calc(100vh - rem(420))
+
+              +mq(portrait)
+                justify-content: center
+
             img
-              width: 50%
-              height: auto
               aspect-ratio: 1 / 1
+
+              +mq(landscape)
+                width: auto
+                height: 72%
+
+              +mq(portrait)
+                max-width: rem(570)
+                width: 100%
+                height: auto
 
         .switching
           text-align: center
@@ -573,12 +631,16 @@
                   padding-left: rem(8)
 
               &.current
-                background-color: rgba($hex-black, .7)
+                background-color: $hex-accent
+                color: $hex-black
 
         .summary
           display: flex
           flex-direction: column
-          width: 50%
+          justify-content: flex-start
+          align-items: flex-start
+          padding-bottom: rem(52)
+          width: 90%
 
           h2
             font-size: rem(20)
@@ -606,6 +668,7 @@
 
     .player
       position: relative
+      z-index: 2
       display: flex
       justify-content: space-between
       width: 100%
@@ -706,6 +769,7 @@
 
         +mq(minMedium)
           max-width: 50%
+          padding-right: rem(126)
 
         button
           position: absolute
