@@ -153,16 +153,18 @@ const Player: React.FC<PlayerProps> = ({
   onSeek,
 }) => {
   const opts: YouTubeProps['opts'] = {
-    height: '0',
-    width: '0',
+    height: '1080',
+    width: '1920',
     playerVars: {
       autoplay: 1 as 0 | 1 | undefined,
     },
   };
 
+  const playerRef = useRef<any>(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const playerRef = useRef<any>(null);
+  const [showPlayer, setShowPlayer] = useState(false);
+  const [isYouTube, setIsYouTube] = useState(false);
 
   const updateCurrentTimeAndDuration = useCallback(() => {
     if (playerRef.current && playerRef.current.getCurrentTime && playerRef.current.getDuration) {
@@ -193,26 +195,159 @@ const Player: React.FC<PlayerProps> = ({
 
   return (
     <div className={musicStyles['player-bar']}>
-      <div tabIndex={-1} className={musicStyles.hidden}>
-        <YouTube
-          videoId={currentSong.videoid}
-          opts={opts}
-          onReady={(event) => {
-            onReady(event);
-            playerRef.current = event.target;
-            updateCurrentTimeAndDuration();
-          }}
-          onEnd={onEnd}
-          onStateChange={(event: YouTubeEvent<any>) => {
-            if (event.data === 1) {
-              handlePlayPauseClick(true, false);
-            } else if (event.data === 2) {
-              handlePlayPauseClick(false, false);
-            } else if (event.data === 0) {
-              onEnd();
-            }
-          }}
-        />
+      <div
+        tabIndex={showPlayer ? undefined : -1}
+        aria-hidden={showPlayer ? undefined : 'true'}
+        className={showPlayer ? musicStyles.show : musicStyles.hidden}
+      >
+        <div className={`${musicStyles.cover} ${isYouTube ? musicStyles.YouTube : ''}`}>
+          {currentSong.isMV && (
+            <>
+              <div className={musicStyles.switching}>
+                <ul>
+                  <li>
+                    <button
+                      onClick={() => setIsYouTube(false)}
+                      className={`${isYouTube ? '' : musicStyles.current} ${musicStyles.isNotYouTube}`}
+                      type="button"
+                    >
+                      노래
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => setIsYouTube(true)}
+                      className={`${isYouTube ? musicStyles.current : ''} ${musicStyles.isYouTube}`}
+                      type="button"
+                    >
+                      동영상
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <div className={musicStyles.youtube}>
+                <YouTube
+                  videoId={currentSong.videoid}
+                  opts={opts}
+                  onReady={(event) => {
+                    onReady(event);
+                    playerRef.current = event.target;
+                    updateCurrentTimeAndDuration();
+                  }}
+                  onEnd={onEnd}
+                  onStateChange={(event: YouTubeEvent<any>) => {
+                    if (event.data === 1) {
+                      handlePlayPauseClick(true, false);
+                    } else if (event.data === 2) {
+                      handlePlayPauseClick(false, false);
+                    } else if (event.data === 0) {
+                      onEnd();
+                    }
+                  }}
+                />
+                <div className={musicStyles.summary}>
+                  <h2>{currentSong.music}</h2>
+                  <cite>
+                    {currentSong.instrument ? (
+                      <>{currentSong.artist !== null ? currentSong.artist : currentSong.composer}</>
+                    ) : currentSong.cover !== null ? (
+                      <>
+                        {currentSong.cover} 커버 ({currentSong.artist} 원곡)
+                      </>
+                    ) : (
+                      currentSong.artist
+                    )}
+                  </cite>
+                  <dl>
+                    {currentSong.cover !== null && (
+                      <div>
+                        <dt>원곡</dt>
+                        <dd>{currentSong.artist}</dd>
+                      </div>
+                    )}
+                    <div>
+                      <dt>수록앨범</dt>
+                      <dd>{currentSong.album}</dd>
+                    </div>
+                    {currentSong.composer === currentSong.lyricist ? (
+                      <div>
+                        <dt>작곡/작사</dt>
+                        <dd>{currentSong.composer}</dd>
+                      </div>
+                    ) : (
+                      <>
+                        <div>
+                          <dt>작곡</dt>
+                          <dd>{currentSong.composer}</dd>
+                        </div>
+                        {currentSong.lyricist !== null && (
+                          <div>
+                            <dt>작사</dt>
+                            <dd>{currentSong.lyricist}</dd>
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </dl>
+                </div>
+              </div>
+            </>
+          )}
+          <div className={musicStyles.thumbnail}>
+            <Image
+              src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
+              width={47}
+              height={47}
+              alt=""
+              unoptimized
+            />
+            <div className={musicStyles.summary}>
+              <h2>{currentSong.music}</h2>
+              <cite>
+                {currentSong.instrument ? (
+                  <>{currentSong.artist !== null ? currentSong.artist : currentSong.composer}</>
+                ) : currentSong.cover !== null ? (
+                  <>
+                    {currentSong.cover} 커버 ({currentSong.artist} 원곡)
+                  </>
+                ) : (
+                  currentSong.artist
+                )}
+              </cite>
+              <dl>
+                {currentSong.cover !== null && (
+                  <div>
+                    <dt>원곡</dt>
+                    <dd>{currentSong.artist}</dd>
+                  </div>
+                )}
+                <div>
+                  <dt>수록앨범</dt>
+                  <dd>{currentSong.album}</dd>
+                </div>
+                {currentSong.composer === currentSong.lyricist ? (
+                  <div>
+                    <dt>작곡/작사</dt>
+                    <dd>{currentSong.composer}</dd>
+                  </div>
+                ) : (
+                  <>
+                    <div>
+                      <dt>작곡</dt>
+                      <dd>{currentSong.composer}</dd>
+                    </div>
+                    {currentSong.lyricist !== null && (
+                      <div>
+                        <dt>작사</dt>
+                        <dd>{currentSong.lyricist}</dd>
+                      </div>
+                    )}
+                  </>
+                )}
+              </dl>
+            </div>
+          </div>
+        </div>
       </div>
       <div className={musicStyles.player}>
         <button type="button" className={musicStyles.seekbar} onClick={handleSeekBarClick}>
@@ -257,6 +392,9 @@ const Player: React.FC<PlayerProps> = ({
                 : currentSong.artist}
             </cite>
           </div>
+          <button onClick={() => setShowPlayer((prev) => !prev)} type="button">
+            <span>{showPlayer ? '플레이어 숨기기' : '플레이어 보기'}</span>
+          </button>
         </div>
         <div className={musicStyles.play}>
           <button className={musicStyles['skip-button']} type="button" onClick={onPrevious}>
@@ -793,9 +931,7 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
   const handleEnd = () => {
     if (isLooping) {
       playerRef.current.playVideo();
-    } else if (playMode === 'one') {
-      // do nothing
-    } else {
+    } else if (playMode === 'all') {
       handleNext();
     }
   };

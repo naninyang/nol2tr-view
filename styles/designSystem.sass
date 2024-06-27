@@ -53,6 +53,14 @@ $hex-dark-background: #272829
     @media screen and (max-width: rem(1399))
       @content
 
+  @if $mediaquery == landscape
+    @media screen and (min-aspect-ratio: 1/1)
+      @content
+
+  @if $mediaquery == portrait
+    @media screen and (max-aspect-ratio: 1/1)
+      @content
+
 @mixin row
   display: flex
   flex-wrap: wrap
