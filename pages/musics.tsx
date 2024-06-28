@@ -30,6 +30,8 @@ interface PlayerProps {
   onNext: () => void;
   isLooping: boolean;
   toggleLoop: () => void;
+  isLyrics: boolean;
+  toggleLyrics: () => void;
   handlePlayPauseClick: (play: boolean, fromButton: boolean) => void;
   isPlaying: boolean;
   onReady: (event: YouTubeEvent<any>) => void;
@@ -68,6 +70,18 @@ const UnselectIcon = styled.i({
   background: `url(${images.misc.unselect}) no-repeat 50% 50%/contain`,
 });
 
+const DownIcon = styled.i({
+  background: `url(${images.arrow.downLight}) no-repeat 50% 50%/contain`,
+});
+
+const LyricsDisabledIcon = styled.i({
+  background: `url(${images.misc.lyricsDisabled}) no-repeat 50% 50%/contain`,
+});
+
+const LyricsEnabledIcon = styled.i({
+  background: `url(${images.misc.lyricsEnabled}) no-repeat 50% 50%/contain`,
+});
+
 export function useTablet() {
   const [isTablet, setIsTablet] = useState(false);
   const tablet = useMediaQuery({ query: `(min-width: ${rem(768)}) and (max-width: ${rem(992)}` });
@@ -84,6 +98,15 @@ export function useMobile() {
     setIsMobile(mobile);
   }, [mobile]);
   return isMobile;
+}
+
+export function useLandscape() {
+  const [isLandscape, setIsLandscape] = useState(false);
+  const landscape = useMediaQuery({ query: `(min-aspect-ratio: 1/1)` });
+  useEffect(() => {
+    setIsLandscape(landscape);
+  }, [landscape]);
+  return isLandscape;
 }
 
 const BackButton = styled.i({
@@ -147,6 +170,8 @@ const Player: React.FC<PlayerProps> = ({
   onNext,
   isLooping,
   toggleLoop,
+  isLyrics,
+  toggleLyrics,
   handlePlayPauseClick,
   isPlaying,
   onReady,
@@ -172,6 +197,7 @@ const Player: React.FC<PlayerProps> = ({
   const playerRef2 = useRef<any>(null);
   const [showPlayer, setShowPlayer] = useState(false);
   const [isYouTube, setIsYouTube] = useState(false);
+  const isLandscape = useLandscape();
 
   const updateCurrentTimeAndDuration = useCallback(() => {
     if (playerRef1.current && playerRef1.current.getCurrentTime && playerRef1.current.getDuration) {
@@ -218,13 +244,45 @@ const Player: React.FC<PlayerProps> = ({
     handlePlayPauseClick(!isPlaying, true);
   };
 
+  useEffect(() => {
+    const preventScroll = (e: Event) => {
+      e.preventDefault();
+    };
+    if (showPlayer) {
+      window.addEventListener('wheel', preventScroll, { passive: false });
+      window.addEventListener('touchmove', preventScroll, { passive: false });
+    } else {
+      window.removeEventListener('wheel', preventScroll);
+      window.removeEventListener('touchmove', preventScroll);
+    }
+    return () => {
+      window.removeEventListener('wheel', preventScroll);
+      window.removeEventListener('touchmove', preventScroll);
+    };
+  }, [showPlayer]);
+
   return (
     <div className={musicStyles['player-bar']}>
       <div
         tabIndex={showPlayer ? undefined : -1}
         aria-hidden={showPlayer ? undefined : 'true'}
-        className={showPlayer ? musicStyles.show : musicStyles.hidden}
+        className={`${showPlayer ? musicStyles.show : musicStyles.hidden} ${
+          !isLandscape && showPlayer ? musicStyles.portrait : ''
+        }`}
       >
+        <div className={musicStyles['player-close']}>
+          <button onClick={() => setShowPlayer(false)} type="button">
+            <DownIcon />
+            <span>플레이어 숨기기</span>
+          </button>
+        </div>
+        {isLandscape && currentSong.lyrics && (
+          <div className={musicStyles.lyrics}>
+            <PerfectScrollbar className={styles['scrollbar-container']}>
+              <p dangerouslySetInnerHTML={{ __html: currentSong.lyrics.replace(/\n/g, '<br />') }} />
+            </PerfectScrollbar>
+          </div>
+        )}
         <div className={`${musicStyles.cover} ${isYouTube && currentSong.isMV ? musicStyles.YouTube : ''}`}>
           {currentSong.isMV ? (
             <>
@@ -366,64 +424,7 @@ const Player: React.FC<PlayerProps> = ({
                       }}
                     />
                   </div>
-                  <div className={musicStyles.summary}>
-                    <h2>{currentSong.music}</h2>
-                    <cite>
-                      {currentSong.instrument ? (
-                        <>{currentSong.artist !== null ? currentSong.artist : currentSong.composer}</>
-                      ) : currentSong.cover !== null ? (
-                        <>
-                          {currentSong.cover} 커버 ({currentSong.artist} 원곡)
-                        </>
-                      ) : (
-                        currentSong.artist
-                      )}
-                    </cite>
-                    <dl>
-                      {currentSong.cover !== null && (
-                        <div>
-                          <dt>원곡</dt>
-                          <dd>{currentSong.artist}</dd>
-                        </div>
-                      )}
-                      <div>
-                        <dt>수록앨범</dt>
-                        <dd>{currentSong.album}</dd>
-                      </div>
-                      {currentSong.composer === currentSong.lyricist ? (
-                        <div>
-                          <dt>작곡/작사</dt>
-                          <dd>{currentSong.composer}</dd>
-                        </div>
-                      ) : (
-                        <>
-                          <div>
-                            <dt>작곡</dt>
-                            <dd>{currentSong.composer}</dd>
-                          </div>
-                          {currentSong.lyricist !== null && (
-                            <div>
-                              <dt>작사</dt>
-                              <dd>{currentSong.lyricist}</dd>
-                            </div>
-                          )}
-                        </>
-                      )}
-                    </dl>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  <div className={musicStyles.thumbnail}>
-                    <div>
-                      <Image
-                        src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
-                        width={47}
-                        height={47}
-                        alt=""
-                        unoptimized
-                      />
-                    </div>
+                  {isLandscape ? (
                     <div className={musicStyles.summary}>
                       <h2>{currentSong.music}</h2>
                       <cite>
@@ -469,6 +470,330 @@ const Player: React.FC<PlayerProps> = ({
                         )}
                       </dl>
                     </div>
+                  ) : (
+                    <div className={musicStyles.controller}>
+                      <div className={musicStyles.summary}>
+                        <h2>{currentSong.music}</h2>
+                        <cite>
+                          {currentSong.instrument ? (
+                            <>{currentSong.artist !== null ? currentSong.artist : currentSong.composer}</>
+                          ) : currentSong.cover !== null ? (
+                            <>
+                              {currentSong.cover} 커버 ({currentSong.artist} 원곡)
+                            </>
+                          ) : (
+                            currentSong.artist
+                          )}
+                        </cite>
+                        <dl>
+                          {currentSong.cover !== null && (
+                            <div>
+                              <dt>원곡</dt>
+                              <dd>{currentSong.artist}</dd>
+                            </div>
+                          )}
+                          <div>
+                            <dt>수록앨범</dt>
+                            <dd>{currentSong.album}</dd>
+                          </div>
+                          {currentSong.composer === currentSong.lyricist ? (
+                            <div>
+                              <dt>작곡/작사</dt>
+                              <dd>{currentSong.composer}</dd>
+                            </div>
+                          ) : (
+                            <>
+                              <div>
+                                <dt>작곡</dt>
+                                <dd>{currentSong.composer}</dd>
+                              </div>
+                              {currentSong.lyricist !== null && (
+                                <div>
+                                  <dt>작사</dt>
+                                  <dd>{currentSong.lyricist}</dd>
+                                </div>
+                              )}
+                            </>
+                          )}
+                        </dl>
+                      </div>
+                      <button type="button" className={musicStyles.seekbar} onClick={handleSeekBarClick}>
+                        <span
+                          style={{
+                            width: `${(currentTime / duration) * 100}%`,
+                          }}
+                        />
+                        <em
+                          style={{
+                            left: `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
+                          }}
+                          className={`${(currentTime / duration) * 100 < 5 ? musicStyles.left : ''} ${
+                            (currentTime / duration) * 100 > 95 ? musicStyles.right : ''
+                          }`}
+                        >
+                          <i>{formatTime(currentTime)}</i>
+                        </em>
+                      </button>
+                      <div className={musicStyles.option}>
+                        <div className={musicStyles.play}>
+                          <button className={musicStyles['skip-button']} type="button" onClick={onPrevious}>
+                            <PrevIcon />
+                            <span>이전곡 재생</span>
+                          </button>
+                          <button className={musicStyles['play-button']} type="button" onClick={handlePlayPause}>
+                            {isPlaying ? (
+                              <>
+                                <PauseIcon />
+                                <span>일시중지 하기</span>
+                              </>
+                            ) : (
+                              <>
+                                <PlayIcon />
+                                <span>계속재생 하기</span>
+                              </>
+                            )}
+                          </button>
+                          <button className={musicStyles['skip-button']} type="button" onClick={onNext}>
+                            <NextIcon />
+                            <span>다음곡 재생</span>
+                          </button>
+                        </div>
+                        <div className={musicStyles.repeat}>
+                          <button onClick={toggleLoop} type="button">
+                            {isLooping ? (
+                              <>
+                                <RepeatingIcon />
+                                <span>한곡 반복 중</span>
+                              </>
+                            ) : (
+                              <>
+                                <RepeatIcon />
+                                <span>전체 곡 반복 중</span>
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <>
+                  {!isLandscape && isLyrics && (
+                    <div className={musicStyles['music-lyrics']}>
+                      <div className={musicStyles['music-info']}>
+                        <div className={musicStyles['song-cover']}>
+                          <Image
+                            src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
+                            width={47}
+                            height={47}
+                            alt=""
+                            unoptimized
+                          />
+                        </div>
+                        <div className={musicStyles.summary}>
+                          <h2>{currentSong.music}</h2>
+                          <cite>
+                            {currentSong.instrument ? (
+                              <>{currentSong.artist !== null ? currentSong.artist : currentSong.composer}</>
+                            ) : currentSong.cover !== null ? (
+                              <>
+                                {currentSong.cover} 커버 ({currentSong.artist} 원곡)
+                              </>
+                            ) : (
+                              currentSong.artist
+                            )}
+                          </cite>
+                        </div>
+                      </div>
+                      <div className={musicStyles.lyrics}>
+                        <PerfectScrollbar className={styles['scrollbar-container']}>
+                          <p dangerouslySetInnerHTML={{ __html: currentSong.lyrics.replace(/\n/g, '<br />') }} />
+                        </PerfectScrollbar>
+                      </div>
+                    </div>
+                  )}
+                  <div className={musicStyles.thumbnail}>
+                    {(isLandscape || (!isLandscape && !isLyrics)) && (
+                      <div>
+                        <Image
+                          src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
+                          width={47}
+                          height={47}
+                          alt=""
+                          unoptimized
+                        />
+                      </div>
+                    )}
+                    {isLandscape ? (
+                      <div className={musicStyles.summary}>
+                        <h2>{currentSong.music}</h2>
+                        <cite>
+                          {currentSong.instrument ? (
+                            <>{currentSong.artist !== null ? currentSong.artist : currentSong.composer}</>
+                          ) : currentSong.cover !== null ? (
+                            <>
+                              {currentSong.cover} 커버 ({currentSong.artist} 원곡)
+                            </>
+                          ) : (
+                            currentSong.artist
+                          )}
+                        </cite>
+                        <dl>
+                          {currentSong.cover !== null && (
+                            <div>
+                              <dt>원곡</dt>
+                              <dd>{currentSong.artist}</dd>
+                            </div>
+                          )}
+                          <div>
+                            <dt>수록앨범</dt>
+                            <dd>{currentSong.album}</dd>
+                          </div>
+                          {currentSong.composer === currentSong.lyricist ? (
+                            <div>
+                              <dt>작곡/작사</dt>
+                              <dd>{currentSong.composer}</dd>
+                            </div>
+                          ) : (
+                            <>
+                              <div>
+                                <dt>작곡</dt>
+                                <dd>{currentSong.composer}</dd>
+                              </div>
+                              {currentSong.lyricist !== null && (
+                                <div>
+                                  <dt>작사</dt>
+                                  <dd>{currentSong.lyricist}</dd>
+                                </div>
+                              )}
+                            </>
+                          )}
+                        </dl>
+                      </div>
+                    ) : (
+                      <div className={musicStyles.controller}>
+                        {!isLyrics && (
+                          <div className={musicStyles.summary}>
+                            <h2>{currentSong.music}</h2>
+                            <cite>
+                              {currentSong.instrument ? (
+                                <>{currentSong.artist !== null ? currentSong.artist : currentSong.composer}</>
+                              ) : currentSong.cover !== null ? (
+                                <>
+                                  {currentSong.cover} 커버 ({currentSong.artist} 원곡)
+                                </>
+                              ) : (
+                                currentSong.artist
+                              )}
+                            </cite>
+                            <dl>
+                              {currentSong.cover !== null && (
+                                <div>
+                                  <dt>원곡</dt>
+                                  <dd>{currentSong.artist}</dd>
+                                </div>
+                              )}
+                              <div>
+                                <dt>수록앨범</dt>
+                                <dd>{currentSong.album}</dd>
+                              </div>
+                              {currentSong.composer === currentSong.lyricist ? (
+                                <div>
+                                  <dt>작곡/작사</dt>
+                                  <dd>{currentSong.composer}</dd>
+                                </div>
+                              ) : (
+                                <>
+                                  <div>
+                                    <dt>작곡</dt>
+                                    <dd>{currentSong.composer}</dd>
+                                  </div>
+                                  {currentSong.lyricist !== null && (
+                                    <div>
+                                      <dt>작사</dt>
+                                      <dd>{currentSong.lyricist}</dd>
+                                    </div>
+                                  )}
+                                </>
+                              )}
+                            </dl>
+                          </div>
+                        )}
+                        <button type="button" className={musicStyles.seekbar} onClick={handleSeekBarClick}>
+                          <span
+                            style={{
+                              width: `${(currentTime / duration) * 100}%`,
+                            }}
+                          />
+                          <em
+                            style={{
+                              left: `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
+                            }}
+                            className={`${(currentTime / duration) * 100 < 5 ? musicStyles.left : ''} ${
+                              (currentTime / duration) * 100 > 95 ? musicStyles.right : ''
+                            }`}
+                          >
+                            <i>{formatTime(currentTime)}</i>
+                          </em>
+                        </button>
+                        <div className={musicStyles.option}>
+                          <div className={musicStyles.lyricsText}>
+                            <button onClick={toggleLyrics} type="button">
+                              {isLyrics ? (
+                                <>
+                                  <LyricsEnabledIcon />
+                                  <span>가사 숨기기</span>
+                                </>
+                              ) : (
+                                <>
+                                  <LyricsDisabledIcon />
+                                  <span>가사 보기</span>
+                                </>
+                              )}
+                            </button>
+                          </div>
+                          <div className={musicStyles.play}>
+                            <button className={musicStyles['skip-button']} type="button" onClick={onPrevious}>
+                              <PrevIcon />
+                              <span>이전곡 재생</span>
+                            </button>
+                            <button className={musicStyles['play-button']} type="button" onClick={handlePlayPause}>
+                              {isPlaying ? (
+                                <>
+                                  <PauseIcon />
+                                  <span>일시중지 하기</span>
+                                </>
+                              ) : (
+                                <>
+                                  <PlayIcon />
+                                  <span>계속재생 하기</span>
+                                </>
+                              )}
+                            </button>
+                            <button className={musicStyles['skip-button']} type="button" onClick={onNext}>
+                              <NextIcon />
+                              <span>다음곡 재생</span>
+                            </button>
+                          </div>
+                          <div className={musicStyles.repeat}>
+                            <button onClick={toggleLoop} type="button">
+                              {isLooping ? (
+                                <>
+                                  <RepeatingIcon />
+                                  <span>한곡 반복 중</span>
+                                </>
+                              ) : (
+                                <>
+                                  <RepeatIcon />
+                                  <span>전체 곡 반복 중</span>
+                                </>
+                              )}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <div className={musicStyles.youtube}>
                     <YouTube
@@ -496,61 +821,221 @@ const Player: React.FC<PlayerProps> = ({
             </>
           ) : (
             <>
-              <div className={musicStyles.thumbnail}>
-                <div>
-                  <Image
-                    src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
-                    width={47}
-                    height={47}
-                    alt=""
-                    unoptimized
-                  />
-                </div>
-                <div className={musicStyles.summary}>
-                  <h2>{currentSong.music}</h2>
-                  <cite>
-                    {currentSong.instrument ? (
-                      <>{currentSong.artist !== null ? currentSong.artist : currentSong.composer}</>
-                    ) : currentSong.cover !== null ? (
-                      <>
-                        {currentSong.cover} 커버 ({currentSong.artist} 원곡)
-                      </>
-                    ) : (
-                      currentSong.artist
-                    )}
-                  </cite>
-                  <dl>
-                    {currentSong.cover !== null && (
-                      <div>
-                        <dt>원곡</dt>
-                        <dd>{currentSong.artist}</dd>
-                      </div>
-                    )}
-                    <div>
-                      <dt>수록앨범</dt>
-                      <dd>{currentSong.album}</dd>
+              {!isLandscape && isLyrics && (
+                <div className={musicStyles['music-lyrics']}>
+                  <div className={musicStyles['music-info']}>
+                    <div className={musicStyles['song-cover']}>
+                      <Image
+                        src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
+                        width={47}
+                        height={47}
+                        alt=""
+                        unoptimized
+                      />
                     </div>
-                    {currentSong.composer === currentSong.lyricist ? (
-                      <div>
-                        <dt>작곡/작사</dt>
-                        <dd>{currentSong.composer}</dd>
-                      </div>
-                    ) : (
-                      <>
+                    <div className={musicStyles.summary}>
+                      <h2>{currentSong.music}</h2>
+                      <cite>
+                        {currentSong.instrument ? (
+                          <>{currentSong.artist !== null ? currentSong.artist : currentSong.composer}</>
+                        ) : currentSong.cover !== null ? (
+                          <>
+                            {currentSong.cover} 커버 ({currentSong.artist} 원곡)
+                          </>
+                        ) : (
+                          currentSong.artist
+                        )}
+                      </cite>
+                    </div>
+                  </div>
+                  <div className={musicStyles.lyrics}>
+                    <PerfectScrollbar className={styles['scrollbar-container']}>
+                      <p dangerouslySetInnerHTML={{ __html: currentSong.lyrics.replace(/\n/g, '<br />') }} />
+                    </PerfectScrollbar>
+                  </div>
+                </div>
+              )}
+              <div className={musicStyles.thumbnail}>
+                {(isLandscape || (!isLandscape && !isLyrics)) && (
+                  <div>
+                    <Image
+                      src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
+                      width={47}
+                      height={47}
+                      alt=""
+                      unoptimized
+                    />
+                  </div>
+                )}
+                {isLandscape ? (
+                  <div className={musicStyles.summary}>
+                    <h2>{currentSong.music}</h2>
+                    <cite>
+                      {currentSong.instrument ? (
+                        <>{currentSong.artist !== null ? currentSong.artist : currentSong.composer}</>
+                      ) : currentSong.cover !== null ? (
+                        <>
+                          {currentSong.cover} 커버 ({currentSong.artist} 원곡)
+                        </>
+                      ) : (
+                        currentSong.artist
+                      )}
+                    </cite>
+                    <dl>
+                      {currentSong.cover !== null && (
                         <div>
-                          <dt>작곡</dt>
+                          <dt>원곡</dt>
+                          <dd>{currentSong.artist}</dd>
+                        </div>
+                      )}
+                      <div>
+                        <dt>수록앨범</dt>
+                        <dd>{currentSong.album}</dd>
+                      </div>
+                      {currentSong.composer === currentSong.lyricist ? (
+                        <div>
+                          <dt>작곡/작사</dt>
                           <dd>{currentSong.composer}</dd>
                         </div>
-                        {currentSong.lyricist !== null && (
+                      ) : (
+                        <>
                           <div>
-                            <dt>작사</dt>
-                            <dd>{currentSong.lyricist}</dd>
+                            <dt>작곡</dt>
+                            <dd>{currentSong.composer}</dd>
                           </div>
-                        )}
-                      </>
+                          {currentSong.lyricist !== null && (
+                            <div>
+                              <dt>작사</dt>
+                              <dd>{currentSong.lyricist}</dd>
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </dl>
+                  </div>
+                ) : (
+                  <div className={musicStyles.controller}>
+                    {!isLyrics && (
+                      <div className={musicStyles.summary}>
+                        <h2>{currentSong.music}</h2>
+                        <cite>
+                          {currentSong.instrument ? (
+                            <>{currentSong.artist !== null ? currentSong.artist : currentSong.composer}</>
+                          ) : currentSong.cover !== null ? (
+                            <>
+                              {currentSong.cover} 커버 ({currentSong.artist} 원곡)
+                            </>
+                          ) : (
+                            currentSong.artist
+                          )}
+                        </cite>
+                        <dl>
+                          {currentSong.cover !== null && (
+                            <div>
+                              <dt>원곡</dt>
+                              <dd>{currentSong.artist}</dd>
+                            </div>
+                          )}
+                          <div>
+                            <dt>수록앨범</dt>
+                            <dd>{currentSong.album}</dd>
+                          </div>
+                          {currentSong.composer === currentSong.lyricist ? (
+                            <div>
+                              <dt>작곡/작사</dt>
+                              <dd>{currentSong.composer}</dd>
+                            </div>
+                          ) : (
+                            <>
+                              <div>
+                                <dt>작곡</dt>
+                                <dd>{currentSong.composer}</dd>
+                              </div>
+                              {currentSong.lyricist !== null && (
+                                <div>
+                                  <dt>작사</dt>
+                                  <dd>{currentSong.lyricist}</dd>
+                                </div>
+                              )}
+                            </>
+                          )}
+                        </dl>
+                      </div>
                     )}
-                  </dl>
-                </div>
+                    <button type="button" className={musicStyles.seekbar} onClick={handleSeekBarClick}>
+                      <span
+                        style={{
+                          width: `${(currentTime / duration) * 100}%`,
+                        }}
+                      />
+                      <em
+                        style={{
+                          left: `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
+                        }}
+                        className={`${(currentTime / duration) * 100 < 5 ? musicStyles.left : ''} ${
+                          (currentTime / duration) * 100 > 95 ? musicStyles.right : ''
+                        }`}
+                      >
+                        <i>{formatTime(currentTime)}</i>
+                      </em>
+                    </button>
+                    <div className={musicStyles.option}>
+                      <div className={musicStyles.lyricsText}>
+                        <button onClick={toggleLyrics} type="button">
+                          {isLyrics ? (
+                            <>
+                              <LyricsEnabledIcon />
+                              <span>가사 숨기기</span>
+                            </>
+                          ) : (
+                            <>
+                              <LyricsDisabledIcon />
+                              <span>가사 보기</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+                      <div className={musicStyles.play}>
+                        <button className={musicStyles['skip-button']} type="button" onClick={onPrevious}>
+                          <PrevIcon />
+                          <span>이전곡 재생</span>
+                        </button>
+                        <button className={musicStyles['play-button']} type="button" onClick={handlePlayPause}>
+                          {isPlaying ? (
+                            <>
+                              <PauseIcon />
+                              <span>일시중지 하기</span>
+                            </>
+                          ) : (
+                            <>
+                              <PlayIcon />
+                              <span>계속재생 하기</span>
+                            </>
+                          )}
+                        </button>
+                        <button className={musicStyles['skip-button']} type="button" onClick={onNext}>
+                          <NextIcon />
+                          <span>다음곡 재생</span>
+                        </button>
+                      </div>
+                      <div className={musicStyles.repeat}>
+                        <button onClick={toggleLoop}>
+                          {isLooping ? (
+                            <>
+                              <RepeatingIcon />
+                              <span>한곡 반복 중</span>
+                            </>
+                          ) : (
+                            <>
+                              <RepeatIcon />
+                              <span>전체 곡 반복 중</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
               <div className={musicStyles.youtube}>
                 <YouTube
@@ -577,92 +1062,94 @@ const Player: React.FC<PlayerProps> = ({
           )}
         </div>
       </div>
-      <div className={musicStyles.player}>
-        <button type="button" className={musicStyles.seekbar} onClick={handleSeekBarClick}>
-          <span
-            style={{
-              width: `${(currentTime / duration) * 100}%`,
-            }}
-          />
-          <em
-            style={{
-              left: `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
-            }}
-            className={`${(currentTime / duration) * 100 < 5 ? musicStyles.left : ''} ${
-              (currentTime / duration) * 100 > 95 ? musicStyles.right : ''
-            }`}
-          >
-            <i>{formatTime(currentTime)}</i>
-          </em>
-        </button>
-        <div className={musicStyles.duration}>{formatTime(duration)}</div>
-        <div className={musicStyles.song}>
-          <div className={musicStyles.cover}>
-            <Image
-              src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
-              width={47}
-              height={47}
-              alt=""
-              unoptimized
+      {(isLandscape || !showPlayer) && (
+        <div className={musicStyles.player}>
+          <button type="button" className={musicStyles.seekbar} onClick={handleSeekBarClick}>
+            <span
+              style={{
+                width: `${(currentTime / duration) * 100}%`,
+              }}
             />
+            <em
+              style={{
+                left: `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
+              }}
+              className={`${(currentTime / duration) * 100 < 5 ? musicStyles.left : ''} ${
+                (currentTime / duration) * 100 > 95 ? musicStyles.right : ''
+              }`}
+            >
+              <i>{formatTime(currentTime)}</i>
+            </em>
+          </button>
+          <div className={musicStyles.duration}>{formatTime(duration)}</div>
+          <div className={musicStyles.song}>
+            <div className={musicStyles.cover}>
+              <Image
+                src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
+                width={47}
+                height={47}
+                alt=""
+                unoptimized
+              />
+            </div>
+            <div className={musicStyles.info}>
+              <strong>
+                {currentSong.music} <span>재생 중</span>
+              </strong>
+              <cite>
+                {currentSong.instrument
+                  ? currentSong.artist !== null
+                    ? currentSong.artist
+                    : currentSong.composer
+                  : currentSong.cover !== null
+                  ? currentSong.cover
+                  : currentSong.artist}
+              </cite>
+            </div>
+            <button onClick={() => setShowPlayer((prev) => !prev)} type="button">
+              <span>{showPlayer ? '플레이어 숨기기' : '플레이어 보기'}</span>
+            </button>
           </div>
-          <div className={musicStyles.info}>
-            <strong>
-              {currentSong.music} <span>재생 중</span>
-            </strong>
-            <cite>
-              {currentSong.instrument
-                ? currentSong.artist !== null
-                  ? currentSong.artist
-                  : currentSong.composer
-                : currentSong.cover !== null
-                ? currentSong.cover
-                : currentSong.artist}
-            </cite>
+          <div className={musicStyles.play}>
+            <button className={musicStyles['skip-button']} type="button" onClick={onPrevious}>
+              <PrevIcon />
+              <span>이전곡 재생</span>
+            </button>
+            <button className={musicStyles['play-button']} type="button" onClick={handlePlayPause}>
+              {isPlaying ? (
+                <>
+                  <PauseIcon />
+                  <span>일시중지 하기</span>
+                </>
+              ) : (
+                <>
+                  <PlayIcon />
+                  <span>계속재생 하기</span>
+                </>
+              )}
+            </button>
+            <button className={musicStyles['skip-button']} type="button" onClick={onNext}>
+              <NextIcon />
+              <span>다음곡 재생</span>
+            </button>
           </div>
-          <button onClick={() => setShowPlayer((prev) => !prev)} type="button">
-            <span>{showPlayer ? '플레이어 숨기기' : '플레이어 보기'}</span>
-          </button>
+          <div className={musicStyles.repeat}>
+            <button onClick={toggleLoop} type="button">
+              {isLooping ? (
+                <>
+                  <RepeatingIcon />
+                  <span>한곡 반복 중</span>
+                </>
+              ) : (
+                <>
+                  <RepeatIcon />
+                  <span>전체 곡 반복 중</span>
+                </>
+              )}
+            </button>
+          </div>
         </div>
-        <div className={musicStyles.play}>
-          <button className={musicStyles['skip-button']} type="button" onClick={onPrevious}>
-            <PrevIcon />
-            <span>이전곡 재생</span>
-          </button>
-          <button className={musicStyles['play-button']} type="button" onClick={handlePlayPause}>
-            {isPlaying ? (
-              <>
-                <PauseIcon />
-                <span>일시중지 하기</span>
-              </>
-            ) : (
-              <>
-                <PlayIcon />
-                <span>계속재생 하기</span>
-              </>
-            )}
-          </button>
-          <button className={musicStyles['skip-button']} type="button" onClick={onNext}>
-            <NextIcon />
-            <span>다음곡 재생</span>
-          </button>
-        </div>
-        <div className={musicStyles.repeat}>
-          <button onClick={toggleLoop}>
-            {isLooping ? (
-              <>
-                <RepeatingIcon />
-                <span>한곡 반복 중</span>
-              </>
-            ) : (
-              <>
-                <RepeatIcon />
-                <span>전체 곡 반복 중</span>
-              </>
-            )}
-          </button>
-        </div>
-      </div>
+      )}
     </div>
   );
 };
@@ -1141,10 +1628,11 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
     );
   }
 
-  const [playMode, setPlayMode] = useState<'one' | 'all'>('one');
+  const [playMode, setPlayMode] = useState<'one' | 'all'>('all');
   const [currentSongId, setCurrentSongId] = useState<string | null>(null);
   const [isLooping, setIsLooping] = useState<boolean>(false);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isLyrics, setIsLyrics] = useState<boolean>(false);
   const playerRef = useRef<any>(null);
 
   const handleSongClick = (id: string) => {
@@ -1186,6 +1674,10 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
 
   const toggleLoop = () => {
     setIsLooping(!isLooping);
+  };
+
+  const toggleLyrics = () => {
+    setIsLyrics(!isLyrics);
   };
 
   const onReady = (event: YouTubeEvent<any>) => {
@@ -1254,25 +1746,6 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
                     <label>
                       <input
                         type="radio"
-                        value="one"
-                        checked={playMode === 'one'}
-                        onChange={() => setPlayMode('one')}
-                      />
-                      {playMode === 'one' ? (
-                        <>
-                          <SelectIcon />
-                          <strong>한곡 재생</strong>
-                        </>
-                      ) : (
-                        <>
-                          <UnselectIcon />
-                          <span>한곡 재생</span>
-                        </>
-                      )}
-                    </label>
-                    <label>
-                      <input
-                        type="radio"
                         value="all"
                         checked={playMode === 'all'}
                         onChange={() => setPlayMode('all')}
@@ -1286,6 +1759,25 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
                         <>
                           <SelectIcon />
                           <strong>전곡 재생</strong>
+                        </>
+                      )}
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        value="one"
+                        checked={playMode === 'one'}
+                        onChange={() => setPlayMode('one')}
+                      />
+                      {playMode === 'one' ? (
+                        <>
+                          <SelectIcon />
+                          <strong>한곡 재생</strong>
+                        </>
+                      ) : (
+                        <>
+                          <UnselectIcon />
+                          <span>한곡 재생</span>
                         </>
                       )}
                     </label>
@@ -1335,6 +1827,8 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
           onNext={handleNext}
           isLooping={isLooping}
           toggleLoop={toggleLoop}
+          toggleLyrics={toggleLyrics}
+          isLyrics={isLyrics}
           handlePlayPauseClick={handlePlayPauseClick}
           isPlaying={isPlaying}
           onReady={onReady}

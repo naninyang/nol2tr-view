@@ -22,6 +22,8 @@ export const images = {
     repeating: require('./misc/repeating.svg'),
     select: require('./misc/select.svg'),
     unselect: require('./misc/unselect.svg'),
+    lyricsEnabled: require('./misc/lyricsEnabled.svg'),
+    lyricsDisabled: require('./misc/lyricsDisabled.svg'),
     error: require('./misc/error.svg'),
     menuLight: require('./misc/menuLight.svg'),
     menuDark: require('./misc/menuDark.svg'),
