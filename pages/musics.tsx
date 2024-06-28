@@ -1124,7 +1124,7 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
             <p>API 서버에 오류가 있습니다. 잠시 후 이용해 주세요.</p>
           ) : (
             <>
-              {ios !== 'isIOS' && (
+              {ios !== 'isIOS' && !loading && (
                 <>
                   <div className={`${musicStyles.control} ${playMode === 'all' ? musicStyles.all : ''}`}>
                     <label>
