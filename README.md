@@ -51,8 +51,6 @@ MS Windows, Apple macOS, Android, iOS, iPadOS 등 대부분의 모던 디바이�
 
 놀이터뷰에서는 광고제안을 받지 않습니다.
 
-기억뉴스상자, 숏뷰뉴스에서 광고제안을 받습니다.
-
 ## 주의사항 및 저작권
 
 이 서비스는 Vercel, AWS 그리고 Google과 관련이 없습니다.

@@ -496,6 +496,30 @@
           padding: rem(32) 0
 
         &.YouTube
+          .background
+            position: absolute
+            top: 0
+            left: 0
+            width: 100%
+            height: 100%
+
+            > div:first-of-type
+              position: absolute
+              aspect-ratio: 1920 / 1080
+              height: 100%
+
+            .dummy
+              position: absolute
+              top: 0
+              left: 0
+              width: 100%
+              height: 100%
+              background-color: rgba($hex-black, .7)
+              backdrop-filter: blur(rem(100))
+
+          div:not(.background)
+            z-index: 2
+
           .youtube
             display: flex
             flex-direction: column
@@ -507,26 +531,34 @@
             +mq(landscape)
               gap: rem(27)
 
-            > div:not(.summary)
-              display: flex
+            .youtube-wrapper
               width: 100%
 
               +mq(landscape)
+                position: relative
                 justify-content: center
                 align-items: flex-end
                 flex-grow: 1
                 width: 90%
                 height: calc(100vh - rem(420))
 
+                > div
+                  position: absolute
+                  top: 50%
+                  left: 50%
+                  width: auto
+                  height: 100%
+                  aspect-ratio: 16 / 9
+                  transform: translate(-50%, -50%)
+
             iframe
               aspect-ratio: 1920 / 1080
+              width: 100%
 
               +mq(landscape)
-                width: 100%
                 height: 100%
 
               +mq(portrait)
-                width: 100%
                 height: auto
 
           .thumbnail
@@ -547,6 +579,12 @@
               width: 100%
               height: 100%
               object-fit: cover
+
+            div:not(.dummy)
+              position: absolute
+              width: 0
+              height: 0
+              overflow: hidden
 
             .dummy
               position: absolute
@@ -601,6 +639,7 @@
                 height: auto
 
         .switching
+          position: relative
           text-align: center
 
           ul
@@ -694,7 +733,7 @@
           background-color: #7F7F7F
           transition: all .4s cubic-bezier(.4,0,.2,1)
 
-        &:hover, &:focus
+        &:hover
           height: rem(12)
 
           &::before
