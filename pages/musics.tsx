@@ -206,8 +206,8 @@ const Player: React.FC<PlayerProps> = ({
         aria-hidden={showPlayer ? undefined : 'true'}
         className={showPlayer ? musicStyles.show : musicStyles.hidden}
       >
-        <div className={`${musicStyles.cover} ${isYouTube ? musicStyles.YouTube : ''}`}>
-          {!isYouTube && (
+        <div className={`${musicStyles.cover} ${isYouTube && currentSong.isMV ? musicStyles.YouTube : ''}`}>
+          {!isYouTube && !currentSong.isMV && (
             <div className={musicStyles.background}>
               <Image
                 src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
@@ -219,7 +219,7 @@ const Player: React.FC<PlayerProps> = ({
               <div className={musicStyles.dummy} />
             </div>
           )}
-          {currentSong.isMV && (
+          {currentSong.isMV ? (
             <>
               <div className={musicStyles.switching}>
                 <ul>
@@ -309,64 +309,144 @@ const Player: React.FC<PlayerProps> = ({
                   </dl>
                 </div>
               </div>
-            </>
-          )}
-          <div className={musicStyles.thumbnail}>
-            <div>
-              <Image
-                src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
-                width={47}
-                height={47}
-                alt=""
-                unoptimized
-              />
-            </div>
-            <div className={musicStyles.summary}>
-              <h2>{currentSong.music}</h2>
-              <cite>
-                {currentSong.instrument ? (
-                  <>{currentSong.artist !== null ? currentSong.artist : currentSong.composer}</>
-                ) : currentSong.cover !== null ? (
-                  <>
-                    {currentSong.cover} 커버 ({currentSong.artist} 원곡)
-                  </>
-                ) : (
-                  currentSong.artist
-                )}
-              </cite>
-              <dl>
-                {currentSong.cover !== null && (
-                  <div>
-                    <dt>원곡</dt>
-                    <dd>{currentSong.artist}</dd>
-                  </div>
-                )}
+              <div className={musicStyles.thumbnail}>
                 <div>
-                  <dt>수록앨범</dt>
-                  <dd>{currentSong.album}</dd>
+                  <Image
+                    src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
+                    width={47}
+                    height={47}
+                    alt=""
+                    unoptimized
+                  />
                 </div>
-                {currentSong.composer === currentSong.lyricist ? (
-                  <div>
-                    <dt>작곡/작사</dt>
-                    <dd>{currentSong.composer}</dd>
-                  </div>
-                ) : (
-                  <>
-                    <div>
-                      <dt>작곡</dt>
-                      <dd>{currentSong.composer}</dd>
-                    </div>
-                    {currentSong.lyricist !== null && (
+                <div className={musicStyles.summary}>
+                  <h2>{currentSong.music}</h2>
+                  <cite>
+                    {currentSong.instrument ? (
+                      <>{currentSong.artist !== null ? currentSong.artist : currentSong.composer}</>
+                    ) : currentSong.cover !== null ? (
+                      <>
+                        {currentSong.cover} 커버 ({currentSong.artist} 원곡)
+                      </>
+                    ) : (
+                      currentSong.artist
+                    )}
+                  </cite>
+                  <dl>
+                    {currentSong.cover !== null && (
                       <div>
-                        <dt>작사</dt>
-                        <dd>{currentSong.lyricist}</dd>
+                        <dt>원곡</dt>
+                        <dd>{currentSong.artist}</dd>
                       </div>
                     )}
-                  </>
-                )}
-              </dl>
-            </div>
-          </div>
+                    <div>
+                      <dt>수록앨범</dt>
+                      <dd>{currentSong.album}</dd>
+                    </div>
+                    {currentSong.composer === currentSong.lyricist ? (
+                      <div>
+                        <dt>작곡/작사</dt>
+                        <dd>{currentSong.composer}</dd>
+                      </div>
+                    ) : (
+                      <>
+                        <div>
+                          <dt>작곡</dt>
+                          <dd>{currentSong.composer}</dd>
+                        </div>
+                        {currentSong.lyricist !== null && (
+                          <div>
+                            <dt>작사</dt>
+                            <dd>{currentSong.lyricist}</dd>
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </dl>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className={musicStyles.thumbnail}>
+                <div>
+                  <Image
+                    src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
+                    width={47}
+                    height={47}
+                    alt=""
+                    unoptimized
+                  />
+                </div>
+                <div className={musicStyles.summary}>
+                  <h2>{currentSong.music}</h2>
+                  <cite>
+                    {currentSong.instrument ? (
+                      <>{currentSong.artist !== null ? currentSong.artist : currentSong.composer}</>
+                    ) : currentSong.cover !== null ? (
+                      <>
+                        {currentSong.cover} 커버 ({currentSong.artist} 원곡)
+                      </>
+                    ) : (
+                      currentSong.artist
+                    )}
+                  </cite>
+                  <dl>
+                    {currentSong.cover !== null && (
+                      <div>
+                        <dt>원곡</dt>
+                        <dd>{currentSong.artist}</dd>
+                      </div>
+                    )}
+                    <div>
+                      <dt>수록앨범</dt>
+                      <dd>{currentSong.album}</dd>
+                    </div>
+                    {currentSong.composer === currentSong.lyricist ? (
+                      <div>
+                        <dt>작곡/작사</dt>
+                        <dd>{currentSong.composer}</dd>
+                      </div>
+                    ) : (
+                      <>
+                        <div>
+                          <dt>작곡</dt>
+                          <dd>{currentSong.composer}</dd>
+                        </div>
+                        {currentSong.lyricist !== null && (
+                          <div>
+                            <dt>작사</dt>
+                            <dd>{currentSong.lyricist}</dd>
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </dl>
+                </div>
+              </div>
+              <div className={musicStyles.youtube}>
+                <YouTube
+                  videoId={currentSong.videoid}
+                  opts={opts}
+                  onReady={(event) => {
+                    onReady(event);
+                    playerRef.current = event.target;
+                    updateCurrentTimeAndDuration();
+                  }}
+                  onEnd={onEnd}
+                  onStateChange={(event: YouTubeEvent<any>) => {
+                    if (event.data === 1) {
+                      handlePlayPauseClick(true, false);
+                    } else if (event.data === 2) {
+                      handlePlayPauseClick(false, false);
+                    } else if (event.data === 0) {
+                      onEnd();
+                    }
+                  }}
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
       <div className={musicStyles.player}>
