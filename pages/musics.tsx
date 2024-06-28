@@ -821,39 +821,43 @@ const Player: React.FC<PlayerProps> = ({
             </>
           ) : (
             <>
-              {!isLandscape && isLyrics && (
-                <div className={musicStyles['music-lyrics']}>
-                  <div className={musicStyles['music-info']}>
-                    <div className={musicStyles['song-cover']}>
-                      <Image
-                        src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
-                        width={47}
-                        height={47}
-                        alt=""
-                        unoptimized
-                      />
+              {!isLandscape && (
+                <>
+                  {isLyrics && (
+                    <div className={musicStyles['music-lyrics']}>
+                      <div className={musicStyles['music-info']}>
+                        <div className={musicStyles['song-cover']}>
+                          <Image
+                            src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
+                            width={47}
+                            height={47}
+                            alt=""
+                            unoptimized
+                          />
+                        </div>
+                        <div className={musicStyles.summary}>
+                          <h2>{currentSong.music}</h2>
+                          <cite>
+                            {currentSong.instrument ? (
+                              <>{currentSong.artist !== null ? currentSong.artist : currentSong.composer}</>
+                            ) : currentSong.cover !== null ? (
+                              <>
+                                {currentSong.cover} 커버 ({currentSong.artist} 원곡)
+                              </>
+                            ) : (
+                              currentSong.artist
+                            )}
+                          </cite>
+                        </div>
+                      </div>
+                      <div className={musicStyles.lyrics}>
+                        <PerfectScrollbar className={styles['scrollbar-container']}>
+                          <p dangerouslySetInnerHTML={{ __html: currentSong.lyrics.replace(/\n/g, '<br />') }} />
+                        </PerfectScrollbar>
+                      </div>
                     </div>
-                    <div className={musicStyles.summary}>
-                      <h2>{currentSong.music}</h2>
-                      <cite>
-                        {currentSong.instrument ? (
-                          <>{currentSong.artist !== null ? currentSong.artist : currentSong.composer}</>
-                        ) : currentSong.cover !== null ? (
-                          <>
-                            {currentSong.cover} 커버 ({currentSong.artist} 원곡)
-                          </>
-                        ) : (
-                          currentSong.artist
-                        )}
-                      </cite>
-                    </div>
-                  </div>
-                  <div className={musicStyles.lyrics}>
-                    <PerfectScrollbar className={styles['scrollbar-container']}>
-                      <p dangerouslySetInnerHTML={{ __html: currentSong.lyrics.replace(/\n/g, '<br />') }} />
-                    </PerfectScrollbar>
-                  </div>
-                </div>
+                  )}
+                </>
               )}
               <div className={musicStyles.thumbnail}>
                 {(isLandscape || (!isLandscape && !isLyrics)) && (
