@@ -827,6 +827,12 @@
                 flex-direction: column
                 padding-top: 0
                 padding-bottom: 0
+                overflow: hidden
+
+                h2, cite
+                  display: block
+                  width: 100%
+                  +ellipsis
 
                 h2
                   font-size: rem(16)
@@ -838,7 +844,7 @@
                   color: $hex-light
 
             .lyrics
-              height: calc(100dvh - rem(296))
+              height: calc(100dvh - rem(296) - env(safe-area-inset-top) - env(safe-area-inset-bottom))
 
               p
                 font-size: rem(24)
@@ -938,10 +944,10 @@
                 color: $hex-black
 
           ~ .music-lyrics
-            height: calc(100dvh - rem(256))
+            height: calc(100dvh - rem(256) - env(safe-area-inset-top) - env(safe-area-inset-bottom))
 
             .lyrics
-              height: calc(100dvh - 355px)
+              height: calc(100dvh - rem(355) - env(safe-area-inset-top) - env(safe-area-inset-bottom))
 
         .controller
           display: flex
@@ -962,19 +968,24 @@
           .summary
             width: 100%
 
+            h2, cite
+              display: block
+              width: 100%
+              +ellipsis
+
             h2
-              font-size: rem(24)
+              font-size: rem(22)
               font-weight: 800
               color: $hex-white
 
             cite
-              font-size: rem(20)
-              color: $hex-white
+              font-size: rem(18)
+              color: $hex-light
 
             dl
               display: flex
               flex-direction: column
-              margin-top: rem(12)
+              margin-top: rem(7)
 
               div
                 display: inline-flex
@@ -1122,7 +1133,7 @@
           flex-direction: column
           justify-content: flex-start
           align-items: flex-start
-          padding-top: rem(52)
+          padding-top: rem(37)
           width: 90%
 
           +mq(landscape)
@@ -1290,17 +1301,36 @@
         .cover, .cover img
           display: block
 
+        .cover
+          width: rem(47)
+
         .info
           display: flex
           flex-direction: column
           justify-content: center
           gap: rem(7)
+          position: relative
+          overflow: hidden
+
+          &::after
+            content: ''
+            position: absolute
+            top: 0
+            right: 0
+            width: rem(57)
+            height: 100%
+            background: linear-gradient(90deg, rgba($hex-dark, 0), $hex-dark 100%)
+
+          strong, cite
+            display: block
+            white-space: nowrap
+            word-break: keep-all
+            word-wrap: break-word
 
           strong
             font-size: rem(16)
             font-weight: 800
             color: $hex-light-subject
-            +line-abbr(1, 16, 1)
 
             span
               +screen-reader-only
@@ -1308,7 +1338,6 @@
           cite
             font-size: rem(14)
             color: $hex-light-summary
-            +line-abbr(1, 14, 1)
 
       .play
         position: absolute
