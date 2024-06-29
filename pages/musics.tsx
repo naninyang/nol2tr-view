@@ -1768,6 +1768,11 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
         <div>
           <p>🎶 놀이터뷰에서 선곡한 곡 목록입니다 🎵</p>
           <p>👉 곡은 가나다 순으로 정렬됩니다 👉</p>
+          {ios === 'isIOS' && (
+            <p className={styles.link}>
+              아이폰/아이패드는 <Anchor href="/musics-ios">여기</Anchor>로 이동하세요!
+            </p>
+          )}
           {musicError ? (
             <p>API 서버에 오류가 있습니다. 잠시 후 이용해 주세요.</p>
           ) : (

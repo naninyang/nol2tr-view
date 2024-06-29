@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { isIOS } from 'react-device-detect';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import YouTube, { YouTubeProps, YouTubeEvent } from 'react-youtube';
 import styled from '@emotion/styled';
@@ -1533,6 +1534,12 @@ const MusicsIOS = ({ musicTotal, musicError }: { musicTotal: number; musicError:
   const [selectedMusicId, setSelectedMusicId] = useState<string | null>(null);
   const [musicsData, setMusicsData] = useState<MusicData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [ios, setIos] = useState<string>();
+  useEffect(() => {
+    if (isIOS) {
+      setIos('isIOS');
+    }
+  }, []);
 
   useEffect(() => {
     const fetchMusicData = async () => {
@@ -1776,6 +1783,11 @@ const MusicsIOS = ({ musicTotal, musicError }: { musicTotal: number; musicError:
         <div>
           <p>🎶 놀이터뷰에서 선곡한 곡 목록입니다 🎵</p>
           <p>👉 곡은 가나다 순으로 정렬됩니다 👉</p>
+          {ios !== 'isIOS' && (
+            <p className={styles.link}>
+              아이폰/아이패드가 아니라면 <Anchor href="/musics">여기</Anchor>로 이동하세요!
+            </p>
+          )}
           {musicError ? (
             <p>API 서버에 오류가 있습니다. 잠시 후 이용해 주세요.</p>
           ) : (

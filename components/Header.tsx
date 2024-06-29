@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { isIOS } from 'react-device-detect';
 import styled from '@emotion/styled';
 import Anchor from './Anchor';
 import { images } from './images';
@@ -389,6 +390,13 @@ export default function Header() {
     setThemeMode(themeMode === 'light' ? 'dark' : 'light');
   };
 
+  const [ios, setIos] = useState<string>();
+  useEffect(() => {
+    if (isIOS) {
+      setIos('isIOS');
+    }
+  }, []);
+
   const [menuState, setMenuState] = useState<'closed' | 'expanding' | 'expanded'>('closed');
 
   const openMenu = () => {
@@ -500,7 +508,7 @@ export default function Header() {
             </Close>
             <ol className="primary">
               <li>
-                <Anchor href="/musics" onClick={closeMenu}>
+                <Anchor href={ios === 'isIOS' ? '/musics-ios' : '/musics'} onClick={closeMenu}>
                   선곡표
                 </Anchor>
               </li>
