@@ -180,7 +180,7 @@ const Player: React.FC<PlayerProps> = ({
     width: 1920,
     height: 1080,
     playerVars: {
-      autoplay: 1 as 0 | 1 | undefined,
+      autoplay: 0 as 0 | 1 | undefined,
       controls: 0,
       modestbranding: 1,
       rel: 0,
@@ -221,6 +221,15 @@ const Player: React.FC<PlayerProps> = ({
 
     return () => clearInterval(interval);
   }, [updateCurrentTimeAndDuration]);
+
+  useEffect(() => {
+    if (playerRef1.current) {
+      playerRef1.current.stopVideo();
+    }
+    if (playerRef2.current) {
+      playerRef2.current.stopVideo();
+    }
+  }, []);
 
   const handleSeekBarClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (!playerRef1.current || !playerRef2.current) return;
@@ -295,6 +304,7 @@ const Player: React.FC<PlayerProps> = ({
                       playerRef2.current = event.target;
                       updateCurrentTimeAndDuration();
                       playerRef2.current.mute();
+                      playerRef2.current.stopVideo();
                     }}
                     onEnd={onEnd}
                     onStateChange={(event: YouTubeEvent<any>) => {
@@ -326,6 +336,7 @@ const Player: React.FC<PlayerProps> = ({
                       playerRef2.current = event.target;
                       updateCurrentTimeAndDuration();
                       playerRef2.current.mute();
+                      playerRef2.current.stopVideo();
                     }}
                     onEnd={onEnd}
                     onStateChange={(event: YouTubeEvent<any>) => {
@@ -359,6 +370,7 @@ const Player: React.FC<PlayerProps> = ({
                   playerRef2.current = event.target;
                   updateCurrentTimeAndDuration();
                   playerRef2.current.mute();
+                  playerRef2.current.stopVideo();
                 }}
                 onEnd={onEnd}
                 onStateChange={(event: YouTubeEvent<any>) => {
@@ -410,6 +422,7 @@ const Player: React.FC<PlayerProps> = ({
                         onReady(event);
                         playerRef1.current = event.target;
                         updateCurrentTimeAndDuration();
+                        playerRef1.current.stopVideo();
                       }}
                       onEnd={onEnd}
                       onStateChange={(event: YouTubeEvent<any>) => {
@@ -803,6 +816,7 @@ const Player: React.FC<PlayerProps> = ({
                         onReady(event);
                         playerRef1.current = event.target;
                         updateCurrentTimeAndDuration();
+                        playerRef1.current.stopVideo();
                       }}
                       onEnd={onEnd}
                       onStateChange={(event: YouTubeEvent<any>) => {
@@ -1049,6 +1063,7 @@ const Player: React.FC<PlayerProps> = ({
                     onReady(event);
                     playerRef1.current = event.target;
                     updateCurrentTimeAndDuration();
+                    playerRef1.current.stopVideo();
                   }}
                   onEnd={onEnd}
                   onStateChange={(event: YouTubeEvent<any>) => {
@@ -1635,7 +1650,7 @@ const MusicsIOS = ({ musicTotal, musicError }: { musicTotal: number; musicError:
 
   const handleSongClick = (id: string) => {
     setCurrentSongId(id);
-    setIsPlaying(true);
+    setIsPlaying(false);
   };
 
   const handleEnd = () => {
@@ -1654,7 +1669,7 @@ const MusicsIOS = ({ musicTotal, musicError }: { musicTotal: number; musicError:
       if (playerRef.current) {
         playerRef.current.loadVideoById(musicsData[newIndex].videoid);
       }
-      setIsPlaying(true);
+      setIsPlaying(false);
     }
   };
 
@@ -1666,7 +1681,7 @@ const MusicsIOS = ({ musicTotal, musicError }: { musicTotal: number; musicError:
       if (playerRef.current) {
         playerRef.current.loadVideoById(musicsData[newIndex].videoid);
       }
-      setIsPlaying(true);
+      setIsPlaying(false);
     }
   };
 
@@ -1780,7 +1795,7 @@ const MusicsIOS = ({ musicTotal, musicError }: { musicTotal: number; musicError:
                       )}
                     </label>
                   </div>
-                  {playMode === 'all' && <p>전곡 재생 선택시 곡을 누르면 자동으로 재생됩니다.</p>}
+                  <p>곡 선택시 자동 재생되지 않습니다. 재생 버튼을 눌러 재생시켜 주세요.</p>
                 </>
               )}
             </>

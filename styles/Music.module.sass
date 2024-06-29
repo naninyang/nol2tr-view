@@ -130,15 +130,12 @@
     display: flex
     justify-content: center
     gap: rem(23)
-    padding: rem(12)
+    padding: rem(12) rem(12) 0
 
-    &.all
-      padding-bottom: 0
-
-      + p
-        padding-bottom: rem(12)
-        font-size: rem(16)
-        font-weight: 800!important
+    + p
+      padding-bottom: rem(12)
+      font-size: rem(16)
+      font-weight: 800!important
 
     label
       display: flex
@@ -487,7 +484,7 @@
 
       .player-close
         position: absolute
-        top: rem(32)
+        top: calc(env(safe-area-inset-top) + rem(32))
         right: rem(32)
         z-index: 77
         width: rem(25)
@@ -516,7 +513,7 @@
         .lyrics
           flex-grow: 1
           z-index: 7
-          padding: rem(52) rem(27) rem(52) 0
+          padding: calc(env(safe-area-inset-top) + rem(52)) calc(env(safe-area-inset-right) + rem(27)) rem(52) 0
 
           p
             font-size: rem(24)
@@ -532,11 +529,11 @@
         display: flex
         flex-direction: column
         gap: rem(27)
-        padding: rem(32) rem(52)
+        padding: calc(env(safe-area-inset-top) + rem(32)) rem(52) rem(32) calc(env(safe-area-inset-left) + rem(52))
         height: calc(100vh - rem(93))
 
         +mq(portrait)
-          padding: rem(32) 0
+          padding: calc(env(safe-area-inset-top) + rem(32)) 0 calc(env(safe-area-inset-bottom) + rem(32))
 
         &.YouTube
           .background
@@ -1055,7 +1052,7 @@
       display: flex
       justify-content: space-between
       width: 100%
-      padding: rem(23)
+      padding: rem(23) calc(env(safe-area-inset-right) + rem(23)) calc(env(safe-area-inset-bottom) + rem(23)) calc(env(safe-area-inset-left) + rem(23))
 
       button
         background-color: transparent
