@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { isIOS } from 'react-device-detect';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import YouTube, { YouTubeProps, YouTubeEvent } from 'react-youtube';
 import styled from '@emotion/styled';
@@ -1502,17 +1501,11 @@ const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
   );
 };
 
-const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: string }) => {
+const MusicsIOS = ({ musicTotal, musicError }: { musicTotal: number; musicError: string }) => {
   const router = useRouter();
   const [selectedMusicId, setSelectedMusicId] = useState<string | null>(null);
   const [musicsData, setMusicsData] = useState<MusicData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [ios, setIos] = useState<string>();
-  useEffect(() => {
-    if (isIOS) {
-      setIos('isIOS');
-    }
-  }, []);
 
   useEffect(() => {
     const fetchMusicData = async () => {
@@ -1760,7 +1753,7 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
             <p>API 서버에 오류가 있습니다. 잠시 후 이용해 주세요.</p>
           ) : (
             <>
-              {ios !== 'isIOS' && !loading && (
+              {!loading && (
                 <>
                   <div className={`${musicStyles.control} ${playMode === 'all' ? musicStyles.all : ''}`}>
                     <label>
@@ -1859,7 +1852,7 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
   );
 };
 
-export default Musics;
+export default MusicsIOS;
 
 export const getServerSideProps: GetServerSideProps = async () => {
   let musicData = null;
