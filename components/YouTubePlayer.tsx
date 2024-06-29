@@ -18,11 +18,7 @@ const YouTubePlayer = ({ videoId, start }: Props) => {
     },
   };
 
-  return (
-    <>
-      <YouTube videoId={videoId} opts={opts} />
-    </>
-  );
+  return <YouTube videoId={videoId} opts={opts} />;
 };
 
 export default YouTubePlayer;

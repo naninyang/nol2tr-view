@@ -435,6 +435,33 @@ const Player: React.FC<PlayerProps> = ({
                         }
                       }}
                     />
+                    {isPlaying ? (
+                      <div className={musicStyles.dummy}>
+                        <button type="button" onClick={handlePlayPause}>
+                          <em>
+                            <PauseIcon />
+                          </em>
+                          <span>영상 재생하기</span>
+                        </button>
+                      </div>
+                    ) : (
+                      <div className={musicStyles.thumbnail}>
+                        <Image
+                          src={`https://i.ytimg.com/vi/${currentSong.videoid}/${currentSong.vvi}.jpg`}
+                          width={640}
+                          height={480}
+                          unoptimized
+                          priority
+                          alt=""
+                        />
+                        <button type="button" onClick={handlePlayPause}>
+                          <em>
+                            <PlayIcon />
+                          </em>
+                          <span>영상 재생하기</span>
+                        </button>
+                      </div>
+                    )}
                   </div>
                   {isLandscape ? (
                     <div className={musicStyles.summary}>
