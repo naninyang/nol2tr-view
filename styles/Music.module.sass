@@ -572,33 +572,55 @@
             gap: rem(27)
 
             +mq(landscape)
-              gap: rem(27)
+              position: relative
+              height: calc(100vh - rem(218))
+
+            +mq(portrait)
+              position: relative
+              height: calc(100vh - rem(91))
 
             .youtube-wrapper
               position: relative
               justify-content: center
               flex-grow: 1
-              width: 90%
               align-items: flex-end
+              width: 90%
 
               > div
                 height: 100%
                 aspect-ratio: 16 / 9
 
               +mq(landscape)
-                height: calc(100vh - rem(420))
+                position: absolute
+                top: 0
+                left: 0
+                display: flex
+                justify-content: center
+                align-items: flex-end
+                width: 100%
+                height: 50%
 
                 > div
                   position: absolute
-                  top: 50%
+                  bottom: 0
                   left: 50%
                   width: auto
-                  transform: translate(-50%, -50%)
+                  transform: translateX(-50%)
 
               +mq(portrait)
-                height: calc(100vh - rem(450))
+                position: absolute
+                top: 0
+                left: 50%
+                transform: translateX(-50%)
+                display: flex
+                justify-content: center
+                align-items: flex-end
+                width: 90%
+                height: 50%
 
                 > div
+                  display: flex
+                  align-items: flex-end
                   width: 100%
                   height: 100%
                   aspect-ratio: 16 / 9
@@ -683,6 +705,7 @@
               .summary
                 display: flex
                 flex-direction: column
+                padding-top: 0
                 padding-bottom: 0
 
                 h2
@@ -695,11 +718,15 @@
                   color: $hex-light
 
             .lyrics
-              max-height: calc(100vh - rem(370))
+              height: calc(100vh - rem(296))
 
               p
                 font-size: rem(24)
                 color: $hex-light
+
+            ~ .thumbnail
+              .controller
+                top: 0!important
 
           .thumbnail
             display: flex
@@ -709,8 +736,14 @@
             flex-grow: 1
             gap: rem(27)
 
+            +mq(landscape)
+              position: relative
+              height: calc(100vh - rem(218))
+
             +mq(portrait)
               justify-content: space-between
+              position: relative
+              height: calc(100vh - rem(91))
 
             > div:not(.summary)
               display: flex
@@ -719,14 +752,23 @@
 
               +mq(landscape)
                 align-items: flex-end
-                padding-top: rem(72)
+                position: absolute
+                top: 0
+                left: 0
                 width: 90%
-                height: calc(100vh - rem(420))
+                height: 50%
 
               +mq(portrait)
-                max-width: 90%
-                width: 100%
-                height: calc(100vh - rem(495))
+                position: absolute
+                top: 0
+                left: 50%
+                transform: translateX(-50%)
+                width: 90%
+                height: 50%
+
+            .controller
+              +mq(portrait)
+                top: 50%!important
 
             img
               aspect-ratio: 1 / 1
@@ -775,11 +817,25 @@
                 background-color: $hex-accent
                 color: $hex-black
 
+          ~ .music-lyrics
+            .lyrics
+              height: calc(100vh - 355px)
+
         .controller
           display: flex
           flex-direction: column
           justify-content: flex-end!important
           width: 90%
+
+          +mq(portrait)
+            position: absolute
+            top: 50%
+            left: 50%
+            transform: translateX(-50%)
+            width: 90%
+
+          +mq(portrait)
+            height: 50%
 
           .summary
             width: 100%
@@ -944,16 +1000,26 @@
           flex-direction: column
           justify-content: flex-start
           align-items: flex-start
-          padding-bottom: rem(52)
+          padding-top: rem(52)
           width: 90%
 
+          +mq(landscape)
+            position: absolute
+            top: 50%
+            left: 0
+            padding-top: rem(52)
+            padding-bottom: 0
+
+          +mq(portrait)
+            flex-grow: 1
+
           h2
-            font-size: rem(20)
+            font-size: rem(32)
             font-weight: 800
             color: $hex-white
 
           cite
-            font-size: rem(16)
+            font-size: rem(24)
             color: $hex-white
 
           dl

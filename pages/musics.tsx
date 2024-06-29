@@ -535,6 +535,7 @@ const Player: React.FC<PlayerProps> = ({
                         </em>
                       </button>
                       <div className={musicStyles.option}>
+                        <div style={{ width: rem(27) }} />
                         <div className={musicStyles.play}>
                           <button className={musicStyles['skip-button']} type="button" onClick={onPrevious}>
                             <PrevIcon />
@@ -579,7 +580,7 @@ const Player: React.FC<PlayerProps> = ({
                 </div>
               ) : (
                 <>
-                  {!isLandscape && isLyrics && (
+                  {!isLandscape && isLyrics && currentSong.lyrics && (
                     <div className={musicStyles['music-lyrics']}>
                       <div className={musicStyles['music-info']}>
                         <div className={musicStyles['song-cover']}>
@@ -614,7 +615,7 @@ const Player: React.FC<PlayerProps> = ({
                     </div>
                   )}
                   <div className={musicStyles.thumbnail}>
-                    {(isLandscape || (!isLandscape && !isLyrics)) && (
+                    {(isLandscape || (!isLandscape && !isLyrics) || !currentSong.lyrics) && (
                       <div>
                         <Image
                           src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
@@ -821,46 +822,42 @@ const Player: React.FC<PlayerProps> = ({
             </>
           ) : (
             <>
-              {!isLandscape && (
-                <>
-                  {isLyrics && (
-                    <div className={musicStyles['music-lyrics']}>
-                      <div className={musicStyles['music-info']}>
-                        <div className={musicStyles['song-cover']}>
-                          <Image
-                            src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
-                            width={47}
-                            height={47}
-                            alt=""
-                            unoptimized
-                          />
-                        </div>
-                        <div className={musicStyles.summary}>
-                          <h2>{currentSong.music}</h2>
-                          <cite>
-                            {currentSong.instrument ? (
-                              <>{currentSong.artist !== null ? currentSong.artist : currentSong.composer}</>
-                            ) : currentSong.cover !== null ? (
-                              <>
-                                {currentSong.cover} 커버 ({currentSong.artist} 원곡)
-                              </>
-                            ) : (
-                              currentSong.artist
-                            )}
-                          </cite>
-                        </div>
-                      </div>
-                      <div className={musicStyles.lyrics}>
-                        <PerfectScrollbar className={styles['scrollbar-container']}>
-                          <p dangerouslySetInnerHTML={{ __html: currentSong.lyrics.replace(/\n/g, '<br />') }} />
-                        </PerfectScrollbar>
-                      </div>
+              {!isLandscape && isLyrics && currentSong.lyrics && (
+                <div className={musicStyles['music-lyrics']}>
+                  <div className={musicStyles['music-info']}>
+                    <div className={musicStyles['song-cover']}>
+                      <Image
+                        src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
+                        width={47}
+                        height={47}
+                        alt=""
+                        unoptimized
+                      />
                     </div>
-                  )}
-                </>
+                    <div className={musicStyles.summary}>
+                      <h2>{currentSong.music}</h2>
+                      <cite>
+                        {currentSong.instrument ? (
+                          <>{currentSong.artist !== null ? currentSong.artist : currentSong.composer}</>
+                        ) : currentSong.cover !== null ? (
+                          <>
+                            {currentSong.cover} 커버 ({currentSong.artist} 원곡)
+                          </>
+                        ) : (
+                          currentSong.artist
+                        )}
+                      </cite>
+                    </div>
+                  </div>
+                  <div className={musicStyles.lyrics}>
+                    <PerfectScrollbar className={styles['scrollbar-container']}>
+                      <p dangerouslySetInnerHTML={{ __html: currentSong.lyrics.replace(/\n/g, '<br />') }} />
+                    </PerfectScrollbar>
+                  </div>
+                </div>
               )}
               <div className={musicStyles.thumbnail}>
-                {(isLandscape || (!isLandscape && !isLyrics)) && (
+                {(isLandscape || (!isLandscape && !isLyrics) || !currentSong.lyrics) && (
                   <div>
                     <Image
                       src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
@@ -919,7 +916,7 @@ const Player: React.FC<PlayerProps> = ({
                   </div>
                 ) : (
                   <div className={musicStyles.controller}>
-                    {!isLyrics && (
+                    {(!isLyrics || !currentSong.lyrics) && (
                       <div className={musicStyles.summary}>
                         <h2>{currentSong.music}</h2>
                         <cite>
@@ -984,21 +981,25 @@ const Player: React.FC<PlayerProps> = ({
                       </em>
                     </button>
                     <div className={musicStyles.option}>
-                      <div className={musicStyles.lyricsText}>
-                        <button onClick={toggleLyrics} type="button">
-                          {isLyrics ? (
-                            <>
-                              <LyricsEnabledIcon />
-                              <span>가사 숨기기</span>
-                            </>
-                          ) : (
-                            <>
-                              <LyricsDisabledIcon />
-                              <span>가사 보기</span>
-                            </>
-                          )}
-                        </button>
-                      </div>
+                      {currentSong.lyrics ? (
+                        <div className={musicStyles.lyricsText}>
+                          <button onClick={toggleLyrics} type="button">
+                            {isLyrics ? (
+                              <>
+                                <LyricsEnabledIcon />
+                                <span>가사 숨기기</span>
+                              </>
+                            ) : (
+                              <>
+                                <LyricsDisabledIcon />
+                                <span>가사 보기</span>
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      ) : (
+                        <div style={{ width: rem(27) }} />
+                      )}
                       <div className={musicStyles.play}>
                         <button className={musicStyles['skip-button']} type="button" onClick={onPrevious}>
                           <PrevIcon />
