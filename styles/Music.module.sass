@@ -553,7 +553,7 @@
         flex-direction: column
         gap: rem(27)
         padding: calc(env(safe-area-inset-top) + rem(32)) rem(52) rem(32) calc(env(safe-area-inset-left) + rem(52))
-        height: calc(100vh - rem(93))
+        height: calc(100dvh - rem(93))
 
         +mq(portrait)
           padding: calc(env(safe-area-inset-top) + rem(32)) 0 calc(env(safe-area-inset-bottom) + rem(32))
@@ -593,11 +593,11 @@
 
             +mq(landscape)
               position: relative
-              height: calc(100vh - rem(218))
+              height: calc(100dvh - rem(218))
 
             +mq(portrait)
               position: relative
-              height: calc(100vh - rem(91))
+              height: calc(100dvh - rem(91))
 
             .youtube-wrapper
               position: relative
@@ -837,7 +837,7 @@
                   color: $hex-light
 
             .lyrics
-              height: calc(100vh - rem(296))
+              height: calc(100dvh - rem(296))
 
               p
                 font-size: rem(24)
@@ -857,12 +857,12 @@
 
             +mq(landscape)
               position: relative
-              height: calc(100vh - rem(218))
+              height: calc(100dvh - rem(218))
 
             +mq(portrait)
               justify-content: space-between
               position: relative
-              height: calc(100vh - rem(91))
+              height: calc(100dvh - rem(91))
 
             > div:not(.summary)
               display: flex
@@ -938,7 +938,7 @@
 
           ~ .music-lyrics
             .lyrics
-              height: calc(100vh - 355px)
+              height: calc(100dvh - 355px)
 
         .controller
           display: flex
