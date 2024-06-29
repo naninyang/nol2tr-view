@@ -223,21 +223,6 @@ const Player: React.FC<PlayerProps> = ({
     return () => clearInterval(interval);
   }, [updateCurrentTimeAndDuration]);
 
-  const attemptPlay = (playerRef: React.RefObject<any>) => {
-    if (playerRef.current && playerRef.current.getPlayerState() !== 1) {
-      playerRef.current.playVideo();
-    }
-  };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      attemptPlay(playerRef1);
-      attemptPlay(playerRef2);
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, [playerRef1, playerRef2]);
-
   const handleSeekBarClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (!playerRef1.current || !playerRef2.current) return;
     const rect = e.currentTarget.getBoundingClientRect();
