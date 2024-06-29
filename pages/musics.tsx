@@ -552,13 +552,16 @@ const Player: React.FC<PlayerProps> = ({
                         />
                         <em
                           style={{
-                            left: `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
+                            left:
+                              duration === 0 || duration === undefined
+                                ? 0
+                                : `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
                           }}
                           className={`${(currentTime / duration) * 100 < 5 ? musicStyles.left : ''} ${
                             (currentTime / duration) * 100 > 95 ? musicStyles.right : ''
                           }`}
                         >
-                          <i>{formatTime(currentTime)}</i>
+                          <i>{duration === 0 || duration === undefined ? '0:00' : formatTime(currentTime)}</i>
                         </em>
                       </button>
                       <div className={musicStyles.option}>
@@ -756,13 +759,16 @@ const Player: React.FC<PlayerProps> = ({
                           />
                           <em
                             style={{
-                              left: `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
+                              left:
+                                duration === 0 || duration === undefined
+                                  ? 0
+                                  : `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
                             }}
                             className={`${(currentTime / duration) * 100 < 5 ? musicStyles.left : ''} ${
                               (currentTime / duration) * 100 > 95 ? musicStyles.right : ''
                             }`}
                           >
-                            <i>{formatTime(currentTime)}</i>
+                            <i>{duration === 0 || duration === undefined ? '0:00' : formatTime(currentTime)}</i>
                           </em>
                         </button>
                         <div className={musicStyles.option}>
@@ -998,13 +1004,16 @@ const Player: React.FC<PlayerProps> = ({
                       />
                       <em
                         style={{
-                          left: `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
+                          left:
+                            duration === 0 || duration === undefined
+                              ? 0
+                              : `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
                         }}
                         className={`${(currentTime / duration) * 100 < 5 ? musicStyles.left : ''} ${
                           (currentTime / duration) * 100 > 95 ? musicStyles.right : ''
                         }`}
                       >
-                        <i>{formatTime(currentTime)}</i>
+                        <i>{duration === 0 || duration === undefined ? '0:00' : formatTime(currentTime)}</i>
                       </em>
                     </button>
                     <div className={musicStyles.option}>
@@ -1104,13 +1113,14 @@ const Player: React.FC<PlayerProps> = ({
             />
             <em
               style={{
-                left: `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
+                left:
+                  duration === 0 || duration === undefined ? 0 : `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
               }}
               className={`${(currentTime / duration) * 100 < 5 ? musicStyles.left : ''} ${
                 (currentTime / duration) * 100 > 95 ? musicStyles.right : ''
               }`}
             >
-              <i>{formatTime(currentTime)}</i>
+              <i>{duration === 0 || duration === undefined ? '0:00' : formatTime(currentTime)}</i>
             </em>
           </button>
           <div className={musicStyles.duration}>{formatTime(duration)}</div>
