@@ -1135,6 +1135,7 @@
           align-items: flex-start
           padding-top: rem(37)
           width: 90%
+          overflow: hidden
 
           +mq(landscape)
             position: absolute
@@ -1145,6 +1146,12 @@
 
           +mq(portrait)
             flex-grow: 1
+
+          h2, cite
+            display: block
+            width: 100%
+            white-space: nowrap
+            +ellipsis
 
           h2
             font-size: rem(32)
@@ -1175,6 +1182,15 @@
                 +col
                 word-break: keep-all
                 word-wrap: break-word
+
+      ~ .player
+        .song
+          .info
+            &::after
+              display: none
+
+            strong, cite
+              +ellipsis
 
     .portrait
       height: 100dvh
