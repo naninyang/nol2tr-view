@@ -557,9 +557,11 @@ const Player: React.FC<PlayerProps> = ({
                                 ? 0
                                 : `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
                           }}
-                          className={`${(currentTime / duration) * 100 < 5 ? musicStyles.left : ''} ${
-                            (currentTime / duration) * 100 > 95 ? musicStyles.right : ''
-                          }`}
+                          className={`${
+                            (currentTime / duration) * 100 < 5 || duration === 0 || duration === undefined
+                              ? musicStyles.left
+                              : ''
+                          } ${(currentTime / duration) * 100 > 95 ? musicStyles.right : ''}`}
                         >
                           <i>{duration === 0 || duration === undefined ? '0:00' : formatTime(currentTime)}</i>
                         </em>
@@ -764,9 +766,11 @@ const Player: React.FC<PlayerProps> = ({
                                   ? 0
                                   : `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
                             }}
-                            className={`${(currentTime / duration) * 100 < 5 ? musicStyles.left : ''} ${
-                              (currentTime / duration) * 100 > 95 ? musicStyles.right : ''
-                            }`}
+                            className={`${
+                              (currentTime / duration) * 100 < 5 || duration === 0 || duration === undefined
+                                ? musicStyles.left
+                                : ''
+                            } ${(currentTime / duration) * 100 > 95 ? musicStyles.right : ''}`}
                           >
                             <i>{duration === 0 || duration === undefined ? '0:00' : formatTime(currentTime)}</i>
                           </em>
@@ -1009,9 +1013,11 @@ const Player: React.FC<PlayerProps> = ({
                               ? 0
                               : `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
                         }}
-                        className={`${(currentTime / duration) * 100 < 5 ? musicStyles.left : ''} ${
-                          (currentTime / duration) * 100 > 95 ? musicStyles.right : ''
-                        }`}
+                        className={`${
+                          (currentTime / duration) * 100 < 5 || duration === 0 || duration === undefined
+                            ? musicStyles.left
+                            : ''
+                        } ${(currentTime / duration) * 100 > 95 ? musicStyles.right : ''}`}
                       >
                         <i>{duration === 0 || duration === undefined ? '0:00' : formatTime(currentTime)}</i>
                       </em>
@@ -1116,9 +1122,9 @@ const Player: React.FC<PlayerProps> = ({
                 left:
                   duration === 0 || duration === undefined ? 0 : `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
               }}
-              className={`${(currentTime / duration) * 100 < 5 ? musicStyles.left : ''} ${
-                (currentTime / duration) * 100 > 95 ? musicStyles.right : ''
-              }`}
+              className={`${
+                (currentTime / duration) * 100 < 5 || duration === 0 || duration === undefined ? musicStyles.left : ''
+              } ${(currentTime / duration) * 100 > 95 ? musicStyles.right : ''}`}
             >
               <i>{duration === 0 || duration === undefined ? '0:00' : formatTime(currentTime)}</i>
             </em>
