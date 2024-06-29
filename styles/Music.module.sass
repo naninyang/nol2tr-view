@@ -1308,17 +1308,16 @@
 
       .play
         position: absolute
-        top: 50%
+        top: rem(21)
         display: flex
         align-items: center
 
         +mq(maxSmall)
           right: rem(62)
-          transform: translateY(-50%)
 
         +mq(minMedium)
           left: 50%
-          transform: translate(-50%, -50%)
+          transform: translateX(-50%)
 
         span
           +screen-reader-only
