@@ -662,9 +662,9 @@ const Player: React.FC<PlayerProps> = ({
                     {(isLandscape || (!isLandscape && !isLyrics) || !currentSong.lyrics) && (
                       <div>
                         <Image
-                          src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
-                          width={47}
-                          height={47}
+                          src={`https://cdn.dev1stud.io/nol2tr/-/${currentSong.videoid}.webp`}
+                          width={720}
+                          height={720}
                           alt=""
                           unoptimized
                         />
@@ -912,9 +912,9 @@ const Player: React.FC<PlayerProps> = ({
                 {(isLandscape || (!isLandscape && !isLyrics) || !currentSong.lyrics) && (
                   <div>
                     <Image
-                      src={`https://cdn.dev1stud.io/nol2tr/_/${currentSong.videoid}.webp`}
-                      width={47}
-                      height={47}
+                      src={`https://cdn.dev1stud.io/nol2tr/-/${currentSong.videoid}.webp`}
+                      width={720}
+                      height={720}
                       alt=""
                       unoptimized
                     />
