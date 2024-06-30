@@ -558,21 +558,22 @@ const Player: React.FC<PlayerProps> = ({
                             width: `${(currentTime / duration) * 100}%`,
                           }}
                         />
-                        <em
-                          style={{
-                            left:
-                              duration === 0 || duration === undefined
-                                ? 0
-                                : `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
-                          }}
-                          className={`${
-                            (currentTime / duration) * 100 < 5 || duration === 0 || duration === undefined
-                              ? musicStyles.left
-                              : ''
-                          } ${(currentTime / duration) * 100 > 95 ? musicStyles.right : ''}`}
-                        >
-                          <i>{duration === 0 || duration === undefined ? '0:00' : formatTime(currentTime)}</i>
-                        </em>
+                        {duration !== undefined && duration > 0 && (
+                          <>
+                            {currentTime < duration - 1 && (
+                              <em
+                                style={{
+                                  left: `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
+                                }}
+                                className={`${(currentTime / duration) * 100 < 5 ? musicStyles.left : ''} ${
+                                  (currentTime / duration) * 100 > 95 ? musicStyles.right : ''
+                                }`}
+                              >
+                                <i>{formatTime(currentTime)}</i>
+                              </em>
+                            )}
+                          </>
+                        )}
                       </button>
                       <div className={musicStyles.option}>
                         {duration !== undefined && duration > 0 && (
@@ -770,21 +771,22 @@ const Player: React.FC<PlayerProps> = ({
                               width: `${(currentTime / duration) * 100}%`,
                             }}
                           />
-                          <em
-                            style={{
-                              left:
-                                duration === 0 || duration === undefined
-                                  ? 0
-                                  : `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
-                            }}
-                            className={`${
-                              (currentTime / duration) * 100 < 5 || duration === 0 || duration === undefined
-                                ? musicStyles.left
-                                : ''
-                            } ${(currentTime / duration) * 100 > 95 ? musicStyles.right : ''}`}
-                          >
-                            <i>{duration === 0 || duration === undefined ? '0:00' : formatTime(currentTime)}</i>
-                          </em>
+                          {duration !== undefined && duration > 0 && (
+                            <>
+                              {currentTime < duration - 1 && (
+                                <em
+                                  style={{
+                                    left: `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
+                                  }}
+                                  className={`${(currentTime / duration) * 100 < 5 ? musicStyles.left : ''} ${
+                                    (currentTime / duration) * 100 > 95 ? musicStyles.right : ''
+                                  }`}
+                                >
+                                  <i>{formatTime(currentTime)}</i>
+                                </em>
+                              )}
+                            </>
+                          )}
                         </button>
                         <div className={musicStyles.option}>
                           {duration !== undefined && duration > 0 && (
@@ -1019,21 +1021,22 @@ const Player: React.FC<PlayerProps> = ({
                           width: `${(currentTime / duration) * 100}%`,
                         }}
                       />
-                      <em
-                        style={{
-                          left:
-                            duration === 0 || duration === undefined
-                              ? 0
-                              : `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
-                        }}
-                        className={`${
-                          (currentTime / duration) * 100 < 5 || duration === 0 || duration === undefined
-                            ? musicStyles.left
-                            : ''
-                        } ${(currentTime / duration) * 100 > 95 ? musicStyles.right : ''}`}
-                      >
-                        <i>{duration === 0 || duration === undefined ? '0:00' : formatTime(currentTime)}</i>
-                      </em>
+                      {duration !== undefined && duration > 0 && (
+                        <>
+                          {currentTime < duration - 1 && (
+                            <em
+                              style={{
+                                left: `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
+                              }}
+                              className={`${(currentTime / duration) * 100 < 5 ? musicStyles.left : ''} ${
+                                (currentTime / duration) * 100 > 95 ? musicStyles.right : ''
+                              }`}
+                            >
+                              <i>{formatTime(currentTime)}</i>
+                            </em>
+                          )}
+                        </>
+                      )}
                     </button>
                     <div className={musicStyles.option}>
                       {duration !== undefined && duration > 0 && (
@@ -1132,17 +1135,22 @@ const Player: React.FC<PlayerProps> = ({
                 width: `${(currentTime / duration) * 100}%`,
               }}
             />
-            <em
-              style={{
-                left:
-                  duration === 0 || duration === undefined ? 0 : `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
-              }}
-              className={`${
-                (currentTime / duration) * 100 < 5 || duration === 0 || duration === undefined ? musicStyles.left : ''
-              } ${(currentTime / duration) * 100 > 95 ? musicStyles.right : ''}`}
-            >
-              {duration !== undefined && duration > 0 && <i>{formatTime(currentTime)}</i>}
-            </em>
+            {duration !== undefined && duration > 0 && (
+              <>
+                {currentTime < duration - 1 && (
+                  <em
+                    style={{
+                      left: `calc(${(currentTime / duration) * 100}% - ${rem(6)})`,
+                    }}
+                    className={`${(currentTime / duration) * 100 < 5 ? musicStyles.left : ''} ${
+                      (currentTime / duration) * 100 > 95 ? musicStyles.right : ''
+                    }`}
+                  >
+                    <i>{formatTime(currentTime)}</i>
+                  </em>
+                )}
+              </>
+            )}
           </button>
           {duration !== undefined && duration > 0 && <div className={musicStyles.duration}>{formatTime(duration)}</div>}
           <div className={musicStyles.song}>
