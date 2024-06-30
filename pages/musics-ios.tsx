@@ -253,6 +253,13 @@ const Player: React.FC<PlayerProps> = ({
     handlePlayPauseClick(!isPlaying, true);
   };
 
+  const handleYouTube = (isYouTube: boolean) => {
+    if (playerRef1.current) playerRef1.current.pauseVideo();
+    if (playerRef2.current) playerRef2.current.pauseVideo();
+    handlePlayPauseClick(false, true);
+    setIsYouTube(isYouTube);
+  };
+
   useEffect(() => {
     const preventScroll = (e: Event) => {
       e.preventDefault();
@@ -392,7 +399,7 @@ const Player: React.FC<PlayerProps> = ({
               <ul>
                 <li>
                   <button
-                    onClick={() => setIsYouTube(false)}
+                    onClick={() => handleYouTube(false)}
                     className={`${isYouTube ? '' : musicStyles.current} ${musicStyles.isNotYouTube}`}
                     type="button"
                   >
@@ -401,7 +408,7 @@ const Player: React.FC<PlayerProps> = ({
                 </li>
                 <li>
                   <button
-                    onClick={() => setIsYouTube(true)}
+                    onClick={() => handleYouTube(true)}
                     className={`${isYouTube ? musicStyles.current : ''} ${musicStyles.isYouTube}`}
                     type="button"
                   >

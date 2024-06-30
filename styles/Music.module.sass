@@ -1299,9 +1299,9 @@
         gap: rem(17)
         max-width: calc(100vw - rem(227))
 
-        +mq(minMedium)
-          max-width: 50%
-          padding-right: rem(126)
+        +mq(landscape)
+          width: 50%
+          padding-right: rem(82)
 
         button
           position: absolute
@@ -1327,6 +1327,7 @@
           gap: rem(5)
           position: relative
           overflow: hidden
+          +col
 
           &::after
             content: ''
@@ -1336,6 +1337,9 @@
             width: rem(57)
             height: 100%
             background: linear-gradient(90deg, rgba($hex-dark, 0), $hex-dark 100%)
+
+            +mq(landscape)
+              width: rem(72)
 
           strong, cite
             display: block
