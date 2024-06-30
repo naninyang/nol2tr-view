@@ -25,7 +25,6 @@ type MusicDetailProps = {
 
 interface PlayerProps {
   currentSong: MusicData;
-  onEnd: () => void;
   onPrevious: () => void;
   onNext: () => void;
   isLooping: boolean;
@@ -34,6 +33,7 @@ interface PlayerProps {
   toggleLyrics: () => void;
   handlePlayPauseClick: (play: boolean, fromButton: boolean) => void;
   isPlaying: boolean;
+  playMode: string;
   onReady: (event: YouTubeEvent<any>) => void;
   onSeek: (time: number) => void;
 }
@@ -165,7 +165,6 @@ const formatTime = (time: number) => {
 
 const Player: React.FC<PlayerProps> = ({
   currentSong,
-  onEnd,
   onPrevious,
   onNext,
   isLooping,
@@ -174,6 +173,7 @@ const Player: React.FC<PlayerProps> = ({
   toggleLyrics,
   handlePlayPauseClick,
   isPlaying,
+  playMode,
   onReady,
   onSeek,
 }) => {
@@ -222,6 +222,18 @@ const Player: React.FC<PlayerProps> = ({
 
     return () => clearInterval(interval);
   }, [updateCurrentTimeAndDuration]);
+
+  const handleEnd = () => {
+    if (isLooping) {
+      if (playerRef1.current) playerRef1.current.seekTo(0);
+      if (playerRef2.current) playerRef2.current.seekTo(0);
+      setCurrentTime(0);
+      playerRef1.current.playVideo();
+      playerRef2.current.playVideo();
+    } else if (playMode === 'all') {
+      onNext();
+    }
+  };
 
   const handleSeekBarClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (!playerRef1.current || !playerRef2.current) return;
@@ -297,14 +309,13 @@ const Player: React.FC<PlayerProps> = ({
                       updateCurrentTimeAndDuration();
                       playerRef2.current.mute();
                     }}
-                    onEnd={onEnd}
                     onStateChange={(event: YouTubeEvent<any>) => {
                       if (event.data === 1) {
                         handlePlayPauseClick(true, false);
                       } else if (event.data === 2) {
                         handlePlayPauseClick(false, false);
                       } else if (event.data === 0) {
-                        onEnd();
+                        handleEnd();
                       }
                     }}
                   />
@@ -328,14 +339,13 @@ const Player: React.FC<PlayerProps> = ({
                       updateCurrentTimeAndDuration();
                       playerRef2.current.mute();
                     }}
-                    onEnd={onEnd}
                     onStateChange={(event: YouTubeEvent<any>) => {
                       if (event.data === 1) {
                         handlePlayPauseClick(true, false);
                       } else if (event.data === 2) {
                         handlePlayPauseClick(false, false);
                       } else if (event.data === 0) {
-                        onEnd();
+                        handleEnd();
                       }
                     }}
                   />
@@ -361,14 +371,13 @@ const Player: React.FC<PlayerProps> = ({
                   updateCurrentTimeAndDuration();
                   playerRef2.current.mute();
                 }}
-                onEnd={onEnd}
                 onStateChange={(event: YouTubeEvent<any>) => {
                   if (event.data === 1) {
                     handlePlayPauseClick(true, false);
                   } else if (event.data === 2) {
                     handlePlayPauseClick(false, false);
                   } else if (event.data === 0) {
-                    onEnd();
+                    handleEnd();
                   }
                 }}
               />
@@ -412,14 +421,13 @@ const Player: React.FC<PlayerProps> = ({
                         playerRef1.current = event.target;
                         updateCurrentTimeAndDuration();
                       }}
-                      onEnd={onEnd}
                       onStateChange={(event: YouTubeEvent<any>) => {
                         if (event.data === 1) {
                           handlePlayPauseClick(true, false);
                         } else if (event.data === 2) {
                           handlePlayPauseClick(false, false);
                         } else if (event.data === 0) {
-                          onEnd();
+                          handleEnd();
                         }
                       }}
                     />
@@ -567,6 +575,9 @@ const Player: React.FC<PlayerProps> = ({
                         </em>
                       </button>
                       <div className={musicStyles.option}>
+                        {duration !== undefined && duration > 0 && (
+                          <div className={musicStyles.duration}>{formatTime(duration)}</div>
+                        )}
                         <div style={{ width: rem(27) }} />
                         <div className={musicStyles.play}>
                           <button className={musicStyles['skip-button']} type="button" onClick={onPrevious}>
@@ -776,6 +787,9 @@ const Player: React.FC<PlayerProps> = ({
                           </em>
                         </button>
                         <div className={musicStyles.option}>
+                          {duration !== undefined && duration > 0 && (
+                            <div className={musicStyles.duration}>{formatTime(duration)}</div>
+                          )}
                           <div className={musicStyles.lyricsText}>
                             <button onClick={toggleLyrics} type="button">
                               {isLyrics ? (
@@ -842,14 +856,13 @@ const Player: React.FC<PlayerProps> = ({
                         playerRef1.current = event.target;
                         updateCurrentTimeAndDuration();
                       }}
-                      onEnd={onEnd}
                       onStateChange={(event: YouTubeEvent<any>) => {
                         if (event.data === 1) {
                           handlePlayPauseClick(true, false);
                         } else if (event.data === 2) {
                           handlePlayPauseClick(false, false);
                         } else if (event.data === 0) {
-                          onEnd();
+                          handleEnd();
                         }
                       }}
                     />
@@ -1023,6 +1036,9 @@ const Player: React.FC<PlayerProps> = ({
                       </em>
                     </button>
                     <div className={musicStyles.option}>
+                      {duration !== undefined && duration > 0 && (
+                        <div className={musicStyles.duration}>{formatTime(duration)}</div>
+                      )}
                       {currentSong.lyrics ? (
                         <div className={musicStyles.lyricsText}>
                           <button onClick={toggleLyrics} type="button">
@@ -1093,14 +1109,13 @@ const Player: React.FC<PlayerProps> = ({
                     playerRef1.current = event.target;
                     updateCurrentTimeAndDuration();
                   }}
-                  onEnd={onEnd}
                   onStateChange={(event: YouTubeEvent<any>) => {
                     if (event.data === 1) {
                       handlePlayPauseClick(true, false);
                     } else if (event.data === 2) {
                       handlePlayPauseClick(false, false);
                     } else if (event.data === 0) {
-                      onEnd();
+                      handleEnd();
                     }
                   }}
                 />
@@ -1126,10 +1141,10 @@ const Player: React.FC<PlayerProps> = ({
                 (currentTime / duration) * 100 < 5 || duration === 0 || duration === undefined ? musicStyles.left : ''
               } ${(currentTime / duration) * 100 > 95 ? musicStyles.right : ''}`}
             >
-              <i>{duration === 0 || duration === undefined ? '0:00' : formatTime(currentTime)}</i>
+              {duration !== undefined && duration > 0 && <i>{formatTime(currentTime)}</i>}
             </em>
           </button>
-          <div className={musicStyles.duration}>{formatTime(duration)}</div>
+          {duration !== undefined && duration > 0 && <div className={musicStyles.duration}>{formatTime(duration)}</div>}
           <div className={musicStyles.song}>
             <div className={musicStyles.cover}>
               <Image
@@ -1688,14 +1703,6 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
     setIsPlaying(true);
   };
 
-  const handleEnd = () => {
-    if (isLooping) {
-      playerRef.current.playVideo();
-    } else if (playMode === 'all') {
-      handleNext();
-    }
-  };
-
   const handlePrevious = () => {
     if (currentSongId !== null) {
       const currentIndex = musicsData.findIndex((music) => music.id === currentSongId);
@@ -1875,9 +1882,9 @@ const Musics = ({ musicTotal, musicError }: { musicTotal: number; musicError: st
       {playMode === 'all' && currentSongId !== null && (
         <Player
           currentSong={musicsData.find((music) => music.id === currentSongId)!}
-          onEnd={handleEnd}
           onPrevious={handlePrevious}
           onNext={handleNext}
+          playMode={playMode}
           isLooping={isLooping}
           toggleLoop={toggleLoop}
           toggleLyrics={toggleLyrics}

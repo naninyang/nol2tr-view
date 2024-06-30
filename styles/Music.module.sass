@@ -1046,7 +1046,7 @@
             em
               position: absolute
               top: 0
-              z-index: 1
+              z-index: 7
               background-color: #EF233C
               border-radius: rem(12)
               width: rem(12)
@@ -1081,7 +1081,16 @@
           .option
             display: flex
             justify-content: space-between
+            position: relative
             padding-top: rem(12)
+
+            .duration
+              position: absolute
+              top: rem(6)
+              right: 0
+              font-size: rem(12)
+              font-weight: 800
+              color: $hex-accent
 
             .lyricsText
               display: flex
@@ -1285,7 +1294,7 @@
 
       .duration
         position: absolute
-        top: rem(17)
+        top: rem(14)
         right: rem(23)
         font-size: rem(12)
         font-weight: 800
@@ -1297,7 +1306,7 @@
         position: relative
         display: flex
         gap: rem(17)
-        max-width: calc(100vw - rem(227))
+        width: calc(100vw - rem(227))
 
         +mq(landscape)
           width: 50%
@@ -1365,10 +1374,10 @@
         display: flex
         align-items: center
 
-        +mq(maxSmall)
+        +mq(portrait)
           right: rem(62)
 
-        +mq(minMedium)
+        +mq(landscape)
           left: 50%
           transform: translateX(-50%)
 
