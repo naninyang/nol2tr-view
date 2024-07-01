@@ -109,13 +109,6 @@ export function useLandscape() {
   return isLandscape;
 }
 
-const [safari, setSafari] = useState<string>();
-useEffect(() => {
-  if (isSafari) {
-    setSafari('isSafari');
-  }
-}, []);
-
 const BackButton = styled.i({
   display: 'block',
   'body[data-theme="dark"] &': {
@@ -205,6 +198,12 @@ const Player: React.FC<PlayerProps> = ({
   const [showPlayer, setShowPlayer] = useState(false);
   const [isYouTube, setIsYouTube] = useState(false);
   const isLandscape = useLandscape();
+  const [safari, setSafari] = useState<string>();
+  useEffect(() => {
+    if (isSafari) {
+      setSafari('isSafari');
+    }
+  }, []);
 
   const updateCurrentTimeAndDuration = useCallback(() => {
     if (playerRef1.current && playerRef1.current.getCurrentTime && playerRef1.current.getDuration) {
