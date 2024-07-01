@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { isIOS } from 'react-device-detect';
+import { isIOS, isSafari } from 'react-device-detect';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import YouTube, { YouTubeProps, YouTubeEvent } from 'react-youtube';
 import styled from '@emotion/styled';
@@ -108,6 +108,13 @@ export function useLandscape() {
   }, [landscape]);
   return isLandscape;
 }
+
+const [safari, setSafari] = useState<string>();
+useEffect(() => {
+  if (isSafari) {
+    setSafari('isSafari');
+  }
+}, []);
 
 const BackButton = styled.i({
   display: 'block',
@@ -290,7 +297,7 @@ const Player: React.FC<PlayerProps> = ({
   }, [showPlayer]);
 
   return (
-    <div className={musicStyles['player-bar']}>
+    <div className={`${musicStyles['player-bar']} ${safari === 'isSafari' ? musicStyles.isSafari : ''}`}>
       <div
         tabIndex={showPlayer ? undefined : -1}
         aria-hidden={showPlayer ? undefined : 'true'}
