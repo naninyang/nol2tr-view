@@ -475,6 +475,11 @@
     z-index: 7777
     width: 100%
 
+    &.isSafari
+      .seekbar
+        em
+          transition: none!important
+
     .hidden
       +screen-reader-only
 
