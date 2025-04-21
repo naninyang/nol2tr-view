@@ -23,7 +23,7 @@
       "@/utils/*": ["utils/*"],
       "@/types/*": ["types/*"]
     },
-    "types": ["jest", "@types/gtag.js", "cypress", "@cypress/react"]
+    "types": ["jest", "@types/gtag.js"]
   },
   "include": [
     "next-env.d.ts",
