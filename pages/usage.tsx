@@ -208,7 +208,7 @@ export default function Usage() {
           <section className={styles.interview}>
             <div className={styles.preview} aria-hidden>
               <img src="https://i.ytimg.com/vi_webp/nrH4sJ4iCuY/hqdefault.webp" alt="" />
-              <span>"나를 알고 싶어 그린다"…화가로 돌아온 배우 박신양.</span>
+              <span>&quot;나를 알고 싶어 그린다&quot;…화가로 돌아온 배우 박신양.</span>
               <p className={styles.summary}>
                 &quot;나를 알고 싶어 그림을 그린다.&quot; 믿고 보는 배우에서 화가로 변신한 박신양 씨를 뉴스룸에
                 모셨습니다.
