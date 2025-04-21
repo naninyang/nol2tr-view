@@ -244,7 +244,7 @@ export default function Usage() {
           <section className={styles.newsic}>
             <div className={styles.preview} aria-hidden>
               <img src="https://i.ytimg.com/vi_webp/Gj-RVyiVZlE/hqdefault.webp" alt="" />
-              <span>"지금 방학이라 올 건데"…앵커도 그만 울어버린 순간.</span>
+              <span>&quot;지금 방학이라 올 건데&quot;…앵커도 그만 울어버린 순간.</span>
               <p className={styles.summary}>
                 &quot;최윤종 살인 사건&quot; 유족 &quot;내 딸 왜 안 오냐&quot; 절규. &quot;성폭행 살인&quot; 최윤종,
                 검거 직후 &quot;너무 빨리 잡혔다&quot; 혼잣말해.
@@ -295,8 +295,8 @@ export default function Usage() {
               <span>
                 아이폰, 아이패드에서는 사파리에서 <i />를 누르신 뒤,
               </span>{' '}
-              <span>'홈 화면에 추가'를 누르시고</span>{' '}
-              <span>맥의 사파리에서는 '파일' 메뉴 &gt; 'Dock에 추가'를 누르세요.</span>
+              <span>&apos;홈 화면에 추가&apos;를 누르시고</span>{' '}
+              <span>맥의 사파리에서는 &apos;파일&apos; 메뉴 &gt; &apos;Dock에 추가&apos;를 누르세요.</span>
             </p>
           </Apple>
         )}
