@@ -34,16 +34,6 @@
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^8.6.12",
-    "@storybook/addon-interactions": "^8.6.12",
-    "@storybook/addon-links": "^8.6.12",
-    "@storybook/addon-onboarding": "^8.6.12",
-    "@storybook/blocks": "^8.6.12",
-    "@storybook/jest": "^0.2.3",
-    "@storybook/nextjs": "^8.6.12",
-    "@storybook/react": "^8.6.12",
-    "@storybook/test-runner": "^0.22.0",
-    "@storybook/testing-library": "^0.2.2",
     "@svgr/webpack": "^8.1.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
