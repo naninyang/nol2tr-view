@@ -4,11 +4,11 @@ import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { NoticeData } from 'types';
 import Seo, { originTitle } from '@/components/Seo';
-import Anchor from '@/components/Anchor';
 import content from '@/styles/Content.module.sass';
 import styles from '@/styles/Pages.module.sass';
 import notice from '@/styles/Notice.module.sass';
 import { ArrowBackDark, ArrowBackLight } from '@/components/images';
+import Link from 'next/link';
 
 interface NoticeProps {
   notices: NoticeData[];
@@ -71,12 +71,12 @@ const Notices: NextPage<NoticeProps> = ({ notices }) => {
               .filter((notice) => notice.platform === 'nol2tr')
               .map((notice) => (
                 <li key={notice.idx}>
-                  <Anchor key={notice.idx} href={`/notices/${notice.idx}`} scroll={false} shallow={true}>
+                  <Link key={notice.idx} href={`/notices/${notice.idx}`} scroll={false} shallow={true}>
                     <strong>
                       <span>{notice.subject}</span>
                     </strong>
                     <time>{notice.created}</time>
-                  </Anchor>
+                  </Link>
                 </li>
               ))}
           </ul>
