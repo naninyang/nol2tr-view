@@ -1,16 +1,7 @@
-import Document, { Head, Main, NextScript, DocumentContext, DocumentInitialProps, Html } from 'next/document';
+import { Html, Head, Main, NextScript } from 'next/document';
 import { GA_TRACKING_ID } from '@/lib/gtag';
 
-import { extractCritical } from '@emotion/server';
-
-interface DocumentProps extends DocumentInitialProps {
-  css: string;
-  ids: string[];
-}
-
-const Nol2trDocument: React.FC<DocumentProps> & {
-  getInitialProps: (ctx: DocumentContext) => Promise<DocumentProps>;
-} = ({ css, ids, ...props }) => {
+export default function Document() {
   return (
     <Html lang="ko-KR">
       <Head>
@@ -156,7 +147,6 @@ const Nol2trDocument: React.FC<DocumentProps> & {
             __html: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '${GA_TRACKING_ID}', { page_path: window.location.pathname });`,
           }}
         />
-        <style data-emotion-css={ids.join(' ')} dangerouslySetInnerHTML={{ __html: css }} />
       </Head>
       <body>
         <Main />
@@ -164,20 +154,4 @@ const Nol2trDocument: React.FC<DocumentProps> & {
       </body>
     </Html>
   );
-};
-
-Nol2trDocument.getInitialProps = async (ctx) => {
-  const { renderPage } = ctx;
-  const page = await renderPage((App) => {
-    return function (props) {
-      return <App {...props} />;
-    };
-  });
-
-  const { css, ids } = extractCritical(page.html);
-  const initialProps = await Document.getInitialProps(ctx);
-
-  return { ...initialProps, ...page, css, ids };
-};
-
-export default Nol2trDocument;
+}

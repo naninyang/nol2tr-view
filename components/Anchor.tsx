@@ -1,14 +1,12 @@
 import Link from 'next/link';
 
-interface AnchorProps {
+interface Props extends React.HTMLAttributes<HTMLAnchorElement> {
   href: string;
-  children: React.ReactNode;
-  [key: string]: any;
 }
 
 const domainRegex = /http[s]*:\/\/[www.]*domain\.com[/]?/;
 
-const Anchor: React.FC<AnchorProps> = ({ href, children, ...rest }) => {
+export default function Anchor({ href, ...rest }: Props) {
   const sameDomain = domainRegex.test(href);
   let h = href;
   if (sameDomain) {
@@ -16,26 +14,12 @@ const Anchor: React.FC<AnchorProps> = ({ href, children, ...rest }) => {
   }
 
   if (href.startsWith('/')) {
-    return (
-      <Link href={h} {...rest}>
-        {children}
-      </Link>
-    );
+    return <Link href={h} {...rest} />;
   }
 
   if (!h.startsWith('http')) {
-    return (
-      <a href={h} {...rest}>
-        {children}
-      </a>
-    );
+    return <a href={h} {...rest} />;
   }
 
-  return (
-    <a href={h} target="_blank" rel="noopener noreferrer nofollow" {...rest}>
-      {children}
-    </a>
-  );
-};
-
-export default Anchor;
+  return <a href={h} target="_blank" rel="noopener noreferrer nofollow" {...rest} />;
+}

@@ -210,7 +210,8 @@ export default function Usage() {
               <img src="https://i.ytimg.com/vi_webp/nrH4sJ4iCuY/hqdefault.webp" alt="" />
               <span>"나를 알고 싶어 그린다"…화가로 돌아온 배우 박신양.</span>
               <p className={styles.summary}>
-                '나를 알고 싶어 그림을 그린다.' 믿고 보는 배우에서 화가로 변신한 박신양 씨를 뉴스룸에 모셨습니다.
+                &quot;나를 알고 싶어 그림을 그린다.&quot; 믿고 보는 배우에서 화가로 변신한 박신양 씨를 뉴스룸에
+                모셨습니다.
               </p>
               <dl>
                 <div>
@@ -245,8 +246,8 @@ export default function Usage() {
               <img src="https://i.ytimg.com/vi_webp/Gj-RVyiVZlE/hqdefault.webp" alt="" />
               <span>"지금 방학이라 올 건데"…앵커도 그만 울어버린 순간.</span>
               <p className={styles.summary}>
-                '최윤종 살인 사건' 유족 "내 딸 왜 안 오냐" 절규. '성폭행 살인' 최윤종, 검거 직후 "너무 빨리 잡혔다"
-                혼잣말해.
+                &quot;최윤종 살인 사건&quot; 유족 &quot;내 딸 왜 안 오냐&quot; 절규. &quot;성폭행 살인&quot; 최윤종,
+                검거 직후 &quot;너무 빨리 잡혔다&quot; 혼잣말해.
               </p>
               <p className={styles.recommended}>김영옥 (원곡: 임형주). 천개의 바람이 되어 (원작: A Thousand Winds).</p>
             </div>

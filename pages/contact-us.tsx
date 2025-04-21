@@ -16,7 +16,7 @@ const BackButton = styled.i({
   },
 });
 
-function ContactForm() {
+export default function ContactForm() {
   const router = useRouter();
   const [formData, setFormData] = useState({
     subject: '',
@@ -155,5 +155,3 @@ function ContactForm() {
     </main>
   );
 }
-
-export default ContactForm;

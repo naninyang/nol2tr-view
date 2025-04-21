@@ -181,7 +181,7 @@ const formatTime = (time: number) => {
   return `${minutes}:${seconds}`;
 };
 
-const Player: React.FC<PlayerProps> = ({
+const Player = ({
   currentSong,
   onPrevious,
   onNext,
@@ -194,7 +194,7 @@ const Player: React.FC<PlayerProps> = ({
   playMode,
   onReady,
   onSeek,
-}) => {
+}: PlayerProps) => {
   const opts: YouTubeProps['opts'] = {
     width: 1920,
     height: 1080,
@@ -1249,7 +1249,7 @@ const Player: React.FC<PlayerProps> = ({
   );
 };
 
-const MusicDetail: React.FC<MusicDetailProps> = ({ music, onClose }) => {
+const MusicDetail = ({ music, onClose }: MusicDetailProps) => {
   const [infoVisible, setInfoVisible] = useState<boolean>(false);
   const [infoText, setInfoText] = useState<string>('정보 보기');
   const [lyricsVisible, setLyricsVisible] = useState<boolean>(false);

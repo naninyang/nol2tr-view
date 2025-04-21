@@ -35,7 +35,7 @@ const YTmusicIcon = styled.i({
   background: `url(${MiscMusic.src}) no-repeat 50% 50%/contain`,
 });
 
-export default function articleDetail({
+export default function ArticleDetail({
   articleData,
   musicData,
 }: {
