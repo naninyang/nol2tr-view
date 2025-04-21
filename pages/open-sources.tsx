@@ -3,17 +3,17 @@ import fs from 'fs';
 import path from 'path';
 import styled from '@emotion/styled';
 import Seo, { originTitle } from '@/components/Seo';
-import { images } from '@/components/images';
 import content from '@/styles/Content.module.sass';
 import styles from '@/styles/Open.module.sass';
+import { ArrowBackDark, ArrowBackLight } from '@/components/images';
 
 const BackButton = styled.i({
   display: 'block',
   'body[data-theme="dark"] &': {
-    background: `url(${images.arrow.backLight}) no-repeat 50% 50%/contain`,
+    background: `url(${ArrowBackLight.src}) no-repeat 50% 50%/contain`,
   },
   'body &, body[data-theme="light"] &': {
-    background: `url(${images.arrow.backDark}) no-repeat 50% 50%/contain`,
+    background: `url(${ArrowBackDark.src}) no-repeat 50% 50%/contain`,
   },
 });
 

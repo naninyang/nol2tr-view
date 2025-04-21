@@ -1,8 +1,6 @@
-@import './designSystem'
-
 .notices
   margin: 0 auto
-  max-width: rem(720)
+  max-width: ds.rem(720)
   width: 100%
 
   ul
@@ -16,7 +14,7 @@
         display: flex
         justify-content: space-between
         align-items: center
-        padding: rem(7) 0
+        padding: ds.rem(7) 0
 
         strong
           position: relative
@@ -29,72 +27,72 @@
             left: 0
             width: 0
             height: 100%
-            border-radius: rem(7)
+            border-radius: ds.rem(7)
             background-color: var(--default-bg)
             transition: all .4s cubic-bezier(.4,0,.2,1)
 
           span
             display: inline-flex
             position: relative
-            padding: rem(7) rem(17)
-            font-size: rem(16)
+            padding: ds.rem(7) ds.rem(17)
+            font-size: ds.rem(16)
             color: var(--txt-subject)
             transition: all .4s cubic-bezier(.4,0,.2,1)
 
         &:focus, &:hover
           strong
             &::before
-              background-color: $hex-accent
+              background-color: ds.$hex-accent
               width: 100%
 
             span
-              color: $hex-white
+              color: ds.$hex-white
 
         time
-          font-size: rem(14)
+          font-size: ds.rem(14)
           white-space: nowrap
           color: var(--txt-summary)
 
 .notice
   article
     margin: 0 auto
-    padding: 0 rem(15)
-    max-width: rem(720)
+    padding: 0 ds.rem(15)
+    max-width: ds.rem(720)
     width: 100%
 
     header
-      padding: rem(17) 0
+      padding: ds.rem(17) 0
 
       h2
-        font-size: rem(24)
+        font-size: ds.rem(24)
         line-height: 1.16666667
         color: var(--txt-subject)
 
       time
-        font-size: rem(14)
+        font-size: ds.rem(14)
         color: var(--txt-blockquote)
 
     .description
-      padding: rem(27) 0
+      padding: ds.rem(27) 0
       color: var(--txt-summary)
 
       p
-        margin: rem(7) 0
+        margin: ds.rem(7) 0
 
       p, li
-        font-size: rem(14)
+        font-size: ds.rem(14)
         font-weight: 400
         line-height: 1.375
 
-        +mq(minSmall)
-          font-size: rem(16)
+        +ds.mq(minSmall)
+          font-size: ds.rem(16)
 
       ol, ul
-        margin: rem(7) 0 rem(7) rem(16)
-        padding-left: rem(16)
+        margin: ds.rem(7) 0 ds.rem(7) ds.rem(16)
+        padding-left: ds.rem(16)
 
         li
-          margin: rem(3) 0
+          margin: ds.rem(3) 0
 
       ol
         list-style-type: decimal
@@ -103,5 +101,5 @@
         list-style-type: disc
 
       a
-        color: $hex-accent
+        color: ds.$hex-accent
         text-decoration: underline

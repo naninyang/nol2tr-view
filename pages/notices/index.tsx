@@ -5,10 +5,10 @@ import styled from '@emotion/styled';
 import { NoticeData } from 'types';
 import Seo, { originTitle } from '@/components/Seo';
 import Anchor from '@/components/Anchor';
-import { images } from '@/components/images';
 import content from '@/styles/Content.module.sass';
 import styles from '@/styles/Pages.module.sass';
 import notice from '@/styles/Notice.module.sass';
+import { ArrowBackDark, ArrowBackLight } from '@/components/images';
 
 interface NoticeProps {
   notices: NoticeData[];
@@ -17,10 +17,10 @@ interface NoticeProps {
 const BackButton = styled.i({
   display: 'block',
   'body[data-theme="dark"] &': {
-    background: `url(${images.arrow.backLight}) no-repeat 50% 50%/contain`,
+    background: `url(${ArrowBackLight.src}) no-repeat 50% 50%/contain`,
   },
   'body &, body[data-theme="light"] &': {
-    background: `url(${images.arrow.backDark}) no-repeat 50% 50%/contain`,
+    background: `url(${ArrowBackDark.src}) no-repeat 50% 50%/contain`,
   },
 });
 

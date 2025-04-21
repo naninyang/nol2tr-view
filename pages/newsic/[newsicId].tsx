@@ -6,33 +6,33 @@ import { formatDate } from '@/utils/strapi';
 import Seo, { originTitle } from '@/components/Seo';
 import YouTubeController from '@/components/YouTubeController';
 import Anchor from '@/components/Anchor';
-import { images } from '@/components/images';
 import ReportVideo from '@/components/Report';
 import styled from '@emotion/styled';
 import styles from '@/styles/Article.module.sass';
 import { DescriptionContent } from '@/components/Description';
+import { ArrowBackDark, ArrowBackLight, MiscMusic, MiscShareDark, MiscShareLight } from '@/components/images';
 
 const BackButton = styled.i({
   display: 'block',
   'body[data-theme="dark"] &': {
-    background: `url(${images.arrow.backLight}) no-repeat 50% 50%/contain`,
+    background: `url(${ArrowBackLight.src}) no-repeat 50% 50%/contain`,
   },
   'body &, body[data-theme="light"] &': {
-    background: `url(${images.arrow.backDark}) no-repeat 50% 50%/contain`,
+    background: `url(${ArrowBackDark.src}) no-repeat 50% 50%/contain`,
   },
 });
 
 const ClipboardIcon = styled.i({
   'body[data-theme="dark"] &': {
-    background: `url(${images.misc.shareLight}) no-repeat 50% 50%/contain`,
+    background: `url(${MiscShareLight.src}) no-repeat 50% 50%/contain`,
   },
   'body &, body[data-theme="light"] &': {
-    background: `url(${images.misc.shareDark}) no-repeat 50% 50%/contain`,
+    background: `url(${MiscShareDark.src}) no-repeat 50% 50%/contain`,
   },
 });
 
 const YTmusicIcon = styled.i({
-  background: `url(${images.misc.music}) no-repeat 50% 50%/contain`,
+  background: `url(${MiscMusic.src}) no-repeat 50% 50%/contain`,
 });
 
 export default function articleDetail({

@@ -1,32 +1,39 @@
 import { hex, rem, mixIn, mq } from '@/styles/designSystem';
 import styled from '@emotion/styled';
 import Anchor from './Anchor';
-import { images } from './images';
+import {
+  ServicesDev1studioDark,
+  ServicesDev1studioLight,
+  ServicesGithubDark,
+  ServicesGithubLight,
+  ServicesStudioDark,
+  ServicesStudioLight,
+} from './images';
 
 const Dev1studio = styled.i({
   'body[data-theme="dark"] &': {
-    background: `url(${images.services.dev1studioLight}) no-repeat 50% 50%/contain`,
+    background: `url(${ServicesDev1studioLight.src}) no-repeat 50% 50%/contain`,
   },
   'body &, body[data-theme="light"] &': {
-    background: `url(${images.services.dev1studioDark}) no-repeat 50% 50%/contain`,
+    background: `url(${ServicesDev1studioDark.src}) no-repeat 50% 50%/contain`,
   },
 });
 
 const Github = styled.i({
   'body[data-theme="dark"] &': {
-    background: `url(${images.services.githubLight}) no-repeat 50% 50%/contain`,
+    background: `url(${ServicesGithubLight.src}) no-repeat 50% 50%/contain`,
   },
   'body &, body[data-theme="light"] &': {
-    background: `url(${images.services.githubDark}) no-repeat 50% 50%/contain`,
+    background: `url(${ServicesGithubDark.src}) no-repeat 50% 50%/contain`,
   },
 });
 
 const Studio = styled.i({
   'body[data-theme="dark"] &': {
-    background: `url(${images.services.studioLight}) no-repeat 50% 50%/contain`,
+    background: `url(${ServicesStudioLight.src}) no-repeat 50% 50%/contain`,
   },
   'body &, body[data-theme="light"] &': {
-    background: `url(${images.services.studioDark}) no-repeat 50% 50%/contain`,
+    background: `url(${ServicesStudioDark.src}) no-repeat 50% 50%/contain`,
   },
 });
 

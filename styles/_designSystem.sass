@@ -109,7 +109,7 @@ $hex-dark-background: #272829
   display: -webkit-box
   -webkit-box-orient: vertical
   -webkit-line-clamp: #{$clamp}
-  max-height: #{$height / 16}rem
+  max-height: math.div($height, 16)
   line-height: #{$lineheight}
 
 @function rem($pixelToRem)

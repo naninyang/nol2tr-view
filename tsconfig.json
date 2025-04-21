@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -17,20 +17,22 @@
     "baseUrl": ".",
     "paths": {
       "@/components/*": ["components/*"],
-      "@/images/*": ["components/images/*"],
       "@/pages/*": ["pages/*"],
       "@/styles/*": ["styles/*"],
       "@/lib/*": ["lib/*"],
       "@/utils/*": ["utils/*"],
       "@/types/*": ["types/*"]
     },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
     "types": ["jest", "@types/gtag.js"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "server.js"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "server.js",
+    "svgr.d.ts",
+    "types/svg.d.ts"
+  ],
   "exclude": ["node_modules"]
 }

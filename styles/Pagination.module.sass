@@ -1,58 +1,56 @@
-@import './designSystem'
-
 .pagination
   display: flex
   justify-content: flex-end
-  gap: rem(7)
+  gap: ds.rem(7)
   width: 100%
-  padding: rem(27) rem(12) rem(57)
+  padding: ds.rem(27) ds.rem(12) ds.rem(57)
 
-  +mq(minSmall)
+  +ds.mq(minSmall)
     justify-content: center
-    padding: rem(27) 0 rem(57)
+    padding: ds.rem(27) 0 ds.rem(57)
 
   .pager, .pages
     a
       display: inline-flex
       justify-content: center
       align-items: center
-      border-radius: rem(3)
-      width: rem(30)
-      height: rem(30)
-      font-size: rem(12)
+      border-radius: ds.rem(3)
+      width: ds.rem(30)
+      height: ds.rem(30)
+      font-size: ds.rem(12)
       transition: all .4s cubic-bezier(.4,0,.2,1)
 
       body[data-theme="dark"] &
-        border: 1px solid $hex-white
-        color: $hex-white
+        border: 1px solid ds.$hex-white
+        color: ds.$hex-white
 
       body &, body[data-theme="light"] &
-        border: 1px solid $hex-black
-        color: $hex-black
+        border: 1px solid ds.$hex-black
+        color: ds.$hex-black
 
       &:hover, &:focus
-        border: 1px solid $hex-accent
-        background-color: $hex-accent
+        border: 1px solid ds.$hex-accent
+        background-color: ds.$hex-accent
         font-weight: 900
 
         body[data-theme="dark"] &
-          color: $hex-black
+          color: ds.$hex-black
 
         body &, body[data-theme="light"] &
-          color: $hex-white
+          color: ds.$hex-white
 
   .pager span
-    +screen-reader-only
+    +ds.screen-reader-only
 
   .pages
     &.current
       a
-        border: 1px solid $hex-accent
-        background-color: $hex-accent
+        border: 1px solid ds.$hex-accent
+        background-color: ds.$hex-accent
         font-weight: 900
 
         body[data-theme="dark"] &
-          color: $hex-black
+          color: ds.$hex-black
 
         body &, body[data-theme="light"] &
-          color: $hex-white
+          color: ds.$hex-white

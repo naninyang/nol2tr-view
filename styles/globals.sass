@@ -1,11 +1,9 @@
-@import './designSystem'
-
 *, ::before, ::after
   box-sizing: border-box
 
 \::selection
-  background-color: $hex-accent
-  color: $hex-white
+  background-color: ds.$hex-accent
+  color: ds.$hex-white
 
 html
   font-size: 16px
@@ -29,44 +27,44 @@ body, pre, input, button, textarea, select
   -webkit-font-smoothing: antialiased
 
 body[data-theme="dark"]
-  --txt-subject: #{$hex-light-subject}
-  --txt-summary: #{$hex-light-summary}
-  --txt-blockquote: #{$hex-white}
-  --bg-primary: #{$hex-dark-summary}
-  --bg-secondary: #{$hex-dark-background}
-  --border: #{$hex-dark-border}
+  --txt-subject: #{ds.$hex-light-subject}
+  --txt-summary: #{ds.$hex-light-summary}
+  --txt-blockquote: #{ds.$hex-white}
+  --bg-primary: #{ds.$hex-dark-summary}
+  --bg-secondary: #{ds.$hex-dark-background}
+  --border: #{ds.$hex-dark-border}
   --bg-primary-opacity: rgba(0, 0, 0, .7)
   --bg-reverse-opacity: rgba(255, 255, 255, .7)
-  --default-text: #{$hex-white}
-  --default-bg: #{$hex-black}
+  --default-text: #{ds.$hex-white}
+  --default-bg: #{ds.$hex-black}
   --default-bg-rgba: rgba(0, 0, 0, 1)
 
 body, body[data-theme="light"]
-  --txt-subject: #{$hex-dark-subject}
-  --txt-summary: #{$hex-dark-summary}
-  --txt-blockquote: #{$hex-black}
-  --bg-primary: #{$hex-light-summary}
-  --bg-secondary: #{$hex-light-background}
-  --border: #{$hex-light-border}
+  --txt-subject: #{ds.$hex-dark-subject}
+  --txt-summary: #{ds.$hex-dark-summary}
+  --txt-blockquote: #{ds.$hex-black}
+  --bg-primary: #{ds.$hex-light-summary}
+  --bg-secondary: #{ds.$hex-light-background}
+  --border: #{ds.$hex-light-border}
   --bg-primary-opacity: rgba(255, 255, 255, .7)
   --bg-reverse-opacity: rgba(0, 0, 0, .7)
-  --default-text: #{$hex-black}
-  --default-bg: #{$hex-white}
+  --default-text: #{ds.$hex-black}
+  --default-bg: #{ds.$hex-white}
   --default-bg-rgba: rgb(255, 255, 255, 1)
 
 body
   background-color: var(--default-bg)
 
 main
-  margin-top: calc(env(safe-area-inset-top) + rem(50))
-  margin-bottom: calc(env(safe-area-inset-top) + rem(50))
+  margin-top: calc(env(safe-area-inset-top) + ds.rem(50))
+  margin-bottom: calc(env(safe-area-inset-top) + ds.rem(50))
 
 h1, h2, h3, h4, h5, h6
   margin-top: 0
   margin-bottom: 0
 
 img
-  +image-rendering
+  +ds.image-rendering
 
 a
   text-decoration: none
@@ -123,8 +121,8 @@ iframe
 
 .top-link
   position: fixed
-  top: calc(env(safe-area-inset-top) + rem(10))
-  left: calc(env(safe-area-inset-left) + rem(25))
+  top: calc(env(safe-area-inset-top) + ds.rem(10))
+  left: calc(env(safe-area-inset-left) + ds.rem(25))
   z-index: 1050
 
   a, button
@@ -132,41 +130,41 @@ iframe
     transition: border .4s cubic-bezier(.4,0,.2,1)
     display: inline-flex
     align-items: center
-    gap: rem(5)
-    padding: 0 rem(5)
-    height: rem(30)
+    gap: ds.rem(5)
+    padding: 0 ds.rem(5)
+    height: ds.rem(30)
 
     i
       transition: transform .4s cubic-bezier(.4,0,.2,1)
-      width: rem(18)
-      height: rem(18)
+      width: ds.rem(18)
+      height: ds.rem(18)
 
     span
       transition: color .4s cubic-bezier(.4,0,.2,1)
-      font-size: rem(14)
+      font-size: ds.rem(14)
       line-height: 1
       color: var(--txt-summary)
 
-      +mq(maxExtraSmall)
-        +screen-reader-only
+      +ds.mq(maxExtraSmall)
+        +ds.screen-reader-only
 
     &:hover, &:focus
       i
-        transform: translateX(rem(-5))
+        transform: translateX(ds.rem(-5))
 
       span
         color: var(--default-text)
 
 .slick-slider
-  border-radius: rem(12)
+  border-radius: ds.rem(12)
   overflow: hidden
 
   .slick-track
     .slick-slide
       width: 100%
 
-      +mq(minSmall)
-        padding: 0 rem(12)
+      +ds.mq(minSmall)
+        padding: 0 ds.rem(12)
         width: 72%
 
       > div > div
@@ -175,5 +173,5 @@ iframe
       > div > div, a
         aspect-ratio: 590 / 478
 
-        +mq(minSmall)
+        +ds.mq(minSmall)
           aspect-ratio: 1180 / 325

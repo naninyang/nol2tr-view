@@ -3,8 +3,30 @@ import { useRouter } from 'next/router';
 import { isIOS } from 'react-device-detect';
 import styled from '@emotion/styled';
 import Anchor from './Anchor';
-import { images } from './images';
 import { hex, mixIn, rem } from '@/styles/designSystem';
+import {
+  HomeDownloadDefaultAfter,
+  HomeDownloadDefaultBefore,
+  HomeDownloadHoverAfter,
+  HomeDownloadHoverBefore,
+  LogoDark,
+  Logolight,
+  MiscClose,
+  MiscMenuDark,
+  MiscMenuLight,
+  ModeDarkNighttime,
+  ModeLightDaytime,
+  ServicesDev1studioDark,
+  ServicesDev1studioLight,
+  ServicesDevelogDark,
+  ServicesDevelogLight,
+  ServicesGithubDark,
+  ServicesGithubLight,
+  ServicesStudioDark,
+  ServicesStudioLight,
+  ServicesVelogDark,
+  ServicesVelogLight,
+} from './images';
 
 const Container = styled.header({
   backgroundColor: 'var(--bg-primary-opacity)',
@@ -29,7 +51,7 @@ const ThemeChangeButton = styled.button<{ themeMode?: boolean }>(({ themeMode })
   backgroundRepeat: 'no-repeat',
   backgroundPosition: '50% 50%',
   backgroundSize: `${rem(20)} ${rem(20)}`,
-  backgroundImage: themeMode ? `url(${images.mode.dark.nighttime})` : `url(${images.mode.light.daytime})`,
+  backgroundImage: themeMode ? `url(${ModeDarkNighttime.src})` : `url(${ModeLightDaytime.src})`,
 }));
 
 const Primary = styled.div({
@@ -43,10 +65,10 @@ const Primary = styled.div({
       width: rem(77),
       height: rem(30),
       'body[data-theme="dark"] &': {
-        background: `url(${images.logo.light}) no-repeat 50% 50%/contain`,
+        background: `url(${Logolight.src}) no-repeat 50% 50%/contain`,
       },
       'body &, body[data-theme="light"] &': {
-        background: `url(${images.logo.dark}) no-repeat 50% 50%/contain`,
+        background: `url(${LogoDark.src}) no-repeat 50% 50%/contain`,
       },
       '& span': {
         ...mixIn.screenReaderOnly,
@@ -88,10 +110,10 @@ const MenuButton = styled.button({
     width: rem(25),
     height: rem(25),
     'body[data-theme="dark"] &': {
-      background: `url(${images.misc.menuLight}) no-repeat 50% 50%/contain`,
+      background: `url(${MiscMenuLight.src}) no-repeat 50% 50%/contain`,
     },
     'body &, body[data-theme="light"] &': {
-      background: `url(${images.misc.menuDark}) no-repeat 50% 50%/contain`,
+      background: `url(${MiscMenuDark.src}) no-repeat 50% 50%/contain`,
     },
   },
   '& span': {
@@ -202,31 +224,31 @@ const MenuContainer = styled.div({
           color: hex.white,
         },
         '& .before': {
-          background: `url(${images.home.downloadDefaultBefore}) no-repeat 50% 50%/contain`,
+          background: `url(${HomeDownloadDefaultBefore.src}) no-repeat 50% 50%/contain`,
         },
         '&:hover, &:focus': {
           '& .before': {
-            background: `url(${images.home.downloadHoverBefore}) no-repeat 50% 50%/contain`,
+            background: `url(${HomeDownloadHoverBefore.src}) no-repeat 50% 50%/contain`,
           },
         },
         '&.before': {
           '& .after': {
-            background: `url(${images.home.downloadDefaultAfter}) no-repeat 50% 50%/contain`,
+            background: `url(${HomeDownloadDefaultAfter.src}) no-repeat 50% 50%/contain`,
           },
           '&:hover, &:focus': {
             '& .after': {
-              background: `url(${images.home.downloadHoverAfter}) no-repeat 50% 50%/contain`,
+              background: `url(${HomeDownloadHoverAfter.src}) no-repeat 50% 50%/contain`,
             },
           },
         },
         '&.after': {
           '& .after': {
             top: rem(-5),
-            background: `url(${images.home.downloadDefaultAfter}) no-repeat 50% 50%/contain`,
+            background: `url(${HomeDownloadDefaultAfter.src}) no-repeat 50% 50%/contain`,
           },
           '&:hover, &:focus': {
             '& .after': {
-              background: `url(${images.home.downloadHoverAfter}) no-repeat 50% 50%/contain`,
+              background: `url(${HomeDownloadHoverAfter.src}) no-repeat 50% 50%/contain`,
             },
           },
         },
@@ -304,7 +326,7 @@ const Close = styled.div({
     width: rem(30),
     height: rem(30),
     '& i': {
-      background: `url(${images.misc.close}) no-repeat 50% 50%/contain`,
+      background: `url(${MiscClose.src}) no-repeat 50% 50%/contain`,
       display: 'inline-block',
       width: rem(27),
       height: rem(27),
@@ -317,46 +339,46 @@ const Close = styled.div({
 
 const Develog = styled.i({
   'body[data-theme="dark"] &': {
-    background: `url(${images.services.develogLight}) no-repeat 50% 50%/contain`,
+    background: `url(${ServicesDevelogLight.src}) no-repeat 50% 50%/contain`,
   },
   'body &, body[data-theme="light"] &': {
-    background: `url(${images.services.develogDark}) no-repeat 50% 50%/contain`,
+    background: `url(${ServicesDevelogDark.src}) no-repeat 50% 50%/contain`,
   },
 });
 
 const Velog = styled.i({
   'body[data-theme="dark"] &': {
-    background: `url(${images.services.velogLight}) no-repeat 50% 50%/contain`,
+    background: `url(${ServicesVelogLight.src}) no-repeat 50% 50%/contain`,
   },
   'body &, body[data-theme="light"] &': {
-    background: `url(${images.services.velogDark}) no-repeat 50% 50%/contain`,
+    background: `url(${ServicesVelogDark.src}) no-repeat 50% 50%/contain`,
   },
 });
 
 const Dev1studio = styled.i({
   'body[data-theme="dark"] &': {
-    background: `url(${images.services.dev1studioLight}) no-repeat 50% 50%/contain`,
+    background: `url(${ServicesDev1studioLight.src}) no-repeat 50% 50%/contain`,
   },
   'body &, body[data-theme="light"] &': {
-    background: `url(${images.services.dev1studioDark}) no-repeat 50% 50%/contain`,
+    background: `url(${ServicesDev1studioDark.src}) no-repeat 50% 50%/contain`,
   },
 });
 
 const Github = styled.i({
   'body[data-theme="dark"] &': {
-    background: `url(${images.services.githubLight}) no-repeat 50% 50%/contain`,
+    background: `url(${ServicesGithubLight.src}) no-repeat 50% 50%/contain`,
   },
   'body &, body[data-theme="light"] &': {
-    background: `url(${images.services.githubDark}) no-repeat 50% 50%/contain`,
+    background: `url(${ServicesGithubDark.src}) no-repeat 50% 50%/contain`,
   },
 });
 
 const Studio = styled.i({
   'body[data-theme="dark"] &': {
-    background: `url(${images.services.studioLight}) no-repeat 50% 50%/contain`,
+    background: `url(${ServicesStudioLight.src}) no-repeat 50% 50%/contain`,
   },
   'body &, body[data-theme="light"] &': {
-    background: `url(${images.services.studioDark}) no-repeat 50% 50%/contain`,
+    background: `url(${ServicesStudioDark.src}) no-repeat 50% 50%/contain`,
   },
 });
 

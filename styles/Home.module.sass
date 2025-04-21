@@ -1,47 +1,45 @@
-@import './designSystem'
-
 .home
-  padding: 0 calc(env(safe-area-inset-right) + rem(15)) 0 calc(env(safe-area-inset-left) + rem(15))
-  min-height: calc(100dvh - rem(50))
-  font-size: rem(16)
+  padding: 0 calc(env(safe-area-inset-right) + ds.rem(15)) 0 calc(env(safe-area-inset-left) + ds.rem(15))
+  min-height: calc(100dvh - ds.rem(50))
+  font-size: ds.rem(16)
 
-  +mq(minLarge)
-    padding: 0 calc(env(safe-area-inset-right) + rem(25)) 0 calc(env(safe-area-inset-left) + rem(25))
+  +ds.mq(minLarge)
+    padding: 0 calc(env(safe-area-inset-right) + ds.rem(25)) 0 calc(env(safe-area-inset-left) + ds.rem(25))
 
   .error
     display: flex
     justify-content: center
     align-items: center
-    gap: rem(15)
-    margin-bottom: rem(71)
-    min-height: calc(100dvh - rem(50))
+    gap: ds.rem(15)
+    margin-bottom: ds.rem(71)
+    min-height: calc(100dvh - ds.rem(50))
     font-weight: 700
-    color: $hex-accent
+    color: ds.$hex-accent
     text-align: center
 
     button
       background: none
       text-decoration: underline
-      color: $hex-accent
+      color: ds.$hex-accent
 
   .article-content
     position: relative
     min-height: 100dvh
     background-color: var(--default-bg)
     transition: all .4s cubic-bezier(.4,0,.2,1)
-    padding-top: rem(25)
+    padding-top: ds.rem(25)
 
     .banner
       position: relative
-      margin-bottom: rem(52)
+      margin-bottom: ds.rem(52)
 
       a
         position: relative
         display: block
         overflow: hidden
-        border-radius: rem(12)
+        border-radius: ds.rem(12)
 
-        +mq(maxExtraSmall)
+        +ds.mq(maxExtraSmall)
           aspect-ratio: 590 / 478
 
         &.ltr
@@ -62,88 +60,88 @@
           display: flex
           flex-direction: column
           justify-content: center
-          gap: rem(3)
-          padding: 0 rem(50)
+          gap: ds.rem(3)
+          padding: 0 ds.rem(50)
 
-          +mq(maxExtraSmall)
-            gap: rem(12)
-            bottom: rem(12)
+          +ds.mq(maxExtraSmall)
+            gap: ds.rem(12)
+            bottom: ds.rem(12)
             padding: 0
 
-          +mq(minSmall)
+          +ds.mq(minSmall)
             top: 0
-            gap: rem(7)
+            gap: ds.rem(7)
             width: 48.89%
-            padding: rem(23)
+            padding: ds.rem(23)
 
-          +mq(minLarge)
-            padding: rem(37)
-            gap: rem(12)
+          +ds.mq(minLarge)
+            padding: ds.rem(37)
+            gap: ds.rem(12)
 
           p
-            font-size: rem(16)
+            font-size: ds.rem(16)
             font-weight: 800
             line-height: 1.27
             letter-spacing: -.07em
-            +line-abbr(1, 25, 1.27)
+            +ds.line-abbr(1, 25, 1.27)
 
-            +mq(maxExtraSmall)
-              font-size: rem(18)
+            +ds.mq(maxExtraSmall)
+              font-size: ds.rem(18)
               color: var(--txt-subject)
 
-            +mq(minMedium)
-              font-size: rem(20)
+            +ds.mq(minMedium)
+              font-size: ds.rem(20)
               letter-spacing: -.05em
-              +line-abbr(2, 50, 1.27)
+              +ds.line-abbr(2, 50, 1.27)
 
-            +mq(minLarge)
-              font-size: rem(24)
-              +line-abbr(2, 58, 1.27)
+            +ds.mq(minLarge)
+              font-size: ds.rem(24)
+              +ds.line-abbr(2, 58, 1.27)
 
           .tail
             display: flex
             flex-direction: column
-            gap: rem(7)
+            gap: ds.rem(7)
 
           em
-            font-size: rem(14)
+            font-size: ds.rem(14)
             font-style: normal
             font-weight: 500
             line-height: 1.27
-            +line-abbr(2, 42, 1.27)
+            +ds.line-abbr(2, 42, 1.27)
 
-            +mq(maxExtraSmall)
-              font-size: rem(14)
+            +ds.mq(maxExtraSmall)
+              font-size: ds.rem(14)
               color: var(--txt-summary)
-              +line-abbr(1, 21, 1.27)
+              +ds.line-abbr(1, 21, 1.27)
 
-            +mq(minLarge)
-              font-size: rem(16)
-              +line-abbr(2, 42, 1.27)
+            +ds.mq(minLarge)
+              font-size: ds.rem(16)
+              +ds.line-abbr(2, 42, 1.27)
 
           dl
             display: flex
             flex-direction: column
-            gap: rem(5)
+            gap: ds.rem(5)
 
-            +mq(maxSmall)
+            +ds.mq(maxSmall)
               display: none
 
             div
               display: flex
-              gap: rem(7)
+              gap: ds.rem(7)
 
             dt, dd
-              font-size: rem(12)
+              font-size: ds.rem(12)
               line-height: 1
 
-              +mq(minSmall)
+              +ds.mq(minSmall)
 
-              +mq(minMedium)
+              +ds.mq(minMedium)
 
-              +mq(minLarge)
-                font-size: rem(14)
-                +line-abbr(2, 48, 1)
+              +ds.mq(minLarge)
+                font-size: ds.rem(14)
+                +ds.line-abbr(2, 48, 1)
 
         .nol2tr
           position: absolute
@@ -151,7 +149,7 @@
           display: flex
           width: 100%
 
-          +mq(maxExtraSmall)
+          +ds.mq(maxExtraSmall)
             flex-direction: column
             aspect-ratio: 545 / 191
 
@@ -161,7 +159,7 @@
               &:nth-of-type(1)
                 aspect-ratio: 545 / 57
 
-          +mq(minSmall)
+          +ds.mq(minSmall)
             top: 0
             width: 68.98%
 
@@ -174,159 +172,159 @@
 
       .paging
         position: absolute
-        bottom: rem(-37)
+        bottom: ds.rem(-37)
         left: 50%
         transform: translateX(-50%)
         display: flex
         align-items: center
 
         .stat
-          margin-right: rem(12)
+          margin-right: ds.rem(12)
           background-color: transparent
-          width: rem(22)
-          height: rem(23)
+          width: ds.rem(22)
+          height: ds.rem(23)
 
-          +mq(minSmall)
-            width: rem(32)
-            height: rem(32)
+          +ds.mq(minSmall)
+            width: ds.rem(32)
+            height: ds.rem(32)
 
           i
             display: inline-block
-            width: rem(23)
-            height: rem(22)
+            width: ds.rem(23)
+            height: ds.rem(22)
 
-            +mq(minSmall)
-              width: rem(32)
-              height: rem(32)
+            +ds.mq(minSmall)
+              width: ds.rem(32)
+              height: ds.rem(32)
 
           span
-            +screen-reader-only
+            +ds.screen-reader-only
 
         .pager
           display: flex
           justify-content: center
           align-items: center
           background-color: transparent
-          width: rem(23)
-          height: rem(23)
+          width: ds.rem(23)
+          height: ds.rem(23)
 
-          +mq(minSmall)
-            width: rem(32)
-            height: rem(32)
+          +ds.mq(minSmall)
+            width: ds.rem(32)
+            height: ds.rem(32)
 
           &.active
             i
               opacity: 1
-              width: rem(23)
+              width: ds.rem(23)
 
-              +mq(minSmall)
-                width: rem(32)
+              +ds.mq(minSmall)
+                width: ds.rem(32)
 
           i
             display: block
             opacity: .27
             transition: all .5s cubic-bezier(.4,0,.2,1)
-            border-radius: rem(3)
-            width: rem(7)
-            height: rem(7)
+            border-radius: ds.rem(3)
+            width: ds.rem(7)
+            height: ds.rem(7)
 
             body[data-theme="dark"] &
-              background-color: $hex-light
+              background-color: ds.$hex-light
 
             body[data-theme="light"] &
-              background-color: $hex-dark
+              background-color: ds.$hex-dark
 
-            +mq(minSmall)
-              border-radius: rem(6)
-              width: rem(12)
-              height: rem(12)
+            +ds.mq(minSmall)
+              border-radius: ds.rem(6)
+              width: ds.rem(12)
+              height: ds.rem(12)
 
           span
-            +screen-reader-only
+            +ds.screen-reader-only
 
       .move
         background-color: transparent
         position: absolute
-        bottom: rem(-37)
-        height: rem(23)
+        bottom: ds.rem(-37)
+        height: ds.rem(23)
 
-        +mq(minSmall)
+        +ds.mq(minSmall)
           top: 0
           width: 13.4%
           height: 100%
 
         i
           display: inline-block
-          width: rem(23)
-          height: rem(23)
+          width: ds.rem(23)
+          height: ds.rem(23)
 
-          +mq(minSmall)
-            width: rem(72)
-            height: rem(72)
+          +ds.mq(minSmall)
+            width: ds.rem(72)
+            height: ds.rem(72)
 
-          +mq(minLarge)
-            width: rem(102)
-            height: rem(102)
+          +ds.mq(minLarge)
+            width: ds.rem(102)
+            height: ds.rem(102)
 
         span
-          +screen-reader-only
+          +ds.screen-reader-only
 
         &.prev
           left: 0
 
-          +mq(minSmall)
+          +ds.mq(minSmall)
             body[data-theme="dark"] &
-              background: linear-gradient(270deg, rgba($hex-black, .5) 0%, rgba($hex-black, 1) 100%)
+              background: linear-gradient(270deg, rgba(ds.$hex-black, .5) 0%, rgba(ds.$hex-black, 1) 100%)
 
             body[data-theme="light"] &
-              background: linear-gradient(270deg, rgba($hex-white, .5) 0%, rgba($hex-white, 1) 100%)
+              background: linear-gradient(270deg, rgba(ds.$hex-white, .5) 0%, rgba(ds.$hex-white, 1) 100%)
 
         &.next
           right: 0
 
-          +mq(minSmall)
+          +ds.mq(minSmall)
             body[data-theme="dark"] &
-              background: linear-gradient(-270deg, rgba($hex-black, .5) 0%, rgba($hex-black, 1) 100%)
+              background: linear-gradient(-270deg, rgba(ds.$hex-black, .5) 0%, rgba(ds.$hex-black, 1) 100%)
 
             body[data-theme="light"] &
-              background: linear-gradient(-270deg, rgba($hex-white, .5) 0%, rgba($hex-white, 1) 100%)
+              background: linear-gradient(-270deg, rgba(ds.$hex-white, .5) 0%, rgba(ds.$hex-white, 1) 100%)
 
     section
-      padding-top: rem(27)
+      padding-top: ds.rem(27)
 
     .headline
       display: flex
-      gap: rem(7)
+      gap: ds.rem(7)
       align-items: center
-      padding-bottom: rem(12)
+      padding-bottom: ds.rem(12)
 
-      +mq(maxExtraSmall)
+      +ds.mq(maxExtraSmall)
         justify-content: space-between
 
       > a
         display: flex
 
         span
-          +screen-reader-only
+          +ds.screen-reader-only
 
         i
           display: inline-block
-          width: rem(25)
-          height: rem(25)
+          width: ds.rem(25)
+          height: ds.rem(25)
 
     h2
       a
         display: flex
         align-items: center
-        gap: rem(3)
-        font-size: rem(20)
+        gap: ds.rem(3)
+        font-size: ds.rem(20)
         font-weight: 800
         color: var(--txt-summary)
 
       i
         display: inline-block
-        width: rem(25)
-        height: rem(25)
+        width: ds.rem(25)
+        height: ds.rem(25)
 
       span
         line-height: 1
@@ -334,16 +332,16 @@
   .article-list
     display: flex
     flex-wrap: wrap
-    gap: rem(27)
+    gap: ds.rem(27)
     padding: 0
     width: 100%
 
-    +mq(minLarge)
+    +ds.mq(minLarge)
       article
         &:nth-of-type(4)
           display: none
 
-    +mq(minExtraLarge)
+    +ds.mq(minExtraLarge)
       article
         &:nth-of-type(4)
           display: flex
@@ -361,27 +359,27 @@
   article, .article
     display: flex
     flex-direction: column
-    gap: rem(12)
+    gap: ds.rem(12)
     overflow: hidden
-    padding-bottom: rem(27)
+    padding-bottom: ds.rem(27)
 
-    +mq(maxExtraSmall)
+    +ds.mq(maxExtraSmall)
       width: 100%
 
-    +mq(minSmall)
-      width: calc(50% - rem(21))
+    +ds.mq(minSmall)
+      width: calc(50% - ds.rem(21))
 
-    +mq(minLarge)
-      width: calc(33.33% - rem(21))
+    +ds.mq(minLarge)
+      width: calc(33.33% - ds.rem(21))
 
-    +mq(minExtraLarge)
-      width: calc(25% - rem(21))
+    +ds.mq(minExtraLarge)
+      width: calc(25% - ds.rem(21))
 
   .article
     .fake
       display: flex
       flex-direction: column
-      gap: rem(12)
+      gap: ds.rem(12)
 
       i
         display: block
@@ -392,50 +390,50 @@
 
       .headline
         width: 100%
-        height: rem(25)
+        height: ds.rem(25)
 
-        +mq(minLarge)
-          height: rem(20)
+        +ds.mq(minLarge)
+          height: ds.rem(20)
 
       .paragraph
         width: 100%
-        height: rem(20)
+        height: ds.rem(20)
 
       .dl
         display: inline-flex
         flex-direction: column
-        gap: rem(2)
+        gap: ds.rem(2)
 
-        +mq(minLarge)
-          gap: rem(3)
+        +ds.mq(minLarge)
+          gap: ds.rem(3)
 
         div
-          width: rem(172)
-          height: rem(21)
+          width: ds.rem(172)
+          height: ds.rem(21)
 
       .music
-        width: rem(122)
-        height: rem(27)
+        width: ds.rem(122)
+        height: ds.rem(27)
 
   article
     a
       display: flex
       flex-direction: column
-      gap: rem(12)
+      gap: ds.rem(12)
 
       &:hover, &:focus
         h3
           text-decoration: underline
-          color: $hex-accent
+          color: ds.$hex-accent
 
     h3
       padding: 0
-      font-size: rem(16)
+      font-size: ds.rem(16)
       color: var(--default-text)
       line-height: 1.25
 
-      +mq(minLarge)
-        font-size: rem(20)
+      +ds.mq(minLarge)
+        font-size: ds.rem(20)
 
     img
       display: block
@@ -447,18 +445,18 @@
     .people
       display: inline-flex
       flex-direction: column
-      gap: rem(2)
+      gap: ds.rem(2)
       padding: 0
 
-      +mq(minLarge)
-        gap: rem(3)
+      +ds.mq(minLarge)
+        gap: ds.rem(3)
 
       div
         display: inline-flex
-        gap: rem(7)
+        gap: ds.rem(7)
 
         dt, dd
-          font-size: rem(14)
+          font-size: ds.rem(14)
           color: var(--txt-summary)
 
         dd
@@ -467,7 +465,7 @@
     .recommended
       display: flex
       align-items: center
-      gap: rem(7)
+      gap: ds.rem(7)
 
       dt
         i
@@ -477,23 +475,23 @@
             content: '🎵'
 
         span
-          +screen-reader-only
+          +ds.screen-reader-only
 
       dd
-        font-size: rem(12)
+        font-size: ds.rem(12)
         color: var(--txt-summary)
         line-height: 1.33333333
 
-        +mq(minLarge)
-          font-size: rem(14)
+        +ds.mq(minLarge)
+          font-size: ds.rem(14)
 
     .summary
-      font-size: rem(14)
+      font-size: ds.rem(14)
       color: var(--txt-subject)
       line-height: 1.25
 
-      +mq(minLarge)
-        font-size: rem(16)
+      +ds.mq(minLarge)
+        font-size: ds.rem(16)
 
 @keyframes loading
   0%

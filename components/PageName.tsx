@@ -1,7 +1,14 @@
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { mq, rem } from '@/styles/designSystem';
-import { images } from './images';
+import {
+  TabInterviewDefaultDark,
+  TabInterviewDefaultLight,
+  TabNewsicDefaultDark,
+  TabNewsicDefaultLight,
+  TabPlaylistDefaultDark,
+  TabPlaylistDefaultLight,
+} from './images';
 
 interface Props {
   pageName: string;
@@ -26,26 +33,26 @@ const Container = styled.h2({
     height: rem(25),
     '&[data-page="/interviews"]': {
       'body[data-theme="dark"] &': {
-        background: `url(${images.tab.interview.defaultLight}) no-repeat 50% 50%/contain`,
+        background: `url(${TabInterviewDefaultLight.src}) no-repeat 50% 50%/contain`,
       },
       'body &, body[data-theme="light"] &': {
-        background: `url(${images.tab.interview.defaultDark}) no-repeat 50% 50%/contain`,
+        background: `url(${TabInterviewDefaultDark.src}) no-repeat 50% 50%/contain`,
       },
     },
     '&[data-page="/newsics"]': {
       'body[data-theme="dark"] &': {
-        background: `url(${images.tab.newsic.defaultLight}) no-repeat 50% 50%/contain`,
+        background: `url(${TabNewsicDefaultLight.src}) no-repeat 50% 50%/contain`,
       },
       'body &, body[data-theme="light"] &': {
-        background: `url(${images.tab.newsic.defaultDark}) no-repeat 50% 50%/contain`,
+        background: `url(${TabNewsicDefaultDark.src}) no-repeat 50% 50%/contain`,
       },
     },
     '&[data-page="/playlists"]': {
       'body[data-theme="dark"] &': {
-        background: `url(${images.tab.playlist.defaultLight}) no-repeat 50% 50%/contain`,
+        background: `url(${TabPlaylistDefaultLight.src}) no-repeat 50% 50%/contain`,
       },
       'body &, body[data-theme="light"] &': {
-        background: `url(${images.tab.playlist.defaultDark}) no-repeat 50% 50%/contain`,
+        background: `url(${TabPlaylistDefaultDark.src}) no-repeat 50% 50%/contain`,
       },
     },
   },

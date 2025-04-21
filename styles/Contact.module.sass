@@ -1,5 +1,3 @@
-@import './designSystem'
-
 .contact_us
   display: flex
   align-items: center
@@ -8,54 +6,54 @@
   .contact_us-content
     display: flex
     flex-direction: column
-    gap: rem(25)
-    padding: rem(15)
+    gap: ds.rem(25)
+    padding: ds.rem(15)
     width: 100%
-    max-width: rem(722)
+    max-width: ds.rem(722)
     color: var(--txt-blockquote)
 
-    +mq(minLarge)
-      gap: rem(50)
-      padding: rem(25)
+    +ds.mq(minLarge)
+      gap: ds.rem(50)
+      padding: ds.rem(25)
 
     > div
       display: flex
       flex-direction: column
-      gap: rem(15)
+      gap: ds.rem(15)
 
       p
         text-align: center
         font-weight: 300
         text-wrap: balance
 
-        +mq(minLarge)
+        +ds.mq(minLarge)
           display: flex
           flex-direction: column
 
     fieldset
       display: flex
       flex-direction: column
-      gap: rem(15)
+      gap: ds.rem(15)
 
     .field-group
       display: flex
       flex-direction: column
-      gap: rem(5)
+      gap: ds.rem(5)
 
     label
-      font-size: rem(14)
+      font-size: ds.rem(14)
       line-height: 1.57142857
 
     textarea
-      height: rem(270)
+      height: ds.rem(270)
 
     input, textarea
       transition: all .4s cubic-bezier(.4,0,.2,1)
       background-color: var(--bg-primary-opacity)
       border: 1px solid var(--border)
-      border-radius: rem(5)
-      padding: rem(10)
-      font-size: rem(14)
+      border-radius: ds.rem(5)
+      padding: ds.rem(10)
+      font-size: ds.rem(14)
       color: var(--txt-blockquote)
 
       &:focus-within, &:focus, &:hover
@@ -64,16 +62,16 @@
     button[type="submit"]
       transition: all .4s cubic-bezier(.4,0,.2,1)
       background: transparent
-      border: 1px solid $hex-accent
-      border-radius: rem(5)
-      padding: rem(15)
-      font-size: rem(20)
+      border: 1px solid ds.$hex-accent
+      border-radius: ds.rem(5)
+      padding: ds.rem(15)
+      font-size: ds.rem(20)
       font-weight: 900
-      color: $hex-accent
+      color: ds.$hex-accent
 
       &:focus, &:hover
-        background: $hex-accent
-        color: $hex-white
+        background: ds.$hex-accent
+        color: ds.$hex-white
         outline: 2px solid var(--default-text)
 
   h1:before

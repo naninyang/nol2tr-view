@@ -2,10 +2,10 @@ import { useRouter } from 'next/router';
 import { isSafari } from 'react-device-detect';
 import styled from '@emotion/styled';
 import Seo, { originTitle } from '@/components/Seo';
-import { images } from '@/components/images';
 import content from '@/styles/Content.module.sass';
 import styles from '@/styles/Page.module.sass';
 import { useEffect, useState } from 'react';
+import { ArrowBackDark, ArrowBackLight, MiscSymbolDark, MiscSymbolLight } from '@/components/images';
 
 interface Counts {
   interview: number;
@@ -16,10 +16,10 @@ interface Counts {
 const Apple = styled.article({
   '& i': {
     'body[data-theme="dark"] &': {
-      background: `url(${images.misc.symbolLight}) no-repeat 50% 50%/contain`,
+      background: `url(${MiscSymbolLight.src}) no-repeat 50% 50%/contain`,
     },
     'body &, body[data-theme="light"] &': {
-      background: `url(${images.misc.symbolDark}) no-repeat 50% 50%/contain`,
+      background: `url(${MiscSymbolDark.src}) no-repeat 50% 50%/contain`,
     },
   },
 });
@@ -27,10 +27,10 @@ const Apple = styled.article({
 const BackButton = styled.i({
   display: 'block',
   'body[data-theme="dark"] &': {
-    background: `url(${images.arrow.backLight}) no-repeat 50% 50%/contain`,
+    background: `url(${ArrowBackLight.src}) no-repeat 50% 50%/contain`,
   },
   'body &, body[data-theme="light"] &': {
-    background: `url(${images.arrow.backDark}) no-repeat 50% 50%/contain`,
+    background: `url(${ArrowBackDark.src}) no-repeat 50% 50%/contain`,
   },
 });
 

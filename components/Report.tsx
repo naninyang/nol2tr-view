@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
-import { images } from '@/components/images';
 import styles from '@/styles/Article.module.sass';
+import { MiscWarning } from './images';
 
 const WarningIcon = styled.i({
-  background: `url(${images.misc.warning}) no-repeat 50% 50%/contain`,
+  background: `url(${MiscWarning.src}) no-repeat 50% 50%/contain`,
 });
 
 const ReportVideo = ({ videoId }: { videoId: string }) => {

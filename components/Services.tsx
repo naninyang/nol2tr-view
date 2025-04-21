@@ -2,7 +2,17 @@ import styled from '@emotion/styled';
 import Anchor from './Anchor';
 import { hex, rem, mixIn } from '@/styles/designSystem';
 import { useRouter } from 'next/router';
-import { images } from './images';
+import {
+  TabInterviewActive,
+  TabInterviewDark,
+  TabInterviewLight,
+  TabNewsicActive,
+  TabNewsicDark,
+  TabNewsicLight,
+  TabPlaylistActive,
+  TabPlaylistdark,
+  TabPlaylistLight,
+} from './images';
 
 const Nav = styled.nav({
   position: 'fixed',
@@ -46,26 +56,26 @@ const Nav = styled.nav({
       height: rem(20),
       '&[data-icon="playlist"]': {
         'body[data-theme="dark"] &': {
-          background: `url(${images.tab.playlist.light}) no-repeat 50% 50%/contain`,
+          background: `url(${TabPlaylistLight.src}) no-repeat 50% 50%/contain`,
         },
         'body &, body[data-theme="light"] &': {
-          background: `url(${images.tab.playlist.dark}) no-repeat 50% 50%/contain`,
+          background: `url(${TabPlaylistdark.src}) no-repeat 50% 50%/contain`,
         },
       },
       '&[data-icon="interview"]': {
         'body[data-theme="dark"] &': {
-          background: `url(${images.tab.interview.light}) no-repeat 50% 50%/contain`,
+          background: `url(${TabInterviewLight.src}) no-repeat 50% 50%/contain`,
         },
         'body &, body[data-theme="light"] &': {
-          background: `url(${images.tab.interview.dark}) no-repeat 50% 50%/contain`,
+          background: `url(${TabInterviewDark.src}) no-repeat 50% 50%/contain`,
         },
       },
       '&[data-icon="newsic"]': {
         'body[data-theme="dark"] &': {
-          background: `url(${images.tab.newsic.light}) no-repeat 50% 50%/contain`,
+          background: `url(${TabNewsicLight.src}) no-repeat 50% 50%/contain`,
         },
         'body &, body[data-theme="light"] &': {
-          background: `url(${images.tab.newsic.dark}) no-repeat 50% 50%/contain`,
+          background: `url(${TabNewsicDark.src}) no-repeat 50% 50%/contain`,
         },
       },
     },
@@ -82,17 +92,13 @@ const MenuItem = styled.li<{ currentRouter?: boolean }>(({ currentRouter }) => (
     fontWeight: currentRouter ? '900' : '400',
     '& i': {
       '&[data-icon="playlist"]': {
-        background: currentRouter
-          ? `url(${images.tab.playlist.active}) no-repeat 50% 50%/contain !important`
-          : undefined,
+        background: currentRouter ? `url(${TabPlaylistActive.src}) no-repeat 50% 50%/contain !important` : undefined,
       },
       '&[data-icon="interview"]': {
-        background: currentRouter
-          ? `url(${images.tab.interview.active}) no-repeat 50% 50%/contain !important`
-          : undefined,
+        background: currentRouter ? `url(${TabInterviewActive.src}) no-repeat 50% 50%/contain !important` : undefined,
       },
       '&[data-icon="newsic"]': {
-        background: currentRouter ? `url(${images.tab.newsic.active}) no-repeat 50% 50%/contain !important` : undefined,
+        background: currentRouter ? `url(${TabNewsicActive.src}) no-repeat 50% 50%/contain !important` : undefined,
       },
     },
   },

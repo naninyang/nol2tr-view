@@ -10,13 +10,31 @@ import { useMediaQuery } from 'react-responsive';
 import { MusicData } from 'types';
 import Seo, { originTitle } from '@/components/Seo';
 import Anchor from '@/components/Anchor';
-import { images } from '@/components/images';
 import YouTubeController from '@/components/YouTubeController';
 import { rem } from '@/styles/designSystem';
 import content from '@/styles/Content.module.sass';
 import styles from '@/styles/Pages.module.sass';
 import musicStyles from '@/styles/Music.module.sass';
 import 'react-perfect-scrollbar/dist/css/styles.css';
+import {
+  ArrowBackDark,
+  ArrowBackLight,
+  ArrowCrossDark,
+  ArrowCrossLight,
+  ArrowDownLight,
+  MiscLyricsDisabled,
+  MiscLyricsEnabled,
+  MiscMusic,
+  MiscNext,
+  MiscPause,
+  MiscPlay,
+  MiscPrev,
+  MiscRepeat,
+  MiscRepeating,
+  MiscSelect,
+  MiscUnselect,
+  MiscWarning,
+} from '@/components/images';
 
 type MusicDetailProps = {
   music: MusicData;
@@ -39,47 +57,47 @@ interface PlayerProps {
 }
 
 const PlayIcon = styled.i({
-  background: `url(${images.misc.play}) no-repeat 50% 50%/contain`,
+  background: `url(${MiscPlay.src}) no-repeat 50% 50%/contain`,
 });
 
 const PauseIcon = styled.i({
-  background: `url(${images.misc.pause}) no-repeat 50% 50%/contain`,
+  background: `url(${MiscPause.src}) no-repeat 50% 50%/contain`,
 });
 
 const PrevIcon = styled.i({
-  background: `url(${images.misc.prev}) no-repeat 50% 50%/contain`,
+  background: `url(${MiscPrev.src}) no-repeat 50% 50%/contain`,
 });
 
 const NextIcon = styled.i({
-  background: `url(${images.misc.next}) no-repeat 50% 50%/contain`,
+  background: `url(${MiscNext.src}) no-repeat 50% 50%/contain`,
 });
 
 const RepeatIcon = styled.i({
-  background: `url(${images.misc.repeat}) no-repeat 50% 50%/contain`,
+  background: `url(${MiscRepeat.src}) no-repeat 50% 50%/contain`,
 });
 
 const RepeatingIcon = styled.i({
-  background: `url(${images.misc.repeating}) no-repeat 50% 50%/contain`,
+  background: `url(${MiscRepeating.src}) no-repeat 50% 50%/contain`,
 });
 
 const SelectIcon = styled.i({
-  background: `url(${images.misc.select}) no-repeat 50% 50%/contain`,
+  background: `url(${MiscSelect.src}) no-repeat 50% 50%/contain`,
 });
 
 const UnselectIcon = styled.i({
-  background: `url(${images.misc.unselect}) no-repeat 50% 50%/contain`,
+  background: `url(${MiscUnselect.src}) no-repeat 50% 50%/contain`,
 });
 
 const DownIcon = styled.i({
-  background: `url(${images.arrow.downLight}) no-repeat 50% 50%/contain`,
+  background: `url(${ArrowDownLight.src}) no-repeat 50% 50%/contain`,
 });
 
 const LyricsDisabledIcon = styled.i({
-  background: `url(${images.misc.lyricsDisabled}) no-repeat 50% 50%/contain`,
+  background: `url(${MiscLyricsDisabled.src}) no-repeat 50% 50%/contain`,
 });
 
 const LyricsEnabledIcon = styled.i({
-  background: `url(${images.misc.lyricsEnabled}) no-repeat 50% 50%/contain`,
+  background: `url(${MiscLyricsEnabled.src}) no-repeat 50% 50%/contain`,
 });
 
 export function useTablet() {
@@ -112,28 +130,28 @@ export function useLandscape() {
 const BackButton = styled.i({
   display: 'block',
   'body[data-theme="dark"] &': {
-    background: `url(${images.arrow.backLight}) no-repeat 50% 50%/contain`,
+    background: `url(${ArrowBackLight.src}) no-repeat 50% 50%/contain`,
   },
   'body &, body[data-theme="light"] &': {
-    background: `url(${images.arrow.backDark}) no-repeat 50% 50%/contain`,
+    background: `url(${ArrowBackDark.src}) no-repeat 50% 50%/contain`,
   },
 });
 
 const YTmusicIcon = styled.i({
-  background: `url(${images.misc.music}) no-repeat 50% 50%/contain`,
+  background: `url(${MiscMusic.src}) no-repeat 50% 50%/contain`,
 });
 
 const CloseIcon = styled.i({
   'body[data-theme="dark"] &': {
-    background: `url(${images.arrow.crossLight}) no-repeat 50% 50%/contain`,
+    background: `url(${ArrowCrossLight.src}) no-repeat 50% 50%/contain`,
   },
   'body &, body[data-theme="light"] &': {
-    background: `url(${images.arrow.crossDark}) no-repeat 50% 50%/contain`,
+    background: `url(${ArrowCrossDark.src}) no-repeat 50% 50%/contain`,
   },
 });
 
 const WarningIcon = styled.i({
-  background: `url(${images.misc.warning}) no-repeat 50% 50%/contain`,
+  background: `url(${MiscWarning.src}) no-repeat 50% 50%/contain`,
 });
 
 const LoadingIndicator = ({ length }: { length: number }) => {

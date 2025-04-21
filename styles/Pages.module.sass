@@ -1,5 +1,3 @@
-@import './designSystem'
-
 .pages
   &.notice h1::before
     content: '안내사항 nol2tr_log'
@@ -10,25 +8,25 @@
   .pages-content
     display: flex
     flex-direction: column
-    gap: rem(25)
-    padding: rem(15) rem(15) rem(25)
+    gap: ds.rem(25)
+    padding: ds.rem(15) ds.rem(15) ds.rem(25)
     color: var(--txt-blockquote)
 
-    +mq(minLarge)
-      gap: rem(50)
-      padding: rem(25) rem(25) rem(50)
+    +ds.mq(minLarge)
+      gap: ds.rem(50)
+      padding: ds.rem(25) ds.rem(25) ds.rem(50)
 
     > div:not(.sections)
       display: flex
       flex-direction: column
-      gap: rem(15)
+      gap: ds.rem(15)
 
       p
         text-align: center
         font-weight: 300
         text-wrap: balance
 
-        +mq(minLarge)
+        +ds.mq(minLarge)
           display: flex
           flex-direction: column
 
@@ -38,14 +36,14 @@
 
         a
           display: inline-flex
-          margin-left: rem(3)
+          margin-left: ds.rem(3)
           color: var(--txt-subject)
           font-weight: 800
           text-decoration: underline
 
     hr
-      margin: rem(20) 0
+      margin: ds.rem(20) 0
       border: 1px solid var(--border)
 
-      +mq(minLarge)
-        margin: rem(25) 0
+      +ds.mq(minLarge)
+        margin: ds.rem(25) 0

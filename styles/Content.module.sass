@@ -1,17 +1,15 @@
-@import './designSystem'
-
 .content
   padding: 0 env(safe-area-inset-right) 0 env(safe-area-inset-left)
-  font-size: rem(16)
+  font-size: ds.rem(16)
   line-height: 1.5
   background-color: var(--default-bg)
 
-  +mq(minLarge)
-    font-size: rem(20)
+  +ds.mq(minLarge)
+    font-size: ds.rem(20)
 
   &:not(.page)
     h1
-      margin-top: rem(25)
+      margin-top: ds.rem(25)
       position: relative
       font-size: vw(24, 380)
       font-weight: 900
@@ -19,8 +17,8 @@
       touch-action: none
       user-select: none
 
-      +mq(minLarge)
-        font-size: rem(70)
+      +ds.mq(minLarge)
+        font-size: ds.rem(70)
 
       &::before
         position: absolute

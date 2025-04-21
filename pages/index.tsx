@@ -7,18 +7,35 @@ import styled from '@emotion/styled';
 import { BannerData, NewsData } from 'types';
 import Seo from '@/components/Seo';
 import Anchor from '@/components/Anchor';
-import { images } from '@/components/images';
 import { rem } from '@/styles/designSystem';
 import styles from '@/styles/Home.module.sass';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import {
+  ArrowMoreDark,
+  ArrowMoreLight,
+  SlideNextDark,
+  SlideNextLight,
+  SlidePauseDark,
+  SlidePauseLight,
+  SlidePlayDark,
+  SlidePlayLight,
+  SlidePrevDark,
+  SlidePrevLight,
+  TabInterviewDefaultDark,
+  TabInterviewDefaultLight,
+  TabNewsicDefaultDark,
+  TabNewsicDefaultLight,
+  TabPlaylistDefaultDark,
+  TabPlaylistDefaultLight,
+} from '@/components/images';
 
 const MoreIcon = styled.i({
   'body[data-theme="dark"] &': {
-    background: `url(${images.arrow.moreLight}) no-repeat 50% 50%/contain`,
+    background: `url(${ArrowMoreLight.src}) no-repeat 50% 50%/contain`,
   },
   'body &, body[data-theme="light"] &': {
-    background: `url(${images.arrow.moreDark}) no-repeat 50% 50%/contain`,
+    background: `url(${ArrowMoreDark.src}) no-repeat 50% 50%/contain`,
   },
 });
 
@@ -26,26 +43,26 @@ const Headline = styled.h2({
   '& i': {
     '&[data-page="/interviews"]': {
       'body[data-theme="dark"] &': {
-        background: `url(${images.tab.interview.defaultLight}) no-repeat 50% 50%/contain`,
+        background: `url(${TabInterviewDefaultLight.src}) no-repeat 50% 50%/contain`,
       },
       'body &, body[data-theme="light"] &': {
-        background: `url(${images.tab.interview.defaultDark}) no-repeat 50% 50%/contain`,
+        background: `url(${TabInterviewDefaultDark.src}) no-repeat 50% 50%/contain`,
       },
     },
     '&[data-page="/newsics"]': {
       'body[data-theme="dark"] &': {
-        background: `url(${images.tab.newsic.defaultLight}) no-repeat 50% 50%/contain`,
+        background: `url(${TabNewsicDefaultLight.src}) no-repeat 50% 50%/contain`,
       },
       'body &, body[data-theme="light"] &': {
-        background: `url(${images.tab.newsic.defaultDark}) no-repeat 50% 50%/contain`,
+        background: `url(${TabNewsicDefaultDark.src}) no-repeat 50% 50%/contain`,
       },
     },
     '&[data-page="/playlists"]': {
       'body[data-theme="dark"] &': {
-        background: `url(${images.tab.playlist.defaultLight}) no-repeat 50% 50%/contain`,
+        background: `url(${TabPlaylistDefaultLight.src}) no-repeat 50% 50%/contain`,
       },
       'body &, body[data-theme="light"] &': {
-        background: `url(${images.tab.playlist.defaultDark}) no-repeat 50% 50%/contain`,
+        background: `url(${TabPlaylistDefaultDark.src}) no-repeat 50% 50%/contain`,
       },
     },
   },
@@ -53,37 +70,37 @@ const Headline = styled.h2({
 
 const NextIcon = styled.i({
   'body[data-theme="dark"] &': {
-    background: `url(${images.slide.nextLight}) no-repeat 50% 50%/contain`,
+    background: `url(${SlideNextLight.src}) no-repeat 50% 50%/contain`,
   },
   'body &, body[data-theme="light"] &': {
-    background: `url(${images.slide.nextDark}) no-repeat 50% 50%/contain`,
+    background: `url(${SlideNextDark.src}) no-repeat 50% 50%/contain`,
   },
 });
 
 const PauseIcon = styled.i({
   'body[data-theme="dark"] &': {
-    background: `url(${images.slide.pauseLight}) no-repeat 50% 50%/contain`,
+    background: `url(${SlidePauseLight.src}) no-repeat 50% 50%/contain`,
   },
   'body &, body[data-theme="light"] &': {
-    background: `url(${images.slide.pauseDark}) no-repeat 50% 50%/contain`,
+    background: `url(${SlidePauseDark.src}) no-repeat 50% 50%/contain`,
   },
 });
 
 const PlayIcon = styled.i({
   'body[data-theme="dark"] &': {
-    background: `url(${images.slide.playLight}) no-repeat 50% 50%/contain`,
+    background: `url(${SlidePlayLight.src}) no-repeat 50% 50%/contain`,
   },
   'body &, body[data-theme="light"] &': {
-    background: `url(${images.slide.playDark}) no-repeat 50% 50%/contain`,
+    background: `url(${SlidePlayDark.src}) no-repeat 50% 50%/contain`,
   },
 });
 
 const PrevIcon = styled.i({
   'body[data-theme="dark"] &': {
-    background: `url(${images.slide.prevLight}) no-repeat 50% 50%/contain`,
+    background: `url(${SlidePrevLight.src}) no-repeat 50% 50%/contain`,
   },
   'body &, body[data-theme="light"] &': {
-    background: `url(${images.slide.prevDark}) no-repeat 50% 50%/contain`,
+    background: `url(${SlidePrevDark.src}) no-repeat 50% 50%/contain`,
   },
 });
 

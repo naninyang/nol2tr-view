@@ -1,5 +1,3 @@
-@import './designSystem'
-
 .open_sources
   display: flex
   align-items: center
@@ -11,68 +9,68 @@
   .open_sources-content
     display: flex
     flex-direction: column
-    gap: rem(25)
-    margin-bottom: calc(env(safe-area-inset-bottom) + rem(68))
-    padding: rem(15)
+    gap: ds.rem(25)
+    margin-bottom: calc(env(safe-area-inset-bottom) + ds.rem(68))
+    padding: ds.rem(15)
     width: 100%
     color: var(--txt-blockquote)
 
-    +mq(minLarge)
-      gap: rem(50)
-      padding: rem(25)
+    +ds.mq(minLarge)
+      gap: ds.rem(50)
+      padding: ds.rem(25)
 
     dl
       display: flex
       justify-content: center
-      gap: rem(15)
-      font-size: rem(16)
+      gap: ds.rem(15)
+      font-size: ds.rem(16)
 
-      +mq(maxMedium)
+      +ds.mq(maxMedium)
         flex-direction: column
         align-items: center
 
-      +mq(minLarge)
-        gap: rem(37)
+      +ds.mq(minLarge)
+        gap: ds.rem(37)
 
       div
         display: flex
-        gap: rem(17)
+        gap: ds.rem(17)
 
-        +mq(maxMedium)
+        +ds.mq(maxMedium)
           width: 100%
           justify-content: center
 
       dt, dd
         line-height: 1
 
-        +mq(maxMedium)
-          +coln
+        +ds.mq(maxMedium)
+          +ds.coln
 
       dt
         color: var(--txt-subject)
 
-        +mq(maxMedium)
-          width: rem(165)
+        +ds.mq(maxMedium)
+          width: ds.rem(165)
           text-align: right
 
       dd
         font-weight: 900
-        color: $hex-accent
+        color: ds.$hex-accent
 
-        +mq(maxMedium)
-          width: rem(95)
+        +ds.mq(maxMedium)
+          width: ds.rem(95)
 
     hr
-      margin: rem(20) 0
+      margin: ds.rem(20) 0
       border: 1px solid var(--border)
 
-      +mq(minLarge)
-        margin: rem(25) 0
+      +ds.mq(minLarge)
+        margin: ds.rem(25) 0
 
     .list
-      margin: rem(50) auto 0
+      margin: ds.rem(50) auto 0
       width: 100%
-      max-width: rem(720)
+      max-width: ds.rem(720)
 
       & :last-of-type hr
         display: none

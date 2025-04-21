@@ -2,8 +2,8 @@ import Image from 'next/image';
 import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
 import { mixIn, rem } from '@/styles/designSystem';
-import { images } from './images';
 import YouTubePlayer from './YouTubePlayer';
+import { MiscPlay } from './images';
 
 interface Props {
   videoId: string;
@@ -51,7 +51,7 @@ const Container = styled.div<{ isVideo?: boolean }>(({ isVideo }) => ({
         display: 'block',
         width: rem(36),
         height: rem(36),
-        background: `url(${images.misc.play}) no-repeat 50% 50%/contain`,
+        background: `url(${MiscPlay.src}) no-repeat 50% 50%/contain`,
       },
     },
     '& span': {
